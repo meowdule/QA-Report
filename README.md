@@ -27,11 +27,11 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 ```
 /
 ├── README.md                 # 본 문서
-├── .github/workflows/        # analyze, test 등 워크플로
-├── packages/core/            # 크롤·시나리오 스키마·병합 로직 (Node)
-├── packages/dashboard-build/ # 리포트 HTML 생성
-├── web/                      # Pages용 SPA 소스 (빌드 산출물은 gh-pages)
-└── docs/trigger/             # (선택) Cloudflare Worker 등 트리거 예제
+├── .github/workflows/        # Pages 배포, Analyze & Test
+├── packages/core/            # 크롤·시나리오 생성·실행·리포트 (Playwright)
+├── scripts/                  # gh-pages에 jobs/ 게시 스크립트
+├── web/                      # Pages용 정적 앱
+└── docs/trigger/             # (선택) 트리거 예제 — 미추가
 ```
 
 `gh-pages` 배포 후 공개 경로 예시:
@@ -81,18 +81,42 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 
 **완료 기준:** 공개 URL에서 정적 페이지가 열린다.
 
-### Phase 1 — Actions만으로 “한 줄 파이프라인” (MVP 코어)
+### Phase 1 — Actions만으로 “한 줄 파이프라인” (MVP 코어) ✅
 
-> 트리거·SPA 없이 **수동 `workflow_dispatch`** 로 먼저 검증합니다.
+> SPA 없이 GitHub Actions에서 **수동 `workflow_dispatch`** 로 실행합니다.
 
-- [ ] 입력: `target_url`, `max_pages`, `max_depth`(선택)
-- [ ] Playwright로 시작 URL 로드, 동일 출처(same-site) 링크 수집, 제한된 BFS/DFS 크롤
-- [ ] 산출물: `structure.json`(URL 목록, 발견된 링크 그래프 요약)
-- [ ] 휴리스틱 시나리오 초안 생성 → `scenarios.draft.json`(선언적 스키마 확정)
-- [ ] 동일 워크플로에서 초안을 그대로 사용해 Playwright 스모크 실행(렌더·콘솔 수집 최소)
-- [ ] `report.html` 생성 후 **`gh-pages`의 `jobs/{jobId}/`** 에 커밋 푸시
+- [x] 입력: `target_url`, `max_pages`, `max_depth`(워크플로 입력)
+- [x] Playwright로 시작 URL 로드, 동일 출처 링크 수집, BFS 크롤(깊이·페이지 수 제한)
+- [x] 산출물: `structure.json`, 링크 그래프 `graph`
+- [x] 휴리스틱 시나리오 초안 → `scenarios.draft.json`(스텝: `navigate`, `assertVisible`, `click`, `fill`, `assertNoConsoleError`)
+- [x] 초안 기준 Playwright 스모크 실행 → `results.json`
+- [x] `report.html` 및 JSON을 **`gh-pages`의 `jobs/{jobId}/`** 에 커밋 푸시 (`jobId` = GitHub `run_id`)
 
-**완료 기준:** Actions 한 번으로 해당 job 폴더에 JSON + HTML이 생기고, 브라우저에서 URL로 열어볼 수 있다.
+**완료 기준:** Actions 한 번으로 해당 job 폴더에 JSON + HTML이 생기고, Pages URL에서 열어볼 수 있다.
+
+#### Phase 1 실행 방법
+
+1. GitHub 저장소 **Actions** 탭 → **Analyze site and run tests** 워크플로 선택 → **Run workflow**.
+2. `target_url` 에 분석할 URL 입력 후 실행합니다.
+3. 성공 후 **기존에 `gh-pages` 가 없으면** 스크립트가 `web/` 내용으로 브랜치를 한 번 생성합니다. Pages 설정이 되어 있으면 다음 주소 형태로 리포트를 열 수 있습니다.  
+   `https://<owner>.github.io/<repo>/jobs/<run_id>/report.html`  
+   (`run_id` 는 해당 워크플로 실행 상세 페이지 상단의 숫자 ID 와 동일합니다.)
+4. 일부 시나리오가 실패하면 워크플로는 **경고(노란색)** 로 끝날 수 있으나, 산출물은 `continue-on-error` 및 `if: always()` 로 **`jobs/` 에 게시**됩니다.
+
+#### 로컬에서 파이프라인만 실행
+
+```powershell
+Set-Location packages/core
+npm ci
+npx playwright install chromium
+$env:TARGET_URL="https://example.com"
+$env:MAX_PAGES="10"
+$env:MAX_DEPTH="2"
+$env:JOB_ID="local"
+node src/pipeline.mjs
+```
+
+결과는 `packages/core/output/` 에 생성됩니다(`gitignore` 됨).
 
 ### Phase 2 — 시나리오 스키마·리포트 품질
 
@@ -152,7 +176,7 @@ cd web && python -m http.server 8080
 
 이후 `http://localhost:8080` 접속.
 
-Phase 1 이후 모노레포 스크립트(`npm run build:web` 등)는 해당 단계에서 README에 맞춰 추가합니다.
+Phase 2+ 에서 공용 스크립트(`npm run build:web` 등)를 루트에 두지 않고도 `packages/core` 단위로 확장할 수 있습니다.
 
 ## 라이선스
 

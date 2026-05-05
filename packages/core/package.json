@@ -1,0 +1,14 @@
+{
+  "name": "qa-site-core",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "pipeline": "node src/pipeline.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.50.0"
+  }
+}
