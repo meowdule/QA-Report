@@ -1,4 +1,32 @@
 /**
+ * 해시가 클라이언트 라우트로 보이면 유지 (#/…, #!/…). 그 외 (#section 등)는 비 SPA로 보고 제거.
+ * @param {string} hash `URL.hash` (`#...` 또는 "")
+ */
+export function hashLooksLikeClientRoute(hash) {
+  if (!hash || hash === "#") return false;
+  const h = hash.slice(1);
+  return h.startsWith("/") || h.startsWith("!/");
+}
+
+/**
+ * 구조 JSON·그래프·링크 키용 URL 정규화 (SPA 해시 경로 유지, 앵커 제거, 경로 끝 슬래시 정리)
+ * @param {string} href
+ * @param {string} base
+ */
+export function normalizeStructureUrl(href, base) {
+  try {
+    const u = new URL(href, base);
+    if (!hashLooksLikeClientRoute(u.hash)) u.hash = "";
+    let path = u.pathname;
+    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+    u.pathname = path || "/";
+    return u.href;
+  } catch {
+    return href;
+  }
+}
+
+/**
  * 동일 사이트(same origin) 링크를 BFS 로 제한 크롤합니다.
  * 링크: a, area, 흔한 data-* 패턴. 각 페이지에서 클릭 후보(button, role 등)와
  * 폼 컨트롤(select 단일/다중, 라디오 그룹, 체크박스, 스위치·aria 토글, label[for])도 수집합니다.
@@ -16,7 +44,7 @@ export async function crawlSite(browser, startUrl, opts) {
   }
 
   const origin = start.origin;
-  const normalizedStart = stripHash(start.href);
+  const normalizedStart = normalizeStructureUrl(start.href, start.href);
 
   /** @type {Map<string, any>} */
   const pages = new Map();
@@ -121,41 +149,13 @@ export async function crawlSite(browser, startUrl, opts) {
   }
 
   return {
-    targetUrl: start.href,
+    targetUrl: normalizedStart,
     origin,
     crawledAt: new Date().toISOString(),
     limits: { maxPages, maxDepth },
     pages: pageList,
     graph,
   };
-}
-
-function stripHash(href) {
-  try {
-    const u = new URL(href);
-    u.hash = "";
-    return u.href;
-  } catch {
-    return href;
-  }
-}
-
-/**
- * 구조 JSON·그래프용 URL 정규화 (해시 제거, 트레일링 슬래시 정리)
- * @param {string} href
- * @param {string} base
- */
-export function normalizeStructureUrl(href, base) {
-  try {
-    const u = new URL(href, base);
-    u.hash = "";
-    let path = u.pathname;
-    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
-    u.pathname = path || "/";
-    return u.href;
-  } catch {
-    return href;
-  }
 }
 
 /**
@@ -168,16 +168,21 @@ async function collectSameOriginLinksWithMeta(page, origin) {
     ({ pageOrigin, base }) => {
       const BINARY =
         /\.(pdf|zip|tar|gz|rar|7z|png|jpe?g|gif|webp|svg|ico|css|js|mjs|map|woff2?|ttf|eot|mp4|webm|mp3|wav|docx?|xlsx?)(\?|$)/i;
-      function normHref(absUrl) {
+      function hashLooksLikeClientRoute(hash) {
+        if (!hash || hash === "#") return false;
+        const h = hash.slice(1);
+        return h.startsWith("/") || h.startsWith("!/");
+      }
+      function normSameOriginLinkKey(absHref) {
         try {
-          const u = new URL(absUrl);
-          u.hash = "";
+          const u = new URL(absHref);
+          if (!hashLooksLikeClientRoute(u.hash)) u.hash = "";
           let path = u.pathname;
           if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
           u.pathname = path || "/";
           return u.href;
         } catch {
-          return absUrl;
+          return absHref;
         }
       }
       const nodes = [
@@ -223,9 +228,8 @@ async function collectSameOriginLinksWithMeta(page, origin) {
         }
         if (abs.origin !== pageOrigin) continue;
         if (abs.protocol !== "http:" && abs.protocol !== "https:") continue;
-        abs.hash = "";
         if (BINARY.test(abs.pathname)) continue;
-        const key = normHref(abs.href);
+        const key = normSameOriginLinkKey(abs.href);
         linkSet.add(key);
         mergeMeta(key, el.getAttribute("target"), el.getAttribute("rel") || "");
       }
@@ -319,6 +323,23 @@ async function extractInteractables(page, origin) {
       /** @type {any[]} */
       const items = [];
       const seenSel = new Set();
+      function hashLooksLikeClientRoute(hash) {
+        if (!hash || hash === "#") return false;
+        const h = hash.slice(1);
+        return h.startsWith("/") || h.startsWith("!/");
+      }
+      function normSameOriginHref(absHref) {
+        try {
+          const u = new URL(absHref);
+          if (!hashLooksLikeClientRoute(u.hash)) u.hash = "";
+          let path = u.pathname;
+          if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+          u.pathname = path || "/";
+          return u.href;
+        } catch {
+          return absHref;
+        }
+      }
 
       const push = (obj) => {
         if (!obj.selector && !obj.getByRole) return;
@@ -373,7 +394,7 @@ async function extractInteractables(page, origin) {
           return;
         }
         if (abs.origin !== pageOrigin) return;
-        abs.hash = "";
+        const hrefNorm = normSameOriginHref(abs.href);
         const name = labelText(a);
         const rawT = (a.getAttribute("target") || "").trim().toLowerCase();
         const linkTarget = rawT === "" ? "_self" : rawT;
@@ -381,7 +402,7 @@ async function extractInteractables(page, origin) {
         push({
           kind: "anchor",
           selector: cssPath(a),
-          href: abs.href,
+          href: hrefNorm,
           name: name || undefined,
           getByRole: "link",
           accessibleName: name || undefined,
@@ -426,7 +447,7 @@ async function extractInteractables(page, origin) {
           return;
         }
         if (abs.origin !== pageOrigin) return;
-        abs.hash = "";
+        const hrefNorm = normSameOriginHref(abs.href);
         const name = labelText(el);
         const rawT = (el.getAttribute("target") || "").trim().toLowerCase();
         const linkTarget = rawT === "" ? "_self" : rawT;
@@ -434,7 +455,7 @@ async function extractInteractables(page, origin) {
         push({
           kind: "roleLink",
           selector: cssPath(el),
-          href: abs.href,
+          href: hrefNorm,
           name: name || undefined,
           getByRole: "link",
           accessibleName: name || undefined,

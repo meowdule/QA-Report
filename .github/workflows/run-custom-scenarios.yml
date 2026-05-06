@@ -59,24 +59,27 @@ jobs:
           script: |
             const fs = require('fs');
             const ev = context.eventName;
+            const payload = context.payload || {};
             let jobId;
             let scenariosStr;
             if (ev === 'repository_dispatch') {
-              const cp = github.event.client_payload;
-              if (!cp || !cp.job_id) core.setFailed('client_payload.job_id required');
-              if (!cp.scenarios) core.setFailed('client_payload.scenarios required');
+              const cp = payload.client_payload;
+              if (!cp || !cp.job_id) return core.setFailed('client_payload.job_id required');
+              if (!cp.scenarios) return core.setFailed('client_payload.scenarios required');
               jobId = String(cp.job_id).trim();
               scenariosStr = JSON.stringify(cp.scenarios);
+            } else if (ev === 'workflow_dispatch') {
+              jobId = String(payload.inputs?.job_id || process.env.WD_JOB_ID || '').trim();
+              scenariosStr = String(payload.inputs?.scenarios_json ?? process.env.WD_JSON ?? '');
+              if (!jobId) return core.setFailed('job_id required');
+              if (!scenariosStr) return core.setFailed('scenarios_json required');
             } else {
-              jobId = String(process.env.WD_JOB_ID || '').trim();
-              scenariosStr = process.env.WD_JSON || '';
-              if (!jobId) core.setFailed('job_id required');
-              if (!scenariosStr) core.setFailed('scenarios_json required');
+              return core.setFailed(`Unsupported event for this step: ${ev}`);
             }
             try {
               JSON.parse(scenariosStr);
             } catch (e) {
-              core.setFailed(`Invalid JSON: ${e}`);
+              return core.setFailed(`Invalid JSON: ${e}`);
             }
             fs.mkdirSync('packages/core/input', { recursive: true });
             fs.writeFileSync('packages/core/input/scenarios.final.json', scenariosStr);

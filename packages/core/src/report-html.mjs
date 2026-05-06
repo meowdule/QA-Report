@@ -260,22 +260,15 @@ function externalSourcesByUrl(structure) {
 /**
  * @param {any} p
  * @param {Set<string>} visitedUrls
- * @param {any} structure
- * @param {{ depth: number | null; parent: string | undefined }} crawlRow
  */
-function internalPageSummaryLine(p, visitedUrls, structure, crawlRow) {
-  const lim = structure?.limits || {};
-  const maxD = lim.maxDepth != null ? String(lim.maxDepth) : "—";
-  const depth = crawlRow.depth != null ? crawlRow.depth : "—";
+function internalPageSummaryCompact(p, visitedUrls) {
   const links = p.links || [];
   const nSame = links.length;
   const pending = links.filter((h) => !visitedUrls.has(h)).length;
   const nExt = (p.outboundNav || []).filter((o) => o.category === "external_http").length;
-  let load;
-  if (p.error) load = `페이지 이동·로드 실패 (${esc(String(p.error).slice(0, 80))})`;
-  else load = `페이지 이동·로드 성공 (HTTP ${esc(p.httpStatus ?? "—")})`;
-  const pendPart = pending > 0 ? ` · 신규 방문 대기 ${esc(pending)}개` : "";
-  return `${load} · 같은 사이트 링크 ${esc(nSame)}개 수집${pendPart} · 외부 링크 ${esc(nExt)}개 발견 · 크롤 깊이 ${esc(depth)} (설정 최대 ${esc(maxD)})`;
+  const load = p.error ? "실패" : "성공";
+  const tail = pending > 0 ? ` 대기${pending}` : "";
+  return `${load} · 내${nSame}·외${nExt}${tail}`;
 }
 
 /** 스텝 타입 → 비개발자용 짧은 설명 */
@@ -613,7 +606,14 @@ export function buildReportHtml(p) {
       font-weight: 800;
     }
     #sites .sites-subh:first-of-type { margin-top: 0; }
+    .sites-table { font-size: 0.82rem; }
+    .sites-table th { font-size: 0.78rem; }
     .sites-table td { vertical-align: top; }
+    .sites-table .sites-col-url { max-width: 12rem; word-break: break-all; }
+    .sites-table .cell-depth { white-space: nowrap; width: 2.75rem; font-size: 0.78rem; color: var(--muted); }
+    .sites-table .sites-col-src { max-width: 9.5rem; font-size: 0.78rem; color: var(--muted); }
+    .sites-table .cell-sum { max-width: 8rem; font-size: 0.76rem; white-space: nowrap; }
+    .sites-src-start { color: var(--muted); }
     .url-list { margin: 0; padding-left: 1.1rem; font-size: 0.84rem; word-break: break-all; }
     .url-list li { margin: 0.28rem 0; }
     .url-list .empty { list-style: none; margin-left: -1.1rem; color: var(--muted); }
@@ -766,6 +766,7 @@ export function buildReportHtml(p) {
       .no-print { display: none !important; }
       body { background: #fff; }
       .wrap { max-width: none; padding: 0; }
+      .summary-dashboard { grid-template-columns: 1fr 1fr !important; }
       .section, .target-card, .summary-dashboard, .sd-gauge-card, .lh-board { break-inside: avoid; box-shadow: none; }
     }
   </style>
@@ -1127,19 +1128,21 @@ function buildSiteListsSection(structure, lighthouseSummary) {
           parent: row0.parent || p.parentUrl,
         };
         const parent = row.parent;
+        const depthCell = esc(row.depth != null ? String(row.depth) : "—");
         const metaLine = parent
-          ? `이동 경로: <a href="${esc(parent)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(parent))}</a>에서 링크로 발견 · 방문 시점 깊이 ${esc(row.depth != null ? row.depth : "—")}`
-          : `시작 URL에서 바로 방문 · 깊이 ${esc(row.depth != null ? row.depth : 0)}`;
-        const sum = internalPageSummaryLine(p, visited, structure, row);
+          ? `<a href="${esc(parent)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(parent))}</a>`
+          : `<span class="sites-src-start">시작</span>`;
+        const sum = internalPageSummaryCompact(p, visited);
         return `<tr>
-          <td style="word-break:break-all"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
-          <td style="font-size:0.84rem;color:var(--muted)">${metaLine}</td>
-          <td style="font-size:0.84rem">${sum}</td>
+          <td class="sites-col-url"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
+          <td class="cell-depth">${depthCell}</td>
+          <td class="cell-src sites-col-src">${metaLine}</td>
+          <td class="cell-sum sites-col-sum">${sum}</td>
         </tr>`;
       }
       return `<tr>
-        <td style="word-break:break-all"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
-        <td colspan="2" style="color:var(--muted)">수집 구조에 이 URL의 상세가 없습니다.</td>
+        <td class="sites-col-url"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
+        <td colspan="3" style="color:var(--muted)">수집 구조에 이 URL의 상세가 없습니다.</td>
       </tr>`;
     })
     .join("");
@@ -1147,42 +1150,50 @@ function buildSiteListsSection(structure, lighthouseSummary) {
   const rowsEx = external
     .map((u) => {
       const srcs = extSources.get(u) || [];
+      let depthCell = "—";
+      if (srcs.length) {
+        const depths = srcs.map((s) => s.depth);
+        const mn = Math.min(...depths);
+        const mx = Math.max(...depths);
+        depthCell = mn === mx ? String(mn) : `${mn}–${mx}`;
+      }
       const srcHtml =
         srcs.length === 0
-          ? "발견 페이지 정보 없음"
+          ? "—"
           : srcs
               .map((s) => {
-                const anchor = s.label ? ` · 앵커 「${esc(s.label)}」` : "";
-                return `<a href="${esc(s.fromUrl)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(s.fromUrl))}</a> (깊이 ${esc(s.depth)})${anchor}`;
+                const lab = s.label ? ` · ${esc(String(s.label).slice(0, 28))}` : "";
+                return `<a href="${esc(s.fromUrl)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(s.fromUrl))}</a>${lab}`;
               })
               .join("<br/>");
       return `<tr>
-        <td style="word-break:break-all"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
-        <td style="font-size:0.84rem;color:var(--muted)">${srcHtml}</td>
+        <td class="sites-col-url"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
+        <td class="cell-depth">${esc(depthCell)}</td>
+        <td class="cell-src sites-col-src">${srcHtml}</td>
       </tr>`;
     })
     .join("");
 
   return `<section class="section" id="sites">
     <h2>내부·외부 URL</h2>
-    <p class="lead">크롤로 <strong>실제로 방문·수집한 내부 페이지</strong>와, 페이지에서 찾은 <strong>외부 https 링크</strong>입니다. 경로·깊이·한 줄 요약은 표로 정리했습니다.</p>
+    <p class="lead">방문·수집한 <strong>내부</strong> URL과 <strong>외부 https</strong> 링크입니다.</p>
     <h3 class="sites-subh">내부 (방문)</h3>
     <div class="scroll-x">
       <table class="data sites-table">
-        <thead><tr><th>URL</th><th>발견·경로</th><th>요약</th></tr></thead>
+        <thead><tr><th>URL</th><th>깊이</th><th>출처</th><th>요약</th></tr></thead>
         <tbody>${
           rowsIn ||
-          '<tr><td colspan="3" style="color:var(--muted)">내부 페이지가 없습니다.</td></tr>'
+          '<tr><td colspan="4" style="color:var(--muted)">내부 페이지가 없습니다.</td></tr>'
         }</tbody>
       </table>
     </div>
     <h3 class="sites-subh">외부 (링크 수집)</h3>
     <div class="scroll-x">
       <table class="data sites-table">
-        <thead><tr><th>URL</th><th>발견 위치</th></tr></thead>
+        <thead><tr><th>URL</th><th>깊이</th><th>발견 위치</th></tr></thead>
         <tbody>${
           rowsEx ||
-          '<tr><td colspan="2" style="color:var(--muted)">수집된 외부 https 링크가 없습니다.</td></tr>'
+          '<tr><td colspan="3" style="color:var(--muted)">수집된 외부 https 링크가 없습니다.</td></tr>'
         }</tbody>
       </table>
     </div>

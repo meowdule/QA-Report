@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { normalizeStructureUrl } from "./crawl.mjs";
 import { summarizeCriteria } from "./schema.mjs";
 
 /**
@@ -358,19 +359,6 @@ function escapeRe(s) {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&").slice(0, 120);
 }
 
-function normalizeNavUrl(u) {
-  try {
-    const x = new URL(u);
-    x.hash = "";
-    let path = x.pathname;
-    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
-    x.pathname = path || "/";
-    return x.href;
-  } catch {
-    return u;
-  }
-}
-
 function pageOrigin(u) {
   try {
     return new URL(u).origin;
@@ -385,7 +373,8 @@ function pageOrigin(u) {
  * @returns {Promise<import('playwright').Locator | null>}
  */
 async function findLinkLocatorForHref(page, targetHref) {
-  const want = normalizeNavUrl(new URL(targetHref, page.url()).href);
+  const base = page.url();
+  const want = normalizeStructureUrl(targetHref, base);
   const selectors = ['a[href]', '[role="link"][href]'];
   for (const sel of selectors) {
     const count = await page.locator(sel).count();
@@ -395,7 +384,7 @@ async function findLinkLocatorForHref(page, targetHref) {
       if (!h) continue;
       let abs;
       try {
-        abs = normalizeNavUrl(new URL(h, page.url()).href);
+        abs = normalizeStructureUrl(h, base);
       } catch {
         continue;
       }

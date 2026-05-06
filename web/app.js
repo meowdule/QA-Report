@@ -389,36 +389,6 @@ function lighthouseBoardHtmlSpa(summary) {
   </div>`;
 }
 
-function svgScenarioFolder() {
-  return `<svg class="ico ico-folder" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>`;
-}
-
-/**
- * @param {string} kind
- */
-function stepGlyphSvg(kind) {
-  const common = 'viewBox="0 0 24 24" aria-hidden="true" class="ico ico-step"';
-  const paths = {
-    navigate:
-      '<path fill="currentColor" d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2zm0 15.17L6.83 18 12 5.83 17.17 18 12 17.17z"/>',
-    click: '<path fill="currentColor" d="M13 1.07V9h7L10 23 9 14H2l11-12.93z"/>',
-    fill: '<path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>',
-    selectOption:
-      '<path fill="currentColor" d="M7 10l5 5 5-5H7zm0-2h10l-5-5-5 5z"/>',
-    check: '<path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
-    assertVisible:
-      '<path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>',
-    assertNoConsoleError:
-      '<path fill="currentColor" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>',
-    waitForResponse:
-      '<path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
-    waitForSelector:
-      '<path fill="currentColor" d="M15 1H9v2h6V1zm4.03 6.39l2.02-.98L18.85 4l-2.42.59c-.4-.56-.86-1.08-1.39-1.55L19 1H5v2h14.17l-1.09 2.08zM11 10H9v7h2v-7zm8 1h2v7c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V9H5v7h14v-5z"/>',
-  };
-  const p = paths[kind] || paths.assertVisible;
-  return `<svg ${common}>${p}</svg>`;
-}
-
 /**
  * @param {HTMLElement} row
  * @param {number} delta
@@ -459,27 +429,27 @@ function fillStepFields(wrap, s) {
 
   switch (t) {
     case "navigate":
-      inp("이동할 주소", "step-url", s.url || "", "url");
+      inp("URL", "step-url", s.url || "", "url");
       break;
     case "click":
-      inp("링크 주소(있으면)", "step-href", s.href || "", "url");
-      inp("요소 찾기(선택자)", "step-selector", s.selector || "");
-      inp("대체 찾기(선택)", "step-fallback", s.fallbackSelector || "");
-      inp("역할(예: button, link)", "step-gr-role", s.getByRole || "");
-      inp("버튼·링크 이름", "step-gr-name", s.accessibleName || "");
+      inp("href", "step-href", s.href || "", "url");
+      inp("선택자", "step-selector", s.selector || "");
+      inp("대체 선택자", "step-fallback", s.fallbackSelector || "");
+      inp("역할", "step-gr-role", s.getByRole || "");
+      inp("이름", "step-gr-name", s.accessibleName || "");
       break;
     case "fill":
-      inp("입력 칸(선택자)", "step-selector", s.selector || "");
-      inp("넣을 내용", "step-value", s.value != null ? String(s.value) : "");
+      inp("선택자", "step-selector", s.selector || "");
+      inp("값", "step-value", s.value != null ? String(s.value) : "");
       break;
     case "selectOption":
-      inp("목록(선택자)", "step-selector", s.selector || "");
-      inp("보이는 글자로 고르기", "step-sel-label", s.label || "");
-      inp("또는 값으로 고르기", "step-sel-value", s.value != null ? String(s.value) : "");
-      inp("또는 몇 번째(0부터)", "step-sel-index", s.index != null ? String(s.index) : "");
+      inp("선택자", "step-selector", s.selector || "");
+      inp("라벨", "step-sel-label", s.label || "");
+      inp("값", "step-sel-value", s.value != null ? String(s.value) : "");
+      inp("인덱스", "step-sel-index", s.index != null ? String(s.index) : "");
       break;
     case "check":
-      inp("체크 칸(선택자)", "step-selector", s.selector || "");
+      inp("선택자", "step-selector", s.selector || "");
       {
         const lab = document.createElement("label");
         lab.className = "check";
@@ -493,17 +463,12 @@ function fillStepFields(wrap, s) {
       }
       break;
     case "assertVisible":
-      inp("보일 때까지 기다릴 영역(선택자)", "step-selector", s.selector || "");
+      inp("선택자", "step-selector", s.selector || "");
       break;
-    case "assertNoConsoleError": {
-      const p = document.createElement("p");
-      p.className = "step-block-note";
-      p.textContent = "이 단계는 별도 입력 없이, 화면에 오류가 없는지만 봅니다.";
-      wrap.appendChild(p);
+    case "assertNoConsoleError":
       break;
-    }
     case "waitForResponse":
-      inp("응답 주소 일부(비우면 무시)", "step-urlpattern", s.urlPattern || "");
+      inp("URL 패턴", "step-urlpattern", s.urlPattern || "");
       {
         const lab = document.createElement("label");
         lab.className = "check";
@@ -512,13 +477,13 @@ function fillStepFields(wrap, s) {
         cb.name = "step-optional";
         cb.checked = !!s.optional;
         lab.appendChild(cb);
-        lab.appendChild(document.createTextNode(" 없어도 넘어가도 됨"));
+        lab.appendChild(document.createTextNode(" 생략 가능"));
         wrap.appendChild(lab);
       }
-      inp("최대 기다림(밀리초)", "step-timeout", s.timeout != null ? String(s.timeout) : "8000", "number");
+      inp("타임아웃(ms)", "step-timeout", s.timeout != null ? String(s.timeout) : "8000", "number");
       break;
     case "waitForSelector":
-      inp("나타날 영역(선택자)", "step-selector", s.selector || "");
+      inp("선택자", "step-selector", s.selector || "");
       {
         const lab = document.createElement("label");
         lab.className = "check";
@@ -527,10 +492,10 @@ function fillStepFields(wrap, s) {
         cb.name = "step-optional";
         cb.checked = !!s.optional;
         lab.appendChild(cb);
-        lab.appendChild(document.createTextNode(" 없어도 넘어가도 됨"));
+        lab.appendChild(document.createTextNode(" 생략 가능"));
         wrap.appendChild(lab);
       }
-      inp("최대 기다림(밀리초)", "step-timeout", s.timeout != null ? String(s.timeout) : "15000", "number");
+      inp("타임아웃(ms)", "step-timeout", s.timeout != null ? String(s.timeout) : "15000", "number");
       break;
     default:
       inp("값", "step-raw", JSON.stringify(s), "text");
@@ -633,13 +598,9 @@ function buildStepEditorRow(st) {
 
   const head = document.createElement("div");
   head.className = "step-block-head";
-  const glyph = document.createElement("span");
-  glyph.className = "step-block-glyph";
-  glyph.innerHTML = stepGlyphSvg(type);
   const ttl = document.createElement("span");
   ttl.className = "step-block-title";
   ttl.textContent = STEP_LABEL_KO[type] || type;
-  head.appendChild(glyph);
   head.appendChild(ttl);
 
   const tools = document.createElement("div");
@@ -802,8 +763,11 @@ function setStatus(text, kind = "") {
 
 function setAnalyzeStatus(text, kind = "") {
   if (!el.analyzeStatus) return;
-  el.analyzeStatus.textContent = text;
-  el.analyzeStatus.dataset.kind = kind;
+  const t = String(text ?? "").trim();
+  el.analyzeStatus.textContent = t;
+  el.analyzeStatus.dataset.kind = t ? kind : "";
+  el.analyzeStatus.classList.toggle("analyze-status--hidden", !t);
+  el.analyzeStatus.toggleAttribute("aria-hidden", !t);
 }
 
 /** @param {boolean} on */
@@ -823,6 +787,39 @@ function setAnalyzeBusy(on) {
     }
   }
   panel?.classList.toggle("is-loading", on);
+}
+
+/** 시나리오 「테스트 수행」 대기 중: 폼·편집 비활성화(중지 버튼 제외). */
+/** @param {boolean} on */
+function setRerunWaiting(on) {
+  for (const form of [el.analyzeForm, el.form]) {
+    if (!form) continue;
+    for (const node of form.querySelectorAll("input, select, textarea, button")) {
+      if (el.btnStop && node === el.btnStop) continue;
+      if (
+        node instanceof HTMLInputElement ||
+        node instanceof HTMLSelectElement ||
+        node instanceof HTMLTextAreaElement ||
+        node instanceof HTMLButtonElement
+      ) {
+        node.disabled = on;
+      }
+    }
+  }
+  if (el.editSection) {
+    for (const node of el.editSection.querySelectorAll("input, select, textarea, button")) {
+      if (
+        node instanceof HTMLInputElement ||
+        node instanceof HTMLSelectElement ||
+        node instanceof HTMLTextAreaElement ||
+        node instanceof HTMLButtonElement
+      ) {
+        node.disabled = on;
+      }
+    }
+  }
+  if (el.btnPostRerun) el.btnPostRerun.disabled = on;
+  el.dashboardNav?.classList.toggle("is-rerun-waiting", on);
 }
 
 /**
@@ -1058,19 +1055,19 @@ function renderScenarioForms(doc) {
 
     const sum = document.createElement("summary");
     sum.className = "scenario-editor-summary";
-    const iconDoc = document.createElement("span");
-    iconDoc.className = "scenario-doc-icon";
-    iconDoc.innerHTML = svgScenarioFolder();
     const titleWrap = document.createElement("div");
     titleWrap.className = "scenario-summary-text";
-    const lab = document.createElement("span");
-    lab.className = "scenario-summary-label";
-    lab.textContent = `시나리오 ${i + 1}`;
-    titleWrap.appendChild(lab);
+    const idx = document.createElement("span");
+    idx.className = "scenario-idx";
+    idx.textContent = String(i + 1);
+    const nameEl = document.createElement("span");
+    nameEl.className = "scenario-summary-name";
+    nameEl.textContent = (s.name || "").trim() || "(이름 없음)";
+    titleWrap.appendChild(idx);
+    titleWrap.appendChild(nameEl);
     const badge = document.createElement("span");
     badge.className = "scenario-step-badge";
     badge.textContent = `${(s.steps || []).length}단계`;
-    sum.appendChild(iconDoc);
     sum.appendChild(titleWrap);
     sum.appendChild(badge);
 
@@ -1079,7 +1076,7 @@ function renderScenarioForms(doc) {
 
     const nameL = document.createElement("label");
     nameL.className = "field";
-    nameL.innerHTML = "<span>이 시나리오 이름</span>";
+    nameL.innerHTML = "<span>이름</span>";
     const nameI = document.createElement("input");
     nameI.type = "text";
     nameI.className = "sc-name";
@@ -1090,7 +1087,7 @@ function renderScenarioForms(doc) {
     const critWrap = document.createElement("div");
     critWrap.className = "field criteria-field";
     const critLbl = document.createElement("span");
-    critLbl.textContent = "적용할 점검 기준";
+    critLbl.textContent = "기준";
     critWrap.appendChild(critLbl);
     const grid = document.createElement("div");
     grid.className = "criteria-strip";
@@ -1497,6 +1494,7 @@ el.btnPostRerun?.addEventListener("click", async () => {
   const prevFinished = state.results?.finishedAt ?? null;
   const postStartedAt = new Date().toISOString();
 
+  setRerunWaiting(true);
   setStatus("테스트 수행을 요청하는 중…", "load");
   const payload = { job_id: state.jobId, scenarios };
   if (state.dispatchMeta?.sig != null && state.dispatchMeta?.exp != null) {
@@ -1545,6 +1543,8 @@ el.btnPostRerun?.addEventListener("click", async () => {
     }
   } catch (e) {
     setStatus(`네트워크 오류: ${/** @type {Error} */ (e).message}`, "err");
+  } finally {
+    setRerunWaiting(false);
   }
 });
 

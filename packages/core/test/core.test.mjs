@@ -13,10 +13,18 @@ import { STEP_TYPES, validateScenarioSteps } from "../src/schema.mjs";
 
 const coreCwd = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("normalizeStructureUrl strips hash and trailing slash on path", () => {
+test("normalizeStructureUrl strips anchor hash and trailing slash; keeps SPA hash routes", () => {
   const base = "https://ex.com";
   assert.equal(normalizeStructureUrl("https://ex.com/a/", base), "https://ex.com/a");
   assert.equal(normalizeStructureUrl("https://ex.com/a#frag", base), "https://ex.com/a");
+  assert.equal(
+    normalizeStructureUrl("https://ex.com/app/#/pages/x", base),
+    "https://ex.com/app#/pages/x",
+  );
+  assert.equal(
+    normalizeStructureUrl("https://ex.com/app/#!/legacy", base),
+    "https://ex.com/app#!/legacy",
+  );
 });
 
 test("validateScenarioSteps accepts waitForSelector", () => {
