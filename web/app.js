@@ -142,6 +142,512 @@ function qaWebhookSecret() {
   return DEFAULT_QA_WEBHOOK_SECRET.trim();
 }
 
+/** @type {Record<string, { label: string; desc: string }>} */
+const CRITERIA_DEF = {
+  page_rendering: { label: "페이지 렌더링", desc: "화면이 열리고 내용이 보이는지" },
+  core_action: { label: "핵심 동작", desc: "클릭·이동이 잘 되는지" },
+  input_data: { label: "입력·선택", desc: "글 입력·목록 선택이 되는지" },
+  console_errors: { label: "화면 오류", desc: "빨간 오류 메시지가 없는지" },
+  primary_flow: { label: "주요 흐름", desc: "중요한 페이지 순서가 지켜지는지" },
+};
+
+const CRITERION_ORDER = Object.keys(CRITERIA_DEF);
+
+/** @type {Record<string, string>} */
+const STEP_LABEL_KO = {
+  navigate: "페이지로 이동",
+  click: "클릭·누르기",
+  fill: "글자 입력",
+  selectOption: "목록에서 고르기",
+  check: "체크·라디오 선택",
+  assertVisible: "화면에 보이는지 확인",
+  assertNoConsoleError: "오류 없음 확인",
+  waitForResponse: "서버 응답 기다리기",
+  waitForSelector: "특정 영역이 나올 때까지 기다리기",
+};
+
+const STEP_TYPES_ADD = [
+  "navigate",
+  "click",
+  "fill",
+  "selectOption",
+  "check",
+  "assertVisible",
+  "assertNoConsoleError",
+  "waitForResponse",
+  "waitForSelector",
+];
+
+const RESULT_STEP_KEYS = new Set([
+  "ok",
+  "error",
+  "status",
+  "finalUrl",
+  "note",
+  "skipped",
+  "consoleErrorCount",
+  "pageErrorCount",
+  "startUrl",
+  "dialogs",
+  "popupUrl",
+  "navigationMode",
+  "popupClosed",
+  "durationMs",
+]);
+
+/**
+ * @param {string} id
+ */
+function criterionLabel(id) {
+  return CRITERIA_DEF[id]?.label ?? id;
+}
+
+/**
+ * @param {any} st
+ */
+function stepForEditor(st) {
+  /** @type {Record<string, any>} */
+  const out = { type: st?.type || "navigate" };
+  for (const [k, v] of Object.entries(st || {})) {
+    if (k === "type" || v === undefined) continue;
+    if (RESULT_STEP_KEYS.has(k)) continue;
+    out[k] = v;
+  }
+  return out;
+}
+
+/**
+ * @param {string} type
+ */
+function defaultStep(type) {
+  switch (type) {
+    case "navigate":
+      return { type: "navigate", url: "" };
+    case "click":
+      return { type: "click", selector: "" };
+    case "fill":
+      return { type: "fill", selector: "", value: "" };
+    case "selectOption":
+      return { type: "selectOption", selector: "", label: "" };
+    case "check":
+      return { type: "check", selector: "", checked: true };
+    case "assertVisible":
+      return { type: "assertVisible", selector: "body" };
+    case "assertNoConsoleError":
+      return { type: "assertNoConsoleError" };
+    case "waitForResponse":
+      return { type: "waitForResponse", urlPattern: "", optional: true, timeout: 8000 };
+    case "waitForSelector":
+      return { type: "waitForSelector", selector: "", optional: true, timeout: 15000 };
+    default:
+      return { type: "assertVisible", selector: "body" };
+  }
+}
+
+/** 도넛 차트 (통과·실패 비율) */
+function donutChartHtml(pass, fail) {
+  const p = Math.max(0, Number(pass) || 0);
+  const f = Math.max(0, Number(fail) || 0);
+  const t = p + f || 1;
+  const pct = Math.round((p / t) * 100);
+  const c = 2 * Math.PI * 16;
+  const dashOk = (p / t) * c;
+  return `<div class="donut-block" role="img" aria-label="통과 ${p}건, 실패 ${f}건">
+    <svg class="donut-svg" viewBox="0 0 40 40" aria-hidden="true">
+      <circle class="donut-track" cx="20" cy="20" r="16" fill="none" stroke-width="6"/>
+      <circle class="donut-arc" cx="20" cy="20" r="16" fill="none" stroke-width="6"
+        stroke-dasharray="${dashOk} ${c}" stroke-linecap="round" transform="rotate(-90 20 20)"/>
+    </svg>
+    <div class="donut-cap"><strong>${esc(String(pct))}%</strong><span>통과</span><span class="donut-sub">${esc(p)} / ${esc(t)} 묶음</span></div>
+  </div>`;
+}
+
+function svgScenarioFolder() {
+  return `<svg class="ico ico-folder" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>`;
+}
+
+/**
+ * @param {string} kind
+ */
+function stepGlyphSvg(kind) {
+  const common = 'viewBox="0 0 24 24" aria-hidden="true" class="ico ico-step"';
+  const paths = {
+    navigate:
+      '<path fill="currentColor" d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2zm0 15.17L6.83 18 12 5.83 17.17 18 12 17.17z"/>',
+    click: '<path fill="currentColor" d="M13 1.07V9h7L10 23 9 14H2l11-12.93z"/>',
+    fill: '<path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>',
+    selectOption:
+      '<path fill="currentColor" d="M7 10l5 5 5-5H7zm0-2h10l-5-5-5 5z"/>',
+    check: '<path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
+    assertVisible:
+      '<path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>',
+    assertNoConsoleError:
+      '<path fill="currentColor" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>',
+    waitForResponse:
+      '<path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
+    waitForSelector:
+      '<path fill="currentColor" d="M15 1H9v2h6V1zm4.03 6.39l2.02-.98L18.85 4l-2.42.59c-.4-.56-.86-1.08-1.39-1.55L19 1H5v2h14.17l-1.09 2.08zM11 10H9v7h2v-7zm8 1h2v7c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V9H5v7h14v-5z"/>',
+  };
+  const p = paths[kind] || paths.assertVisible;
+  return `<svg ${common}>${p}</svg>`;
+}
+
+/**
+ * @param {HTMLElement} row
+ * @param {number} delta
+ */
+function moveStepRow(row, delta) {
+  const parent = row.parentElement;
+  if (!parent) return;
+  const kids = [...parent.children];
+  const idx = kids.indexOf(row);
+  const j = idx + delta;
+  if (j < 0 || j >= kids.length) return;
+  const ref = kids[j];
+  if (delta < 0) parent.insertBefore(row, ref);
+  else parent.insertBefore(row, ref.nextSibling);
+}
+
+/**
+ * @param {HTMLElement} wrap
+ * @param {Record<string, any>} s
+ */
+function fillStepFields(wrap, s) {
+  wrap.replaceChildren();
+  const t = s.type;
+  /** @param {string} lbl @param {string} name @param {string} val @param {string} [typ] */
+  const inp = (lbl, name, val, typ = "text") => {
+    const lab = document.createElement("label");
+    lab.className = "field field--compact";
+    const span = document.createElement("span");
+    span.textContent = lbl;
+    const i = document.createElement("input");
+    i.name = name;
+    i.type = typ;
+    i.value = val ?? "";
+    lab.appendChild(span);
+    lab.appendChild(i);
+    wrap.appendChild(lab);
+  };
+
+  switch (t) {
+    case "navigate":
+      inp("이동할 주소", "step-url", s.url || "", "url");
+      break;
+    case "click":
+      inp("링크 주소(있으면)", "step-href", s.href || "", "url");
+      inp("요소 찾기(선택자)", "step-selector", s.selector || "");
+      inp("대체 찾기(선택)", "step-fallback", s.fallbackSelector || "");
+      inp("역할(예: button, link)", "step-gr-role", s.getByRole || "");
+      inp("버튼·링크 이름", "step-gr-name", s.accessibleName || "");
+      break;
+    case "fill":
+      inp("입력 칸(선택자)", "step-selector", s.selector || "");
+      inp("넣을 내용", "step-value", s.value != null ? String(s.value) : "");
+      break;
+    case "selectOption":
+      inp("목록(선택자)", "step-selector", s.selector || "");
+      inp("보이는 글자로 고르기", "step-sel-label", s.label || "");
+      inp("또는 값으로 고르기", "step-sel-value", s.value != null ? String(s.value) : "");
+      inp("또는 몇 번째(0부터)", "step-sel-index", s.index != null ? String(s.index) : "");
+      break;
+    case "check":
+      inp("체크 칸(선택자)", "step-selector", s.selector || "");
+      {
+        const lab = document.createElement("label");
+        lab.className = "check";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.name = "step-checked";
+        cb.checked = s.checked !== false;
+        lab.appendChild(cb);
+        lab.appendChild(document.createTextNode(" 체크된 상태로 둘 것"));
+        wrap.appendChild(lab);
+      }
+      break;
+    case "assertVisible":
+      inp("보일 때까지 기다릴 영역(선택자)", "step-selector", s.selector || "");
+      break;
+    case "assertNoConsoleError": {
+      const p = document.createElement("p");
+      p.className = "step-block-note";
+      p.textContent = "이 단계는 별도 입력 없이, 화면에 오류가 없는지만 봅니다.";
+      wrap.appendChild(p);
+      break;
+    }
+    case "waitForResponse":
+      inp("응답 주소 일부(비우면 무시)", "step-urlpattern", s.urlPattern || "");
+      {
+        const lab = document.createElement("label");
+        lab.className = "check";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.name = "step-optional";
+        cb.checked = !!s.optional;
+        lab.appendChild(cb);
+        lab.appendChild(document.createTextNode(" 없어도 넘어가도 됨"));
+        wrap.appendChild(lab);
+      }
+      inp("최대 기다림(밀리초)", "step-timeout", s.timeout != null ? String(s.timeout) : "8000", "number");
+      break;
+    case "waitForSelector":
+      inp("나타날 영역(선택자)", "step-selector", s.selector || "");
+      {
+        const lab = document.createElement("label");
+        lab.className = "check";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.name = "step-optional";
+        cb.checked = !!s.optional;
+        lab.appendChild(cb);
+        lab.appendChild(document.createTextNode(" 없어도 넘어가도 됨"));
+        wrap.appendChild(lab);
+      }
+      inp("최대 기다림(밀리초)", "step-timeout", s.timeout != null ? String(s.timeout) : "15000", "number");
+      break;
+    default:
+      inp("값", "step-raw", JSON.stringify(s), "text");
+  }
+}
+
+/**
+ * @param {HTMLElement} row
+ */
+function readStepFromRow(row) {
+  const type = row.dataset.stepType || "navigate";
+  /** @type {any} */
+  const out = { type };
+  const q = (n) => row.querySelector(`[name="${n}"]`);
+
+  switch (type) {
+    case "navigate": {
+      const v = q("step-url")?.value?.trim();
+      if (v) out.url = v;
+      break;
+    }
+    case "click": {
+      const href = q("step-href")?.value?.trim();
+      const sel = q("step-selector")?.value?.trim();
+      const fb = q("step-fallback")?.value?.trim();
+      const gr = q("step-gr-role")?.value?.trim();
+      const gname = q("step-gr-name")?.value?.trim();
+      if (href) out.href = href;
+      if (sel) out.selector = sel;
+      if (fb) out.fallbackSelector = fb;
+      if (gr) out.getByRole = gr;
+      if (gname) out.accessibleName = gname;
+      break;
+    }
+    case "fill": {
+      const sel = q("step-selector")?.value?.trim();
+      const val = q("step-value")?.value ?? "";
+      if (sel) out.selector = sel;
+      out.value = val;
+      break;
+    }
+    case "selectOption": {
+      const sel = q("step-selector")?.value?.trim();
+      const lab = q("step-sel-label")?.value?.trim();
+      const val = q("step-sel-value")?.value?.trim();
+      const idxRaw = q("step-sel-index")?.value?.trim();
+      if (sel) out.selector = sel;
+      if (lab) out.label = lab;
+      else if (val) out.value = val;
+      else if (idxRaw !== undefined && idxRaw !== "") out.index = Number(idxRaw);
+      break;
+    }
+    case "check": {
+      const sel = q("step-selector")?.value?.trim();
+      if (sel) out.selector = sel;
+      const cb = q("step-checked");
+      if (cb instanceof HTMLInputElement) out.checked = cb.checked;
+      break;
+    }
+    case "assertVisible": {
+      const sel = q("step-selector")?.value?.trim();
+      if (sel) out.selector = sel;
+      break;
+    }
+    case "assertNoConsoleError":
+      break;
+    case "waitForResponse": {
+      const up = q("step-urlpattern")?.value?.trim();
+      if (up) out.urlPattern = up;
+      const opt = q("step-optional");
+      if (opt instanceof HTMLInputElement) out.optional = opt.checked;
+      const to = q("step-timeout")?.value;
+      if (to !== "" && to != null) out.timeout = Number(to);
+      break;
+    }
+    case "waitForSelector": {
+      const sel = q("step-selector")?.value?.trim();
+      if (sel) out.selector = sel;
+      const opt = q("step-optional");
+      if (opt instanceof HTMLInputElement) out.optional = opt.checked;
+      const to = q("step-timeout")?.value;
+      if (to !== "" && to != null) out.timeout = Number(to);
+      break;
+    }
+    default:
+      break;
+  }
+  return out;
+}
+
+/**
+ * @param {any} st
+ */
+function buildStepEditorRow(st) {
+  const clean = stepForEditor(st);
+  const type = clean.type;
+  const row = document.createElement("div");
+  row.className = "step-block";
+  row.dataset.stepType = type;
+
+  const head = document.createElement("div");
+  head.className = "step-block-head";
+  const glyph = document.createElement("span");
+  glyph.className = "step-block-glyph";
+  glyph.innerHTML = stepGlyphSvg(type);
+  const ttl = document.createElement("span");
+  ttl.className = "step-block-title";
+  ttl.textContent = STEP_LABEL_KO[type] || type;
+  head.appendChild(glyph);
+  head.appendChild(ttl);
+
+  const tools = document.createElement("div");
+  tools.className = "step-block-tools";
+  const mkBtn = (label, fn) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn btn-tiny ghost";
+    b.textContent = label;
+    b.addEventListener("click", fn);
+    return b;
+  };
+  tools.appendChild(
+    mkBtn("↑", () => {
+      moveStepRow(row, -1);
+    }),
+  );
+  tools.appendChild(
+    mkBtn("↓", () => {
+      moveStepRow(row, 1);
+    }),
+  );
+  tools.appendChild(
+    mkBtn("삭제", () => {
+      row.remove();
+    }),
+  );
+
+  const fields = document.createElement("div");
+  fields.className = "step-block-fields";
+  fillStepFields(fields, clean);
+
+  row.appendChild(head);
+  row.appendChild(tools);
+  row.appendChild(fields);
+  return row;
+}
+
+/**
+ * @param {HTMLElement} stepsHost
+ */
+function buildAddStepBar(stepsHost) {
+  const bar = document.createElement("div");
+  bar.className = "step-add-bar";
+  const sel = document.createElement("select");
+  sel.className = "step-add-select";
+  const z = document.createElement("option");
+  z.value = "";
+  z.textContent = "➕ 단계 추가…";
+  sel.appendChild(z);
+  for (const typ of STEP_TYPES_ADD) {
+    const o = document.createElement("option");
+    o.value = typ;
+    o.textContent = STEP_LABEL_KO[typ] || typ;
+    sel.appendChild(o);
+  }
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn ghost btn-small";
+  btn.textContent = "추가";
+  btn.addEventListener("click", () => {
+    const typ = sel.value;
+    if (!typ) return;
+    stepsHost.appendChild(buildStepEditorRow(defaultStep(typ)));
+    sel.value = "";
+  });
+  bar.appendChild(sel);
+  bar.appendChild(btn);
+  return bar;
+}
+
+/**
+ * @param {any} doc
+ * @returns {string} 오류 문구 또는 빈 문자열
+ */
+function validateScenariosDoc(doc) {
+  if (!doc?.scenarios?.length) return "편집할 시나리오가 없습니다.";
+  for (let i = 0; i < doc.scenarios.length; i++) {
+    const sc = doc.scenarios[i];
+    const lab = `「시나리오 ${i + 1}」`;
+    if (!String(sc.name || "").trim()) return `${lab} 이름을 적어 주세요.`;
+    if (!sc.criteria?.length) return `${lab}에서 점검 기준을 한 가지 이상 골라 주세요.`;
+    if (!sc.steps?.length) return `${lab}에 실행 단계가 없습니다. 단계를 추가하세요.`;
+    for (let j = 0; j < sc.steps.length; j++) {
+      const st = sc.steps[j];
+      const p = `${lab} ${j + 1}번째 단계`;
+      if (!st?.type) return `${p}의 종류가 없습니다.`;
+      if (st.type === "navigate" && !String(st.url || "").trim()) return `${p}: 이동할 주소를 적어 주세요.`;
+      if (st.type === "assertVisible" && !String(st.selector || "").trim())
+        return `${p}: 확인할 영역(선택자)을 적어 주세요.`;
+      if (st.type === "fill" && !String(st.selector || "").trim()) return `${p}: 입력 칸(선택자)을 적어 주세요.`;
+      if (st.type === "selectOption" && !String(st.selector || "").trim())
+        return `${p}: 목록(선택자)을 적어 주세요.`;
+      if (st.type === "check" && !String(st.selector || "").trim()) return `${p}: 체크 칸(선택자)을 적어 주세요.`;
+      if (st.type === "waitForSelector" && !String(st.selector || "").trim())
+        return `${p}: 기다릴 영역(선택자)을 적어 주세요.`;
+      if (st.type === "click") {
+        const ok = !!(String(st.href || "").trim() || String(st.selector || "").trim() || String(st.getByRole || "").trim());
+        if (!ok) return `${p}: 클릭할 링크 주소, 또는 선택자, 또는 역할 중 하나는 적어 주세요.`;
+      }
+    }
+  }
+  return "";
+}
+
+/**
+ * @param {string} u
+ */
+function shortUrlSpa(u) {
+  try {
+    const x = new URL(u);
+    return (x.hostname + x.pathname).slice(0, 52) + (String(u).length > 52 ? "…" : "");
+  } catch {
+    return String(u).slice(0, 52);
+  }
+}
+
+/**
+ * @param {any} st
+ */
+function formatStepLineKo(st) {
+  const parts = [];
+  if (st.url) parts.push(`주소 ${esc(shortUrlSpa(st.url))}`);
+  if (st.finalUrl && st.finalUrl !== st.url) parts.push(`이동 후 ${esc(shortUrlSpa(st.finalUrl))}`);
+  if (st.status != null) parts.push(`응답 ${esc(st.status)}`);
+  if (st.selector) parts.push("지정한 영역");
+  if (st.href) parts.push(`링크 ${esc(shortUrlSpa(st.href))}`);
+  if (st.accessibleName) parts.push(`이름 「${esc(String(st.accessibleName).slice(0, 36))}」`);
+  if (st.value != null && String(st.value) !== "") parts.push(`입력값 ${esc(String(st.value).slice(0, 36))}`);
+  if (st.label != null && String(st.label) !== "") parts.push(`선택 ${esc(String(st.label).slice(0, 36))}`);
+  if (st.error) parts.push(`원인 ${esc(String(st.error).slice(0, 120))}`);
+  if (!parts.length) return "";
+  return ` — ${parts.join(" · ")}`;
+}
+
 const qs = new URLSearchParams(window.location.search);
 const initialJob = (qs.get("job") || qs.get("jobId") || "").trim();
 
@@ -176,22 +682,15 @@ const el = {
   summaryBody: document.getElementById("summary-body"),
   scenariosSection: document.getElementById("scenarios-section"),
   scenariosBody: document.getElementById("scenarios-body"),
-  scenariosRaw: document.getElementById("scenarios-raw"),
   editSection: document.getElementById("edit-section"),
-  scenariosJson: document.getElementById("scenarios-json"),
   scenarioFormRows: document.getElementById("scenario-form-rows"),
-  jsonHint: document.getElementById("json-hint"),
-  btnJsonToForm: document.getElementById("btn-json-to-form"),
-  btnFormToJson: document.getElementById("btn-form-to-json"),
-  btnValidateJson: document.getElementById("btn-validate-json"),
+  editHint: document.getElementById("edit-hint"),
   btnPostRerun: document.getElementById("btn-post-rerun"),
   dispatchHint: document.getElementById("dispatch-hint"),
   structureSection: document.getElementById("structure-section"),
   structureBody: document.getElementById("structure-body"),
-  structureRaw: document.getElementById("structure-raw"),
   resultsSection: document.getElementById("results-section"),
   resultsBody: document.getElementById("results-body"),
-  resultsRaw: document.getElementById("results-raw"),
   reportSection: document.getElementById("report-section"),
   reportLink: document.getElementById("report-link"),
   reportFrame: document.getElementById("report-frame"),
@@ -319,11 +818,17 @@ function formatDuration(ms) {
   return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}초`;
 }
 
-/** @param {string[]} items */
-function chipsHtml(items) {
-  const list = (items || []).filter(Boolean);
+/** @param {string[]} criterionIds */
+function chipsHtmlCriteria(criterionIds) {
+  const list = (criterionIds || []).filter(Boolean);
   if (!list.length) return `<span class="chip chip--muted">—</span>`;
-  return list.map((c) => `<span class="chip">${esc(c)}</span>`).join("");
+  return list
+    .map((id) => {
+      const d = CRITERIA_DEF[id];
+      const t = d ? `${d.label}` : criterionLabel(id);
+      return `<span class="chip" title="${esc(d?.desc || "")}">${esc(t)}</span>`;
+    })
+    .join("");
 }
 
 /**
@@ -387,6 +892,9 @@ function renderSummary(structure, scenarios, results) {
         )}</a>`
       : `<span class="muted">—</span>`;
 
+  const failN = tot > 0 ? tot - pass : 0;
+  const donutMini = tot > 0 ? donutChartHtml(pass, failN) : "";
+
   el.summaryBody.innerHTML = `
     <div class="summary-kpi" role="group" aria-label="작업 요약">
       <div class="kpi-tile kpi-tile--accent">
@@ -394,10 +902,9 @@ function renderSummary(structure, scenarios, results) {
         <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
         <span class="kpi-hint">이 번호로 나중에 다시 이 결과를 열 수 있습니다.</span>
       </div>
-      <div class="kpi-tile">
-        <span class="kpi-label">통과율</span>
-        <span class="kpi-value">${pct != null ? `${esc(String(pct))}%` : "—"}</span>
-        <span class="kpi-hint">${esc(resultsHint)}</span>
+      <div class="kpi-tile kpi-tile--viz">
+        ${donutMini || `<span class="kpi-label">통과율</span><span class="kpi-value">—</span><span class="kpi-hint">${esc(resultsHint)}</span>`}
+        ${donutMini ? `<span class="kpi-hint kpi-hint--below">${esc(resultsHint)}</span>` : ""}
       </div>
       <div class="kpi-tile">
         <span class="kpi-label">수집한 페이지</span>
@@ -430,14 +937,13 @@ function renderStructure(structure) {
     .join("");
   const more =
     pages.length > 50
-      ? `<p class="hint">목록이 길어 처음 50개만 보여 드립니다. 전체는 아래 고급 원본을 펼쳐 보세요.</p>`
+      ? `<p class="hint">목록이 길어 처음 50개만 보여 드립니다.</p>`
       : "";
   el.structureBody.innerHTML = `
     <p class="structure-lead">총 <strong>${pages.length}</strong>개 페이지를 살펴보았습니다.</p>
     <div class="table-scroll"><table class="data data--pages"><thead><tr><th>페이지 이름</th><th>주소</th><th>응답</th></tr></thead>
     <tbody>${rows || "<tr><td colspan=3>페이지 없음</td></tr>"}</tbody></table></div>${more}
   `;
-  el.structureRaw.textContent = JSON.stringify(structure, null, 2);
 }
 
 /**
@@ -448,70 +954,89 @@ function renderScenarios(doc) {
   const ver = doc?.version ?? "?";
   const rows = list
     .map(
-      (s) =>
+      (s, idx) =>
         `<tr>
           <td class="cell-scen-name">
+            <span class="scen-ico" aria-hidden="true">${svgScenarioFolder()}</span>
             <span class="scen-name">${esc(s.name || "이름 없음")}</span>
-            ${s.id ? `<span class="scen-id">참고 코드: ${esc(s.id)}</span>` : ""}
+            <span class="scen-sub">묶음 ${idx + 1} · 단계 ${esc(s.steps?.length ?? 0)}개</span>
           </td>
-          <td class="cell-chips">${chipsHtml(s.criteria || [])}</td>
-          <td class="cell-num">${esc(s.steps?.length ?? 0)}</td>
+          <td class="cell-chips">${chipsHtmlCriteria(s.criteria || [])}</td>
         </tr>`,
     )
     .join("");
   el.scenariosBody.innerHTML = `
     <p class="scenarios-meta"><span class="ver-pill">목록 버전 ${esc(ver)}</span></p>
-    <div class="table-scroll"><table class="data data--scenarios"><thead><tr><th>시나리오</th><th>점검 기준</th><th>단계 수</th></tr></thead>
-    <tbody>${rows || "<tr><td colspan=3>시나리오가 없습니다.</td></tr>"}</tbody></table></div>
+    <div class="table-scroll"><table class="data data--scenarios"><thead><tr><th>시나리오</th><th>점검 기준</th></tr></thead>
+    <tbody>${rows || "<tr><td colspan=2>시나리오가 없습니다.</td></tr>"}</tbody></table></div>
   `;
-  el.scenariosRaw.textContent = JSON.stringify(doc, null, 2);
 }
 
 /**
  * @param {any} results
  */
 function renderResults(results) {
+  const list = results?.scenarios || [];
+  const passN = list.filter((s) => s.passed).length;
+  const failN = list.length - passN;
+  const donut = list.length ? donutChartHtml(passN, failN) : "";
+
   const summary = results?.criteriaSummary;
   let table = "";
   if (summary && Object.keys(summary).length) {
     const rows = Object.entries(summary)
       .filter(([, row]) => (row.pass || 0) + (row.fail || 0) > 0)
       .map(([id, row]) => {
-        const label = row.labelKo || id;
-        const showCode = row.labelKo && String(row.labelKo) !== String(id);
+        const label = row.labelKo || criterionLabel(id);
+        const total = (row.pass || 0) + (row.fail || 0);
+        const rate = total ? Math.round(((row.pass || 0) / total) * 100) : 0;
         return `<tr>
           <td class="cell-criterion">
             <span class="crit-label">${esc(label)}</span>
-            ${showCode ? `<span class="crit-code">${esc(id)}</span>` : ""}
+            <span class="crit-mini">${esc(CRITERIA_DEF[id]?.desc || "")}</span>
           </td>
-          <td class="cell-num cell-num--ok">${esc(row.pass)}</td>
+          <td class="cell-num cell-num--ok">${esc(row.pass)} <span class="crit-pct">(${esc(rate)}%)</span></td>
           <td class="cell-num cell-num--bad">${esc(row.fail)}</td>
         </tr>`;
       })
       .join("");
-    table = `<h3 class="subh">기준별 요약</h3>
+    table = `<h3 class="subh subh--ico"><span class="subh-ico" aria-hidden="true">📊</span> 기준별 요약</h3>
       <div class="table-scroll"><table class="data data--criteria"><thead><tr><th>점검 항목</th><th>통과</th><th>실패</th></tr></thead><tbody>${
         rows || "<tr><td colspan=3>집계할 항목이 없습니다.</td></tr>"
       }</tbody></table></div>`;
   }
-  const scen = (results?.scenarios || [])
-    .map(
-      (s) => `
-    <article class="result-scen-card ${s.passed ? "is-pass" : "is-fail"}">
-      <div class="result-scen-card__row">
-        <span class="badge ${s.passed ? "badge--ok" : "badge--bad"}">${s.passed ? "통과" : "실패"}</span>
-        <h4 class="result-scen-card__title">${esc(s.name || "이름 없음")}</h4>
-      </div>
-      <p class="result-scen-card__meta">소요 시간 ${esc(formatDuration(s.durationMs))}</p>
-    </article>`,
-    )
+
+  const scen = list
+    .map((s) => {
+      const steps = (s.steps || [])
+        .map((st) => {
+          const cls = st.skipped ? "step-li--skip" : st.ok === false ? "step-li--bad" : "step-li--ok";
+          const lab = STEP_LABEL_KO[st.type] || st.type;
+          const line = formatStepLineKo(st);
+          const mark =
+            st.skipped ? "◦" : st.ok === false ? "✕" : "✓";
+          return `<li class="step-li ${cls}"><span class="step-li-glyph" aria-hidden="true">${stepGlyphSvg(st.type)}</span><span class="step-li-mark">${mark}</span><span class="step-li-txt"><strong>${esc(lab)}</strong>${line}</span></li>`;
+        })
+        .join("");
+      const crits = chipsHtmlCriteria(s.criteria || []);
+      return `<article class="result-scen-detail ${s.passed ? "is-pass" : "is-fail"}">
+        <header class="result-scen-detail__head">
+          <span class="badge ${s.passed ? "badge--ok" : "badge--bad"}">${s.passed ? "통과" : "실패"}</span>
+          <h4 class="result-scen-detail__title">${esc(s.name || "이름 없음")}</h4>
+          <p class="result-scen-detail__meta">⏱ ${esc(formatDuration(s.durationMs))} · 점검 ${crits}</p>
+        </header>
+        <ol class="step-ol">${steps || '<li class="step-li step-li--skip">단계 없음</li>'}</ol>
+      </article>`;
+    })
     .join("");
+
   el.resultsBody.innerHTML = `
+    <div class="results-viz-row">${donut ? `<div class="results-donut-slot">${donut}</div>` : ""}
+    <p class="results-viz-caption">${list.length ? `총 ${esc(list.length)}개 묶음 중 ${esc(passN)}개 통과` : "아직 결과가 없습니다."}</p></div>
     ${table}
-    <h3 class="subh">시나리오별 결과</h3>
-    <div class="result-scen-grid">${scen || '<p class="hint">시나리오 결과가 없습니다.</p>'}</div>
+    <h3 class="subh subh--ico"><span class="subh-ico" aria-hidden="true">📋</span> 시나리오별 상세</h3>
+    <div class="result-scen-stack">${scen || '<p class="hint">시나리오 결과가 없습니다.</p>'}</div>
   `;
-  el.resultsRaw.textContent = JSON.stringify(results, null, 2);
 }
 
 /**
@@ -523,49 +1048,83 @@ function renderScenarioForms(doc) {
   const list = doc?.scenarios || [];
   list.forEach((s, i) => {
     const det = document.createElement("details");
-    det.className = "scenario-block";
-    det.dataset.index = String(i);
-    if (i === 0) det.open = true;
+    det.className = "scenario-editor";
+    det.open = i === 0;
 
     const sum = document.createElement("summary");
-    sum.textContent = s.id || `scenario-${i}`;
-    det.appendChild(sum);
+    sum.className = "scenario-editor-summary";
+    const iconDoc = document.createElement("span");
+    iconDoc.className = "scenario-doc-icon";
+    iconDoc.innerHTML = svgScenarioFolder();
+    const titleWrap = document.createElement("div");
+    titleWrap.className = "scenario-summary-text";
+    const lab = document.createElement("span");
+    lab.className = "scenario-summary-label";
+    lab.textContent = `시나리오 ${i + 1}`;
+    const namePrev = document.createElement("span");
+    namePrev.className = "scenario-summary-name";
+    namePrev.textContent = s.name || "이름 없음";
+    titleWrap.appendChild(lab);
+    titleWrap.appendChild(namePrev);
+    const badge = document.createElement("span");
+    badge.className = "scenario-step-badge";
+    badge.textContent = `${(s.steps || []).length}단계`;
+    sum.appendChild(iconDoc);
+    sum.appendChild(titleWrap);
+    sum.appendChild(badge);
 
-    const wrap = document.createElement("div");
-    wrap.className = "scenario-fields";
+    const body = document.createElement("div");
+    body.className = "scenario-editor-body";
 
     const nameL = document.createElement("label");
     nameL.className = "field";
-    nameL.innerHTML = "<span>이름</span>";
+    nameL.innerHTML = "<span>이 시나리오 이름</span>";
     const nameI = document.createElement("input");
     nameI.type = "text";
     nameI.className = "sc-name";
     nameI.value = s.name || "";
     nameL.appendChild(nameI);
-    wrap.appendChild(nameL);
+    body.appendChild(nameL);
 
-    const critL = document.createElement("label");
-    critL.className = "field";
-    critL.innerHTML = "<span>기준 (쉼표 구분)</span>";
-    const critI = document.createElement("input");
-    critI.type = "text";
-    critI.className = "sc-crit";
-    critI.value = (s.criteria || []).join(", ");
-    critL.appendChild(critI);
-    wrap.appendChild(critL);
+    const critWrap = document.createElement("div");
+    critWrap.className = "field criteria-field";
+    const critLbl = document.createElement("span");
+    critLbl.textContent = "적용할 점검 기준";
+    critWrap.appendChild(critLbl);
+    const grid = document.createElement("div");
+    grid.className = "criteria-grid";
+    for (const id of CRITERION_ORDER) {
+      const def = CRITERIA_DEF[id];
+      if (!def) continue;
+      const labEl = document.createElement("label");
+      labEl.className = "crit-option";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.className = "sc-crit-cb";
+      cb.value = id;
+      cb.checked = (s.criteria || []).includes(id);
+      const strong = document.createElement("strong");
+      strong.textContent = def.label;
+      const small = document.createElement("small");
+      small.textContent = def.desc;
+      labEl.appendChild(cb);
+      labEl.appendChild(strong);
+      labEl.appendChild(small);
+      grid.appendChild(labEl);
+    }
+    critWrap.appendChild(grid);
+    body.appendChild(critWrap);
 
-    const stepL = document.createElement("label");
-    stepL.className = "field";
-    stepL.innerHTML = "<span>동작 순서 (고급 · JSON)</span>";
-    const ta = document.createElement("textarea");
-    ta.className = "sc-steps code-area";
-    ta.rows = 8;
-    ta.spellcheck = false;
-    ta.value = JSON.stringify(s.steps || [], null, 2);
-    stepL.appendChild(ta);
-    wrap.appendChild(stepL);
+    const stepsHost = document.createElement("div");
+    stepsHost.className = "step-blocks";
+    for (const st of s.steps || []) {
+      stepsHost.appendChild(buildStepEditorRow(st));
+    }
+    body.appendChild(stepsHost);
+    body.appendChild(buildAddStepBar(stepsHost));
 
-    det.appendChild(wrap);
+    det.appendChild(sum);
+    det.appendChild(body);
     el.scenarioFormRows.appendChild(det);
   });
 }
@@ -575,31 +1134,16 @@ function renderScenarioForms(doc) {
  */
 function readScenarioFormsIntoDoc(baseDoc) {
   const doc = JSON.parse(JSON.stringify(baseDoc));
-  const blocks = /** @type {HTMLElement[]} */ ([...document.querySelectorAll(".scenario-block")]);
-  blocks.forEach((det, i) => {
+  const editors = /** @type {HTMLElement[]} */ ([...document.querySelectorAll(".scenario-editor")]);
+  editors.forEach((det, i) => {
     if (!doc.scenarios[i]) return;
-    const name = det.querySelector(".sc-name")?.value ?? doc.scenarios[i].name;
-    const crit = det.querySelector(".sc-crit")?.value ?? "";
-    const stepsRaw = det.querySelector(".sc-steps")?.value ?? "[]";
-    doc.scenarios[i].name = name;
-    doc.scenarios[i].criteria = crit
-      .split(",")
-      .map((x) => x.trim())
-      .filter(Boolean);
-    doc.scenarios[i].steps = JSON.parse(stepsRaw);
+    doc.scenarios[i].name = det.querySelector(".sc-name")?.value ?? doc.scenarios[i].name;
+    const checked = [...det.querySelectorAll(".sc-crit-cb:checked")].map((c) => /** @type {HTMLInputElement} */ (c).value);
+    doc.scenarios[i].criteria = checked;
+    const rows = [...det.querySelectorAll(".step-blocks .step-block")];
+    doc.scenarios[i].steps = rows.map((r) => readStepFromRow(r));
   });
   return doc;
-}
-
-function syncJsonFromState() {
-  if (!el.scenariosJson || !state.scenariosDoc) return;
-  el.scenariosJson.value = JSON.stringify(state.scenariosDoc, null, 2);
-}
-
-function parseJsonEditor() {
-  const raw = el.scenariosJson?.value?.trim();
-  if (!raw) throw new Error("JSON 이 비어 있습니다.");
-  return JSON.parse(raw);
 }
 
 function wireReport(jobRel) {
@@ -778,10 +1322,12 @@ async function loadJob(jobId, opts = {}) {
   if (scenarios) {
     renderScenarios(scenarios);
     show(el.scenariosSection, true);
-    syncJsonFromState();
     renderScenarioForms(scenarios);
     show(el.editSection, true);
-    el.jsonHint.textContent = "";
+    if (el.editHint) {
+      el.editHint.textContent = "";
+      el.editHint.dataset.kind = "";
+    }
   } else {
     show(el.scenariosSection, false);
     show(el.editSection, false);
@@ -908,47 +1454,6 @@ el.btnStop?.addEventListener("click", () => {
   setStatus("사용자가 중지했습니다.", "warn");
 });
 
-el.btnJsonToForm?.addEventListener("click", () => {
-  try {
-    const doc = parseJsonEditor();
-    if (!Array.isArray(doc.scenarios)) throw new Error("scenarios 배열이 필요합니다.");
-    state.scenariosDoc = doc;
-    renderScenarioForms(doc);
-    el.jsonHint.textContent = "폼을 시나리오 JSON에 맞게 갱신했습니다.";
-    el.jsonHint.dataset.kind = "ok";
-  } catch (e) {
-    el.jsonHint.textContent = /** @type {Error} */ (e).message;
-    el.jsonHint.dataset.kind = "err";
-  }
-});
-
-el.btnFormToJson?.addEventListener("click", () => {
-  if (!state.scenariosDoc) return;
-  try {
-    const merged = readScenarioFormsIntoDoc(state.scenariosDoc);
-    state.scenariosDoc = merged;
-    syncJsonFromState();
-    el.jsonHint.textContent = "JSON을 폼 내용으로 갱신했습니다.";
-    el.jsonHint.dataset.kind = "ok";
-  } catch (e) {
-    el.jsonHint.textContent = /** @type {Error} */ (e).message;
-    el.jsonHint.dataset.kind = "err";
-  }
-});
-
-el.btnValidateJson?.addEventListener("click", () => {
-  try {
-    const doc = parseJsonEditor();
-    if (!Array.isArray(doc.scenarios)) throw new Error("최상위에 scenarios 배열이 있어야 합니다.");
-    state.scenariosDoc = doc;
-    el.jsonHint.textContent = `유효한 JSON입니다. 시나리오 ${doc.scenarios.length}개.`;
-    el.jsonHint.dataset.kind = "ok";
-  } catch (e) {
-    el.jsonHint.textContent = /** @type {Error} */ (e).message;
-    el.jsonHint.dataset.kind = "err";
-  }
-});
-
 el.btnPostRerun?.addEventListener("click", async () => {
   const url = workerRerunEndpoint();
   const secret = qaWebhookSecret();
@@ -958,10 +1463,26 @@ el.btnPostRerun?.addEventListener("click", async () => {
   }
   let scenarios;
   try {
-    scenarios = parseJsonEditor();
+    if (!state.scenariosDoc) throw new Error("시나리오를 불러오지 못했습니다.");
+    scenarios = readScenarioFormsIntoDoc(state.scenariosDoc);
+    const verr = validateScenariosDoc(scenarios);
+    if (verr) {
+      if (el.editHint) {
+        el.editHint.textContent = verr;
+        el.editHint.dataset.kind = "err";
+      }
+      return;
+    }
+    state.scenariosDoc = scenarios;
+    if (el.editHint) {
+      el.editHint.textContent = "";
+      el.editHint.dataset.kind = "";
+    }
   } catch (e) {
-    el.jsonHint.textContent = /** @type {Error} */ (e).message;
-    el.jsonHint.dataset.kind = "err";
+    if (el.editHint) {
+      el.editHint.textContent = /** @type {Error} */ (e).message;
+      el.editHint.dataset.kind = "err";
+    }
     return;
   }
   if (!url) {

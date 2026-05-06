@@ -38,179 +38,173 @@
         </p>
       </header>
 
-      <nav
-        id="dashboard-nav"
-        class="dashboard-nav hidden"
-        aria-label="결과 화면 바로가기"
-      >
-        <span class="dashboard-nav-label">바로가기</span>
-        <a href="#section-summary">요약</a>
-        <a href="#section-results">테스트 결과</a>
-        <a href="#section-scenarios">시나리오 목록</a>
-        <a href="#section-edit">수정 · 재실행</a>
-        <a href="#section-structure">수집한 페이지</a>
-        <a href="#section-report">리포트</a>
-      </nav>
+      <div class="dash-layout">
+        <aside class="dash-aside">
+          <nav
+            id="dashboard-nav"
+            class="dashboard-nav hidden"
+            aria-label="결과 화면 바로가기"
+          >
+            <span class="dashboard-nav-label">바로가기</span>
+            <a href="#section-summary">요약</a>
+            <a href="#section-results">테스트 결과</a>
+            <a href="#section-scenarios">시나리오 목록</a>
+            <a href="#section-edit">수정 · 재실행</a>
+            <a href="#section-structure">수집한 페이지</a>
+            <a href="#section-report">리포트</a>
+          </nav>
 
-      <section class="panel" id="analyze-panel" aria-labelledby="analyze-heading">
-        <h2 id="analyze-heading"><span class="panel-step" aria-hidden="true">1</span> 새 사이트 분석</h2>
-        <p class="panel-intro">HTTPS 페이지 URL을 입력한 뒤 분석을 시작하세요.</p>
-        <form id="analyze-form" class="job-form">
-          <label class="field">
-            <span>분석할 URL</span>
-            <input
-              id="analyze-target-url"
-              type="url"
-              required
-              autocomplete="url"
-              placeholder="https://example.com/"
-            />
-          </label>
-          <div class="row-2">
-            <label class="field">
-              <span>최대 페이지</span>
-              <input id="analyze-max-pages" type="number" min="1" max="100" value="20" />
-            </label>
-            <label class="field">
-              <span>링크 깊이</span>
-              <input id="analyze-max-depth" type="number" min="0" max="10" value="2" />
-            </label>
-          </div>
-          <div class="field">
-            <span>실행 기록(트레이스)</span>
-            <p class="field-help field-help--compact">
-              문제가 났을 때 화면 흐름을 다시 볼 수 있게 저장합니다. 보통은 <strong>실패한 경우만</strong> 저장하면 충분합니다.
+          <section class="panel" id="analyze-panel" aria-labelledby="analyze-heading">
+            <h2 id="analyze-heading"><span class="panel-step" aria-hidden="true">1</span> 새 사이트 분석</h2>
+            <p class="panel-intro">HTTPS 페이지 URL을 입력한 뒤 분석을 시작하세요.</p>
+            <form id="analyze-form" class="job-form">
+              <label class="field">
+                <span>분석할 URL</span>
+                <input
+                  id="analyze-target-url"
+                  type="url"
+                  required
+                  autocomplete="url"
+                  placeholder="https://example.com/"
+                />
+              </label>
+              <div class="row-2">
+                <label class="field">
+                  <span>최대 페이지</span>
+                  <input id="analyze-max-pages" type="number" min="1" max="100" value="20" />
+                </label>
+                <label class="field">
+                  <span>링크 깊이</span>
+                  <input id="analyze-max-depth" type="number" min="0" max="10" value="2" />
+                </label>
+              </div>
+              <div class="field">
+                <span>실행 기록(트레이스)</span>
+                <p class="field-help field-help--compact">
+                  문제가 났을 때 화면 흐름을 다시 볼 수 있게 저장합니다. 보통은 <strong>실패한 경우만</strong> 저장하면 충분합니다.
+                </p>
+                <select id="analyze-trace-mode" aria-describedby="analyze-heading">
+                  <option value="failure" selected>실패한 테스트만 기록 (권장)</option>
+                  <option value="all">모든 테스트 기록</option>
+                  <option value="off">기록 안 함</option>
+                </select>
+              </div>
+              <div class="job-actions">
+                <button type="submit" class="btn primary">분석 시작</button>
+              </div>
+            </form>
+            <p id="analyze-status" class="status" role="status"></p>
+            <p class="hint subtle">
+              분석에는 수 분 걸릴 수 있습니다. 진행 중에는 이 탭을 닫지 마세요.
             </p>
-            <select id="analyze-trace-mode" aria-describedby="analyze-heading">
-              <option value="failure" selected>실패한 테스트만 기록 (권장)</option>
-              <option value="all">모든 테스트 기록</option>
-              <option value="off">기록 안 함</option>
-            </select>
+          </section>
+
+          <details class="panel job-id-details" id="job-id-panel" aria-label="예전 작업 번호로 결과 열기">
+            <summary class="job-id-summary">
+              <span class="panel-step" aria-hidden="true">2</span> 예전에 받은 작업 번호로 열기 (선택)
+            </summary>
+            <p class="panel-intro">
+              주소 끝에 <code class="inline-code">?job=번호</code>가 있으면 자동으로 불러옵니다. 번호만 알고 있을 때 여기 입력해 주세요.
+            </p>
+            <form id="job-form" class="job-form">
+              <label class="field">
+                <span>작업 번호</span>
+                <input
+                  id="job-input"
+                  name="job"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="숫자만"
+                />
+              </label>
+              <label class="check">
+                <input id="poll-toggle" type="checkbox" checked />
+                <span>아직 없으면 잠깐마다 다시 시도</span>
+              </label>
+              <div class="job-actions">
+                <button type="submit" class="btn primary">불러오기</button>
+                <button type="button" class="btn ghost" id="btn-stop" hidden>대기 중지</button>
+              </div>
+            </form>
+            <p id="job-status" class="status" role="status"></p>
+          </details>
+        </aside>
+
+        <div class="dash-main">
+          <div class="dash-grid">
+            <div class="dash-cell dash-cell--summary">
+              <section id="summary-section" class="panel hidden" aria-live="polite">
+                <h2 id="section-summary">요약</h2>
+                <div id="summary-body" class="summary-body"></div>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--results">
+              <section id="results-section" class="panel hidden">
+                <h2 id="section-results">테스트 결과</h2>
+                <p class="panel-intro">기준별 집계와 시나리오별 흐름을 확인합니다.</p>
+                <div id="results-body"></div>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--scenarios">
+              <section id="scenarios-section" class="panel hidden">
+                <h2 id="section-scenarios">시나리오 목록</h2>
+                <p class="panel-intro">자동으로 만든 점검 묶음입니다. 아래 「수정」에서 순서와 내용을 바꿀 수 있습니다.</p>
+                <div id="scenarios-body"></div>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--edit">
+              <section id="edit-section" class="panel hidden" aria-labelledby="edit-heading">
+                <h2 id="section-edit">
+                  <span class="panel-step" aria-hidden="true">3</span>
+                  <span id="edit-heading">시나리오 수정 · 다시 테스트</span>
+                </h2>
+                <p class="panel-intro">
+                  블록을 위아래로 옮기거나 삭제해 순서를 바꾸고, 칸에 값을 적어 내용을 수정합니다. 같은 작업 번호로 다시 돌립니다.
+                </p>
+                <p id="edit-hint" class="hint" role="status"></p>
+                <h3 class="subh">시나리오별 편집</h3>
+                <div id="scenario-form-rows" class="scenario-forms"></div>
+
+                <h3 class="subh">다시 테스트</h3>
+                <p class="panel-intro">
+                  저장·배포가 끝날 때까지 이 탭을 두면 결과가 자동으로 갱신됩니다.
+                </p>
+                <div class="job-actions">
+                  <button type="button" class="btn primary" id="btn-post-rerun">테스트 수행</button>
+                </div>
+                <p id="dispatch-hint" class="hint hint--subtle" role="status"></p>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--structure">
+              <section id="structure-section" class="panel hidden">
+                <h2 id="section-structure">수집한 페이지</h2>
+                <p class="panel-intro">분석 과정에서 방문·기록한 페이지 목록입니다.</p>
+                <div id="structure-body"></div>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--report">
+              <section id="report-section" class="panel hidden">
+                <h2 id="section-report">상세 리포트</h2>
+                <div class="report-actions">
+                  <p class="hint report-actions-text">
+                    <a id="report-link" class="btn btn-inline" href="#" target="_blank" rel="noopener">새 탭에서 크게 보기</a>
+                    <span class="report-actions-divider" aria-hidden="true">·</span>
+                    <span>리포트 화면에서 <strong>인쇄</strong> 또는 <strong>PDF로 저장</strong>(브라우저 메뉴)을 사용할 수 있습니다.</span>
+                  </p>
+                </div>
+                <div class="iframe-wrap">
+                  <iframe id="report-frame" title="QA 상세 리포트" sandbox="allow-same-origin allow-scripts"></iframe>
+                </div>
+                <p class="hint subtle">재실행 후에는 이 페이지에서 다시 불러오거나 새로고침하면 아래 내용이 바뀝니다.</p>
+              </section>
+            </div>
           </div>
-          <div class="job-actions">
-            <button type="submit" class="btn primary">분석 시작</button>
-          </div>
-        </form>
-        <p id="analyze-status" class="status" role="status"></p>
-        <p class="hint subtle">
-          분석에는 수 분 걸릴 수 있습니다. 진행 중에는 이 탭을 닫지 마세요.
-        </p>
-      </section>
-
-      <details class="panel job-id-details" id="job-id-panel" aria-label="예전 작업 번호로 결과 열기">
-        <summary class="job-id-summary">
-          <span class="panel-step" aria-hidden="true">2</span> 예전에 받은 작업 번호로 열기 (선택)
-        </summary>
-        <p class="panel-intro">
-          주소 끝에 <code class="inline-code">?job=번호</code>가 있으면 자동으로 불러옵니다. 번호만 알고 있을 때 여기 입력해 주세요.
-        </p>
-        <form id="job-form" class="job-form">
-          <label class="field">
-            <span>작업 번호</span>
-            <input
-              id="job-input"
-              name="job"
-              type="text"
-              inputmode="numeric"
-              autocomplete="off"
-              placeholder="숫자만"
-            />
-          </label>
-          <label class="check">
-            <input id="poll-toggle" type="checkbox" checked />
-            <span>아직 없으면 잠깐마다 다시 시도</span>
-          </label>
-          <div class="job-actions">
-            <button type="submit" class="btn primary">불러오기</button>
-            <button type="button" class="btn ghost" id="btn-stop" hidden>대기 중지</button>
-          </div>
-        </form>
-        <p id="job-status" class="status" role="status"></p>
-      </details>
-
-      <div class="dashboard-grid">
-        <div class="dashboard-main">
-      <section id="summary-section" class="panel hidden" aria-live="polite">
-        <h2 id="section-summary">요약</h2>
-        <div id="summary-body" class="summary-body"></div>
-      </section>
-
-      <section id="results-section" class="panel hidden">
-        <h2 id="section-results">테스트 결과</h2>
-        <p class="panel-intro">기준별 집계와 시나리오별 성공·실패를 확인합니다.</p>
-        <div id="results-body"></div>
-        <details class="raw-block raw-block--advanced">
-          <summary>고급 · 개발자용 원본 데이터</summary>
-          <pre id="results-raw"></pre>
-        </details>
-      </section>
-
-      <section id="scenarios-section" class="panel hidden">
-        <h2 id="section-scenarios">시나리오 목록</h2>
-        <p class="panel-intro">자동으로 만든 점검 시나리오입니다. 이름과 순서는 아래 「수정」에서 고칠 수 있습니다.</p>
-        <div id="scenarios-body"></div>
-        <details class="raw-block raw-block--advanced">
-          <summary>고급 · 개발자용 원본 데이터</summary>
-          <pre id="scenarios-raw"></pre>
-        </details>
-      </section>
-
-      <section id="edit-section" class="panel hidden" aria-labelledby="edit-heading">
-        <h2 id="section-edit">
-          <span class="panel-step" aria-hidden="true">3</span>
-          <span id="edit-heading">시나리오 수정 · 다시 테스트</span>
-        </h2>
-        <p class="panel-intro">
-          아래 폼에서 시나리오를 고친 뒤 <strong>테스트 수행</strong>을 누르면 같은 작업 번호로 다시 돌아갑니다.
-          (고급 사용자는 접어 둔 원본 편집기를 펼칠 수 있습니다.)
-        </p>
-        <details class="advanced-editor">
-          <summary>고급 · 시나리오 원본 편집 (JSON)</summary>
-          <textarea id="scenarios-json" class="code-area" rows="14" spellcheck="false" aria-label="시나리오 JSON"></textarea>
-          <div class="job-actions">
-            <button type="button" class="btn ghost" id="btn-json-to-form">JSON → 폼에 반영</button>
-            <button type="button" class="btn ghost" id="btn-form-to-json">폼 내용 → JSON</button>
-            <button type="button" class="btn ghost" id="btn-validate-json">형식 검사</button>
-          </div>
-          <p id="json-hint" class="hint" role="status"></p>
-        </details>
-        <h3 class="subh">시나리오별 입력</h3>
-        <div id="scenario-form-rows" class="scenario-forms"></div>
-
-        <h3 class="subh">다시 테스트</h3>
-        <p class="panel-intro">
-          저장·배포가 끝날 때까지 이 탭을 두면 결과가 자동으로 갱신됩니다.
-        </p>
-        <div class="job-actions">
-          <button type="button" class="btn primary" id="btn-post-rerun">테스트 수행</button>
-        </div>
-        <p id="dispatch-hint" class="hint hint--subtle" role="status"></p>
-      </section>
-
-      <section id="structure-section" class="panel hidden">
-        <h2 id="section-structure">수집한 페이지</h2>
-        <p class="panel-intro">분석 과정에서 방문·기록한 페이지 목록입니다.</p>
-        <div id="structure-body"></div>
-        <details class="raw-block raw-block--advanced">
-          <summary>고급 · 개발자용 원본 데이터</summary>
-          <pre id="structure-raw"></pre>
-        </details>
-      </section>
-
-      <section id="report-section" class="panel hidden">
-        <h2 id="section-report">상세 리포트</h2>
-        <div class="report-actions">
-          <p class="hint report-actions-text">
-            <a id="report-link" class="btn btn-inline" href="#" target="_blank" rel="noopener">새 탭에서 크게 보기</a>
-            <span class="report-actions-divider" aria-hidden="true">·</span>
-            <span>리포트 화면에서 <strong>인쇄</strong> 또는 <strong>PDF로 저장</strong>(브라우저 메뉴)을 사용할 수 있습니다.</span>
-          </p>
-        </div>
-        <div class="iframe-wrap">
-          <iframe id="report-frame" title="QA 상세 리포트" sandbox="allow-same-origin allow-scripts"></iframe>
-        </div>
-        <p class="hint subtle">재실행 후에는 이 페이지에서 다시 불러오거나 새로고침하면 아래 내용이 바뀝니다.</p>
-      </section>
         </div>
       </div>
 

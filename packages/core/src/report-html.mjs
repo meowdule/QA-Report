@@ -21,6 +21,42 @@ const STEP_LABEL_KO = /** @type {Record<string, string>} */ ({
   waitForSelector: "특정 영역이 나타날 때까지 대기",
 });
 
+/** @param {string} kind */
+function stepIconSvg(kind) {
+  const common = 'class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"';
+  const p = {
+    navigate:
+      '<path fill="currentColor" d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/>',
+    click: '<path fill="currentColor" d="M13 1.07V9h7L10 23 9 14H2l11-12.93z"/>',
+    fill: '<path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>',
+    assertVisible:
+      '<path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>',
+  };
+  const path = p[/** @type {keyof typeof p} */ (kind)] || p.assertVisible;
+  return `<svg ${common}>${path}</svg>`;
+}
+
+/**
+ * @param {number} pass
+ * @param {number} fail
+ */
+function buildDonutHtml(pass, fail) {
+  const p = Math.max(0, pass);
+  const f = Math.max(0, fail);
+  const t = p + f || 1;
+  const pct = Math.round((p / t) * 100);
+  const c = 2 * Math.PI * 18;
+  const dash = (p / t) * c;
+  return `<div class="donut-row" role="img" aria-label="통과 ${p}, 실패 ${f}">
+    <svg class="donut-chart" viewBox="0 0 44 44" aria-hidden="true">
+      <circle cx="22" cy="22" r="18" fill="none" stroke="#e2e8f0" stroke-width="7"/>
+      <circle cx="22" cy="22" r="18" fill="none" stroke="#0d9488" stroke-width="7" stroke-linecap="round"
+        stroke-dasharray="${dash} ${c}" transform="rotate(-90 22 22)"/>
+    </svg>
+    <div><strong>${esc(String(pct))}%</strong> 통과 · <span style="color:var(--muted)">${esc(p)}/${esc(p + f)} 시나리오</span></div>
+  </div>`;
+}
+
 /**
  * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string; reportGeneratedAt?: string }} p
  */
@@ -36,6 +72,7 @@ export function buildReportHtml(p) {
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
   const scenarioCards = runResults.scenarios.map((s) => buildScenarioCard(s)).join("");
   const crawlInsightHtml = buildCrawlInsightSection(structure);
+  const donutHtml = total > 0 ? buildDonutHtml(passed, total - passed) : "";
 
   const passPct = total ? Math.round((passed / total) * 100) : 0;
   const targetUrl = structure.targetUrl || "—";
@@ -149,6 +186,20 @@ export function buildReportHtml(p) {
     .kpi .num { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
     .kpi .num.ok { color: var(--ok); }
     .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
+    .donut-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+      font-size: 0.92rem;
+    }
+    .donut-chart { width: 3.75rem; height: 3.75rem; flex-shrink: 0; }
+    .step-ico-svg { width: 1.1rem; height: 1.1rem; vertical-align: -0.2rem; margin-right: 0.35rem; color: var(--muted); }
     .jump {
       display: flex;
       flex-wrap: wrap;
@@ -281,6 +332,8 @@ export function buildReportHtml(p) {
       <span>기록 모드: ${esc(traceMode === "failure" ? "실패 시만" : traceMode === "all" ? "전체" : "끔")}</span>
     </div>
   </div>
+
+  ${donutHtml}
 
   <div class="kpi-row" id="summary">
     <div class="kpi"><div class="num ok">${esc(passPct)}%</div><div class="lbl">전체 통과율</div></div>
@@ -530,7 +583,8 @@ function buildScenarioCard(s) {
       const label = STEP_LABEL_KO[st.type] || st.type;
       const detail = formatStepDetailHuman(st);
       const note = st.note ? ` <span class="step-detail">(${esc(st.note)})</span>` : "";
-      return `<li class="${cls}"><span class="step-type">${esc(label)}</span>${note}${detail}</li>`;
+      const ico = stepIconSvg(st.type);
+      return `<li class="${cls}">${ico}<span class="step-type">${esc(label)}</span>${note}${detail}</li>`;
     })
     .join("");
 
