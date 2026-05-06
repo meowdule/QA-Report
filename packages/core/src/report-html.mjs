@@ -8,6 +8,19 @@ function esc(s) {
     .replace(/"/g, "&quot;");
 }
 
+/** 스텝 타입 → 비개발자용 짧은 설명 */
+const STEP_LABEL_KO = /** @type {Record<string, string>} */ ({
+  navigate: "페이지로 이동",
+  click: "요소 클릭",
+  fill: "텍스트 입력",
+  selectOption: "목록에서 선택",
+  check: "선택(체크/라디오)",
+  assertVisible: "화면에 보이는지 확인",
+  assertNoConsoleError: "오류 메시지 없음 확인",
+  waitForResponse: "서버 응답 대기",
+  waitForSelector: "특정 영역이 나타날 때까지 대기",
+});
+
 /**
  * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string; reportGeneratedAt?: string }} p
  */
@@ -21,10 +34,17 @@ export function buildReportHtml(p) {
 
   const criteriaRows = buildCriteriaTable(runResults.criteriaSummary);
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
-  const scenarioRows = runResults.scenarios.map((s) => buildScenarioRow(s)).join("");
+  const scenarioCards = runResults.scenarios.map((s) => buildScenarioCard(s)).join("");
   const crawlInsightHtml = buildCrawlInsightSection(structure);
 
   const passPct = total ? Math.round((passed / total) * 100) : 0;
+  const targetUrl = structure.targetUrl || "—";
+  let targetHost = "—";
+  try {
+    targetHost = new URL(targetUrl).hostname;
+  } catch {
+    /* */
+  }
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -32,26 +52,25 @@ export function buildReportHtml(p) {
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="noindex, nofollow"/>
-  <title>QA 리포트 · Job ${esc(jobId)}</title>
+  <title>테스트 결과 · ${esc(jobId)}</title>
   <link rel="icon" href="./Icon.svg" type="image/svg+xml"/>
   <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <style>
     :root {
       --font: "Pretendard", -apple-system, system-ui, sans-serif;
-      --bg: #e8ecf4;
-      --bg2: #f4f6fb;
-      --card: #fff;
-      --text: #1a1d24;
-      --muted: #5c6473;
-      --accent: #00c471;
-      --accent2: #00a85f;
-      --accent-soft: rgba(0, 196, 113, 0.12);
-      --border: rgba(15, 23, 42, 0.08);
-      --shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
-      --radius: 16px;
-      --radius-sm: 12px;
-      --bad: #e11d48;
-      --ok: #00a85f;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --accent: #0d9488;
+      --accent-hover: #0f766e;
+      --ok: #059669;
+      --ok-bg: #ecfdf5;
+      --bad: #dc2626;
+      --bad-bg: #fef2f2;
+      --radius: 14px;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
     }
     * { box-sizing: border-box; }
     body {
@@ -59,275 +78,262 @@ export function buildReportHtml(p) {
       font-family: var(--font);
       line-height: 1.55;
       color: var(--text);
-      background: linear-gradient(165deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
-      min-height: 100vh;
+      background: var(--bg);
       -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
-    .hero {
-      text-align: center;
-      margin-bottom: 1.75rem;
+    .wrap { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.25rem 2rem; }
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
     }
-    .eyebrow {
-      display: inline-block;
-      margin: 0 0 0.65rem;
-      padding: 0.25rem 0.7rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--accent2);
-      background: var(--accent-soft);
+    .brand { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; }
+    .sub { margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--muted); max-width: 36rem; }
+    .job-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
       border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
     }
-    h1 {
-      margin: 0 0 0.6rem;
-      font-size: clamp(1.5rem, 3.5vw, 1.85rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.25;
-    }
-    .meta {
-      margin: 0 auto;
-      max-width: 42rem;
+    .job-pill span { color: var(--muted); font-weight: 500; }
+    .actions-top { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1rem;
+      font-family: inherit;
       font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.6;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
     }
-    .meta code { font-size: 0.9em; }
-    .meta-grid {
-      display: grid;
-      gap: 0.35rem;
-      margin-top: 0.75rem;
-      padding: 0.85rem 1rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      box-shadow: var(--shadow);
-      text-align: left;
-    }
-    .meta-grid div { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; align-items: baseline; }
-    .meta-grid strong { min-width: 5.5rem; color: var(--text); font-size: 0.8rem; }
-    .callout {
-      margin-top: 1rem;
-      padding: 0.75rem 1rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      background: rgba(0, 196, 113, 0.08);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--accent-soft);
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
+    .btn:hover { background: var(--accent-hover); }
+    .target-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 1.25rem 1.35rem;
-      margin: 1rem 0;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
       box-shadow: var(--shadow);
     }
-    .card h2 {
-      margin: 0 0 0.5rem;
+    .target-card .lbl { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+    .target-card a { color: var(--accent); font-weight: 600; word-break: break-all; text-decoration: none; }
+    .target-card a:hover { text-decoration: underline; }
+    .meta-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; font-size: 0.8rem; color: var(--muted); }
+    .meta-chips span { padding: 0.2rem 0.5rem; background: #f1f5f9; border-radius: 6px; }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+    .kpi .num { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+    .kpi .num.ok { color: var(--ok); }
+    .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .jump a {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .jump a:hover { color: var(--accent); border-color: var(--accent); }
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .section h2 {
+      margin: 0 0 0.65rem;
       font-size: 1.05rem;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
-    .card > p.muted { margin-top: 0; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.85rem;
-    }
-    .stat {
-      padding: 1rem;
-      background: var(--bg2);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-    }
-    .stat strong {
-      display: block;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .stat span.lbl {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin-top: 0.25rem;
-    }
-    .stat.pass strong { color: var(--ok); }
-    table.data {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-    table.data th, table.data td {
-      border-bottom: 1px solid var(--border);
-      padding: 0.55rem 0.45rem;
-      vertical-align: top;
-      text-align: left;
-    }
-    table.data th {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+    .section > p.lead { margin: 0 0 0.85rem; font-size: 0.9rem; color: var(--muted); }
+    .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.data { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    table.data th, table.data td { border-bottom: 1px solid var(--line); padding: 0.65rem 0.5rem; text-align: left; vertical-align: top; }
+    table.data th { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
     table.data tr:last-child td { border-bottom: none; }
-    .scroll { overflow: auto; -webkit-overflow-scrolling: touch; }
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.5rem;
-      border-radius: 8px;
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .badge.pass { background: #d1fae5; color: #047857; }
-    .badge.fail { background: #ffe4e6; color: #be123c; }
+    .crit-ok { color: var(--ok); font-weight: 700; }
+    .crit-bad { color: var(--bad); font-weight: 700; }
     .pill {
       display: inline-block;
-      margin: 0.15rem 0.35rem 0 0;
-      padding: 0.15rem 0.45rem;
+      margin: 0.12rem 0.25rem 0 0;
+      padding: 0.12rem 0.45rem;
       border-radius: 999px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
+      background: #f1f5f9;
       font-size: 0.72rem;
       color: var(--muted);
     }
-    .muted { color: var(--muted); font-size: 0.86rem; }
-    .steps { margin: 0.35rem 0 0 1rem; padding: 0; }
-    .steps li { margin: 0.15rem 0; }
-    .steps li.ok { color: #047857; }
-    .steps li.bad { color: var(--bad); }
-    .steps li.skip { color: var(--muted); }
-    pre.sub {
-      font-size: 0.72rem;
-      background: #12151c;
-      color: #e8ecf4;
-      padding: 0.65rem;
-      border-radius: var(--radius-sm);
-      overflow: auto;
-      max-height: 220px;
-      margin: 0.35rem 0 0;
+    .crawl-one { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.85rem; line-height: 1.5; }
+    .stat-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .stat-chip {
+      padding: 0.45rem 0.65rem;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 0.82rem;
     }
-    code { font-family: ui-monospace, monospace; font-size: 0.88em; }
-    a { color: var(--accent2); font-weight: 600; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .crit-ok { color: #047857; font-weight: 700; }
-    .crit-bad { color: var(--bad); font-weight: 700; }
-    .artifact { font-size: 0.82rem; margin: 0.25rem 0; }
-    .links {
-      margin-top: 1.5rem;
+    .stat-chip strong { color: var(--text); font-weight: 700; }
+    .sc-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.85rem;
+      background: #fafbfc;
+    }
+    .sc-card:last-child { margin-bottom: 0; }
+    .sc-card.pass { border-left: 4px solid var(--ok); }
+    .sc-card.fail { border-left: 4px solid var(--bad); background: #fffafb; }
+    .sc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.75rem; margin-bottom: 0.5rem; }
+    .sc-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .sc-badge.pass { background: var(--ok-bg); color: var(--ok); }
+    .sc-badge.fail { background: var(--bad-bg); color: var(--bad); }
+    .sc-title { margin: 0; font-size: 1rem; font-weight: 700; flex: 1 1 100%; }
+    .sc-meta { font-size: 0.82rem; color: var(--muted); width: 100%; }
+    .step-list { margin: 0.5rem 0 0; padding-left: 1.15rem; font-size: 0.88rem; }
+    .step-list li { margin: 0.25rem 0; }
+    .step-list li.ok { color: var(--ok); }
+    .step-list li.bad { color: var(--bad); }
+    .step-list li.skip { color: var(--muted); }
+    .step-type { font-weight: 600; color: var(--text); }
+    .step-detail { color: var(--muted); font-size: 0.86rem; }
+    .artifacts { margin-top: 0.65rem; font-size: 0.85rem; }
+    .artifacts a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .artifacts a:hover { text-decoration: underline; }
+    .err-list { margin: 0.5rem 0 0; padding-left: 1.1rem; font-size: 0.84rem; color: var(--bad); }
+    .footer {
+      margin-top: 2rem;
       padding-top: 1.25rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
       color: var(--muted);
-      text-align: center;
+      line-height: 1.6;
     }
-    table.data tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.025); }
-    .crawl-card { border-left: 4px solid var(--accent); }
-    .crawl-card h2::before { content: "◆ "; color: var(--accent2); font-size: 0.85em; }
-    .hero { position: relative; }
-    .hero::after {
-      content: "";
-      display: block;
-      width: 4rem;
-      height: 4px;
-      margin: 1rem auto 0;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    .footer strong { color: var(--text); }
+    .time-foot { margin-top: 0.75rem; font-size: 0.75rem; color: #94a3b8; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; }
+      .wrap { max-width: none; padding: 0; }
+      .section, .target-card, .kpi, .sc-card { break-inside: avoid; box-shadow: none; }
     }
-    h2 { display: flex; align-items: center; gap: 0.35rem; }
   </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="hero">
-    <p class="eyebrow">실행 리포트</p>
-    <h1>테스트 결과 대시보드</h1>
-    <p class="meta">
-      크롤을 새로 돌릴 때마다 작업 번호(run_id)가 새로 생기고, 한국 시간 기준
-      <code>jobs/년-월-일/시분초_작업번호/</code> 아래에 리포트가 따로 저장됩니다.
-      같은 작업에서 시나리오만 다시 돌리면 그 폴더가 갱신됩니다.
-    </p>
-    <div class="meta-grid">
-      <div><strong>Job ID</strong> <code>${esc(jobId)}</code></div>
-      <div><strong>테스트 완료</strong> <span>${esc(runResults.finishedAt)}</span></div>
-      <div><strong>리포트 생성</strong> <span>${esc(reportGeneratedAt)}</span></div>
-      <div><strong>시나리오 스키마</strong> <span>v${esc(scenariosDoc.version)}</span> · trace <code>${esc(traceMode)}</code></div>
-      <div><strong>대상 URL</strong> <code style="word-break:break-all">${esc(structure.targetUrl)}</code></div>
+  <div class="top-bar">
+    <div>
+      <h1 class="brand">테스트 결과</h1>
+      <p class="sub">자동으로 실행한 점검 요약입니다. 아래에서 통과 여부와 각 항목 설명을 확인하세요.</p>
     </div>
-    <p class="callout">이 페이지는 배포된 정적 HTML입니다. 같은 Job에서 시나리오를 수정해 다시 테스트하면 이 파일이 갱신됩니다.</p>
-  </header>
-
-  <div class="card">
-    <div class="grid">
-      <div class="stat"><strong>${esc(pages)}</strong><span class="lbl">크롤 페이지</span></div>
-      <div class="stat pass"><strong>${esc(passPct)}%</strong><span class="lbl">시나리오 통과율</span></div>
-      <div class="stat"><strong>${esc(passed)} / ${esc(total)}</strong><span class="lbl">통과 / 전체</span></div>
-      <div class="stat"><strong>${esc(total)}</strong><span class="lbl">실행 시나리오 수</span></div>
+    <div class="actions-top no-print">
+      <span class="job-pill"><span>작업 ID</span> ${esc(jobId)}</span>
+      <button type="button" class="btn" onclick="window.print()">PDF로 저장 · 인쇄</button>
     </div>
   </div>
 
-  ${crawlInsightHtml}
+  <div class="target-card">
+    <div class="lbl">분석한 사이트</div>
+    <a href="${esc(targetUrl)}" target="_blank" rel="noopener noreferrer">${esc(targetUrl)}</a>
+    <div class="meta-chips">
+      <span>페이지 ${esc(pages)}개 수집</span>
+      <span>시나리오 버전 ${esc(scenariosDoc.version ?? "—")}</span>
+      <span>기록 모드: ${esc(traceMode === "failure" ? "실패 시만" : traceMode === "all" ? "전체" : "끔")}</span>
+    </div>
+  </div>
 
-  <div class="card">
-    <h2>기준별 통과 요약</h2>
-    <p class="muted">기준 태그가 붙은 시나리오 건수 기준입니다. 한 시나리오가 여러 기준을 가질 수 있습니다.</p>
-    <div class="scroll">
+  <div class="kpi-row" id="summary">
+    <div class="kpi"><div class="num ok">${esc(passPct)}%</div><div class="lbl">전체 통과율</div></div>
+    <div class="kpi"><div class="num">${esc(passed)} / ${esc(total)}</div><div class="lbl">통과한 시나리오</div></div>
+    <div class="kpi"><div class="num">${esc(pages)}</div><div class="lbl">크롤 페이지</div></div>
+    <div class="kpi"><div class="num">${esc(total)}</div><div class="lbl">실행한 시나리오 수</div></div>
+  </div>
+
+  <nav class="jump no-print" aria-label="섹션 이동">
+    <a href="#criteria">점검 기준 요약</a>
+    <a href="#scenarios">시나리오별 결과</a>
+    <a href="#errors">오류 메시지</a>
+    <a href="#crawl">수집 범위</a>
+  </nav>
+
+  <section class="section" id="criteria">
+    <h2>점검 기준별 요약</h2>
+    <p class="lead">각 항목이 몇 번 통과·실패했는지 보여 줍니다. 한 시나리오에 여러 기준이 붙을 수 있습니다.</p>
+    <div class="scroll-x">
       <table class="data">
         <thead>
           <tr>
             <th>기준</th>
             <th>설명</th>
-            <th>주요 스텝</th>
             <th>통과</th>
             <th>실패</th>
-            <th>시나리오</th>
+            <th>관련 시나리오</th>
           </tr>
         </thead>
         <tbody>${criteriaRows}</tbody>
       </table>
     </div>
-  </div>
+  </section>
 
-  <div class="card">
-    <h2>콘솔·페이지 오류 (실패 시나리오)</h2>
+  <section class="section" id="errors">
+    <h2>브라우저 오류 (실패한 항목만)</h2>
     ${failedConsoleBlock}
-  </div>
+  </section>
 
-  <div class="card">
-    <h2>시나리오 상세</h2>
-    <p class="muted">Trace는 실패 시 또는 모드가 <code>all</code>일 때 <code>traces/*.zip</code> ·
-      <code>npx playwright show-trace traces/&lt;파일&gt;.zip</code></p>
-    <div class="scroll">
-      <table class="data">
-        <thead>
-          <tr>
-            <th>결과</th>
-            <th>시나리오 / 기준</th>
-            <th>시간</th>
-            <th>아티팩트</th>
-            <th>스텝 / 콘솔</th>
-          </tr>
-        </thead>
-        <tbody>${scenarioRows}</tbody>
-      </table>
-    </div>
-  </div>
+  <section class="section" id="scenarios">
+    <h2>시나리오별 상세</h2>
+    <p class="lead">각 줄은 하나의 테스트 묶음입니다. ✓는 성공, 실패 시 빨간 줄과 원인 힌트가 표시됩니다.</p>
+    ${scenarioCards}
+  </section>
 
-  <p class="links">
-    원본 JSON ·
-    <a href="./structure.json">structure.json</a> ·
-    <a href="./scenarios.draft.json">scenarios.draft.json</a> ·
-    <a href="./results.json">results.json</a> ·
-    <a href="./schema.json">schema.json</a> ·
-    <a href="./llm-enrich-log.json">llm-enrich-log.json</a> <span class="muted">(Phase 6 사용 시)</span>
-  </p>
+  ${crawlInsightHtml}
+
+  <footer class="footer">
+    <strong>저작권·이용 안내</strong><br/>
+    본 리포트는 QA 자동화 도구로 생성되었습니다. 대상 웹사이트의 이용약관·저작권은 각 사이트 정책을 따릅니다.
+    이 문서의 재배포·상업적 이용 시 관련 법령 및 사이트 정책을 확인하세요.
+    <div class="time-foot">작업 ID ${esc(jobId)} · 테스트 완료 ${esc(runResults.finishedAt)} · 리포트 생성 ${esc(reportGeneratedAt)}</div>
+  </footer>
 </div>
 </body>
 </html>`;
@@ -388,39 +394,35 @@ function buildCrawlInsightSection(structure) {
   const errCount = list.length - ok.length;
   const sumFormControls =
     sumSelectSingle + sumSelectMulti + sumRadioGroups + sumCheckbox + sumSwitch + sumAriaToggle;
-  return `<div class="card crawl-card">
-    <h2>크롤 · UI 인터랙션 범위</h2>
-    <p class="muted">
-      링크(<code>a</code>, <code>area</code>, <code>data-href</code> 등), 버튼·<code>role=button|link</code>,
-      일부 <code>onclick</code> div, 그리고 폼 컨트롤(<code>&lt;select&gt;</code> 단일/다중,
-      <code>label[for]</code>·래핑 <code>label</code>로 읽은 텍스트, 라디오 그룹, 체크박스,
-      <code>role=switch</code>, <code>aria-checked</code> 토글)을 수집합니다. 각 항목은
-      <code>selectionMode</code>(<code>single</code> / <code>multi</code> / <code>group-single</code> / <code>boolean</code>)로 구분됩니다.
-      동일 출처 링크는 URL별 <code>linkClickMeta</code>(<code>target=_blank</code> 여부)가 붙고,
-      크롤 범위 밖 링크는 <code>outboundNav</code>(외부 웹·mailto·tel·javascript)로만 집계됩니다.
-      <strong>클릭 러너:</strong> <code>alert</code>/<code>confirm</code> 등 브라우저 다이얼로그는 메시지를 기록한 뒤 dismiss합니다.
-      <code>target=_blank</code> 또는 시나리오의 <code>opensNewTab</code> 이면 새 탭을 감지해 URL을 기록하고 기본적으로 탭을 닫습니다.
-      토스트·인라인 메시지는 자동으로 모든 셀렉터를 알 수 없어 <code>waitForSelector</code>(필요 시 <code>optional</code>) 스텝·Phase 6 LLM 초안을 권장합니다.
-      그래도 <strong>모든</strong> SPA·모달·섀도 DOM·커스텀 라우터는 보장되지 않습니다.
-    </p>
-    <div class="grid">
-      <div class="stat"><strong>${esc(ok.length)}</strong><span class="lbl">HTTP 정상 페이지</span></div>
-      <div class="stat"><strong>${esc(errCount)}</strong><span class="lbl">오류·스킵 페이지</span></div>
-      <div class="stat"><strong>${esc(sumLinks)}</strong><span class="lbl">수집 동일출처 링크(합계)</span></div>
-      <div class="stat"><strong>${esc(sumInteract)}</strong><span class="lbl">클릭 후보 요소(합계)</span></div>
-      <div class="stat"><strong>${esc(pagesWithClickable)}</strong><span class="lbl">클릭 후보가 있는 페이지</span></div>
-      <div class="stat"><strong>${esc(sumFormControls)}</strong><span class="lbl">폼 컨트롤(합계)</span></div>
-      <div class="stat"><strong>${esc(sumSelectSingle)}</strong><span class="lbl"><code>select</code> 단일</span></div>
-      <div class="stat"><strong>${esc(sumSelectMulti)}</strong><span class="lbl"><code>select multiple</code></span></div>
-      <div class="stat"><strong>${esc(sumRadioGroups)}</strong><span class="lbl">라디오 그룹</span></div>
-      <div class="stat"><strong>${esc(sumCheckbox)}</strong><span class="lbl">체크박스</span></div>
-      <div class="stat"><strong>${esc(sumSwitch + sumAriaToggle)}</strong><span class="lbl">스위치·토글</span></div>
-      <div class="stat"><strong>${esc(sumBlankTargets)}</strong><span class="lbl">동일출처 링크 중 새 탭(<code>_blank</code>)</span></div>
-      <div class="stat"><strong>${esc(sumOutboundExt)}</strong><span class="lbl">외부 HTTP 링크(수집)</span></div>
-      <div class="stat"><strong>${esc(sumOutboundMail)}</strong><span class="lbl"><code>mailto</code></span></div>
-      <div class="stat"><strong>${esc(sumOutboundTel)}</strong><span class="lbl"><code>tel</code></span></div>
-    </div>
-  </div>`;
+
+  /** @type {{ label: string; value: number }[]} */
+  const chips = [
+    { label: "정상 응답 페이지", value: ok.length },
+    { label: "건너뛰거나 오류 페이지", value: errCount },
+    { label: "같은 사이트 안 링크(합계)", value: sumLinks },
+    { label: "클릭·버튼 후보(합계)", value: sumInteract },
+    { label: "클릭 후보가 있는 페이지", value: pagesWithClickable },
+  ];
+  if (sumFormControls > 0) chips.push({ label: "입력·목록·토글 등 폼 요소", value: sumFormControls });
+  if (sumSelectSingle > 0) chips.push({ label: "한 개만 고르는 목록", value: sumSelectSingle });
+  if (sumSelectMulti > 0) chips.push({ label: "여러 개 고르는 목록", value: sumSelectMulti });
+  if (sumRadioGroups > 0) chips.push({ label: "라디오 묶음", value: sumRadioGroups });
+  if (sumCheckbox > 0) chips.push({ label: "체크박스", value: sumCheckbox });
+  if (sumSwitch + sumAriaToggle > 0) chips.push({ label: "스위치·토글", value: sumSwitch + sumAriaToggle });
+  if (sumBlankTargets > 0) chips.push({ label: "새 탭으로 열리는 링크", value: sumBlankTargets });
+  if (sumOutboundExt > 0) chips.push({ label: "외부 사이트 링크(참고)", value: sumOutboundExt });
+  if (sumOutboundMail > 0) chips.push({ label: "메일 링크", value: sumOutboundMail });
+  if (sumOutboundTel > 0) chips.push({ label: "전화 링크", value: sumOutboundTel });
+
+  const chipHtml = chips
+    .map((c) => `<div class="stat-chip"><strong>${esc(c.value)}</strong> ${esc(c.label)}</div>`)
+    .join("");
+
+  return `<section class="section" id="crawl">
+    <h2>자동 수집 범위</h2>
+    <p class="crawl-one">페이지를 돌며 링크·버튼·입력 요소를 찾아 자동 점검 초안을 만들 때 참고한 규모입니다. 팝업·일부 앱 화면은 포함되지 않을 수 있습니다.</p>
+    <div class="stat-grid">${chipHtml}</div>
+  </section>`;
 }
 
 /**
@@ -428,12 +430,12 @@ function buildCrawlInsightSection(structure) {
  */
 function buildCriteriaTable(summary) {
   if (!summary || Object.keys(summary).length === 0) {
-    return `<tr><td colspan="6" class="muted">기준 요약 없음</td></tr>`;
+    return `<tr><td colspan="5" style="color:var(--muted)">표시할 요약이 없습니다.</td></tr>`;
   }
 
   const entries = Object.entries(summary).filter(([, row]) => (row.pass || 0) + (row.fail || 0) > 0);
   if (!entries.length) {
-    return `<tr><td colspan="6" class="muted">이번 실행에 태깅된 기준이 없습니다.</td></tr>`;
+    return `<tr><td colspan="5" style="color:var(--muted)">이번 실행에 태깅된 기준이 없습니다.</td></tr>`;
   }
 
   return entries
@@ -441,7 +443,6 @@ function buildCriteriaTable(summary) {
       const def = CRITERIA[/** @type {keyof typeof CRITERIA} */ (id)];
       const label = def?.labelKo ?? id;
       const desc = def?.description ?? "";
-      const steps = def?.primarySteps?.join(", ") ?? "";
       const total = row.pass + row.fail;
       const rate = total ? Math.round((row.pass / total) * 100) : 0;
       const scenList = (row.scenarioIds || [])
@@ -449,14 +450,13 @@ function buildCriteriaTable(summary) {
           /** @param {{ id: string; passed: boolean }} s */ (s) =>
             `<span class="${s.passed ? "crit-ok" : "crit-bad"}">${esc(s.id)}</span>`,
         )
-        .join(", ");
+        .join(" ");
       return `<tr>
-        <td><strong>${esc(label)}</strong><div class="muted"><code>${esc(id)}</code></div></td>
-        <td class="muted">${esc(desc)}</td>
-        <td><code>${esc(steps)}</code></td>
-        <td class="crit-ok">${esc(row.pass)} <span class="muted">(${esc(rate)}%)</span></td>
+        <td><strong>${esc(label)}</strong></td>
+        <td style="color:var(--muted);font-size:0.88rem">${esc(desc)}</td>
+        <td class="crit-ok">${esc(row.pass)} <span style="color:var(--muted);font-weight:500">(${esc(rate)}%)</span></td>
         <td class="crit-bad">${esc(row.fail)}</td>
-        <td style="word-break:break-word;">${scenList || "—"}</td>
+        <td style="word-break:break-word;font-size:0.85rem">${scenList || "—"}</td>
       </tr>`;
     })
     .join("");
@@ -468,15 +468,23 @@ function buildCriteriaTable(summary) {
 function buildFailedConsoleSection(scenarios) {
   const failed = scenarios.filter((s) => !s.passed && s.consoleErrors?.length);
   if (!failed.length) {
-    return `<p class="muted">실패 시나리오에서 수집된 콘솔·페이지 오류가 없거나, 통과만 있습니다.</p>`;
+    return `<p style="color:var(--muted);margin:0">실패한 시나리오에서 잡힌 브라우저 오류가 없거나, 모든 항목이 통과했습니다.</p>`;
   }
 
   return failed
     .map((s) => {
-      const body = esc(JSON.stringify(s.consoleErrors, null, 2));
-      return `<div style="margin-bottom:1rem;">
-        <strong>${esc(s.name)}</strong> <code class="muted">${esc(s.id)}</code>
-        <pre class="sub">${body}</pre>
+      const lines = (s.consoleErrors || []).slice(0, 12).map((e) => {
+        const text =
+          typeof e === "object" && e != null && "text" in e
+            ? String(e.text)
+            : typeof e === "string"
+              ? e
+              : JSON.stringify(e);
+        return `<li>${esc(text.slice(0, 500))}</li>`;
+      });
+      return `<div style="margin-bottom:1rem">
+        <strong>${esc(s.name)}</strong>
+        <ul class="err-list">${lines.join("")}</ul>
       </div>`;
     })
     .join("");
@@ -485,74 +493,101 @@ function buildFailedConsoleSection(scenarios) {
 /**
  * @param {any} s
  */
-function buildScenarioRow(s) {
+function buildScenarioCard(s) {
   const badge = s.passed ? "pass" : "fail";
-  const crit = (s.criteria || []).map((c) => `<span class="pill">${esc(c)}</span>`).join(" ");
+  const badgeText = s.passed ? "통과" : "실패";
+  const crit = (s.criteria || []).map((c) => `<span class="pill">${esc(criterionLabelKo(c))}</span>`).join(" ");
 
   const arts = [];
   if (s.artifacts?.trace) {
-    arts.push(`<div class="artifact">Trace: <a href="./${esc(s.artifacts.trace)}">${esc(s.artifacts.trace)}</a></div>`);
+    arts.push(`<a href="./${esc(s.artifacts.trace)}">실행 기록(trace) 열기</a>`);
   }
   if (s.artifacts?.screenshot) {
-    arts.push(
-      `<div class="artifact">Screenshot: <a href="./${esc(s.artifacts.screenshot)}">${esc(
-        s.artifacts.screenshot,
-      )}</a></div>`,
-    );
+    arts.push(`<a href="./${esc(s.artifacts.screenshot)}">실패 화면 캡처</a>`);
   }
-  if (!arts.length) {
-    arts.push(`<span class="muted">—</span>`);
-  }
+  const artBlock =
+    arts.length > 0 ? `<div class="artifacts">${arts.join(" · ")}</div>` : "";
 
-  const errPreview =
+  const sec = Math.round((s.durationMs || 0) / 100) / 10;
+
+  const errBlock =
     s.passed === false && s.consoleErrors?.length
-      ? `<pre class="sub">${esc(JSON.stringify(s.consoleErrors.slice(0, 4), null, 2))}</pre>`
+      ? `<ul class="err-list">${(s.consoleErrors || [])
+          .slice(0, 6)
+          .map((e) => {
+            const t =
+              typeof e === "object" && e != null && "text" in e
+                ? String(e.text)
+                : JSON.stringify(e);
+            return `<li>${esc(t.slice(0, 280))}</li>`;
+          })
+          .join("")}</ul>`
       : "";
 
   const steps = (s.steps || [])
     .map((st) => {
       const cls = st.skipped ? "skip" : st.ok ? "ok" : "bad";
-      const extra = formatStepDetail(st);
-      const note = st.note ? ` <span class="muted">(${esc(st.note)})</span>` : "";
-      return `<li class="${cls}"><code>${esc(st.type)}</code>${note}${extra}</li>`;
+      const label = STEP_LABEL_KO[st.type] || st.type;
+      const detail = formatStepDetailHuman(st);
+      const note = st.note ? ` <span class="step-detail">(${esc(st.note)})</span>` : "";
+      return `<li class="${cls}"><span class="step-type">${esc(label)}</span>${note}${detail}</li>`;
     })
     .join("");
 
-  return `<tr>
-    <td><span class="badge ${badge}">${badge}</span></td>
-    <td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.id)}</div>${crit}</td>
-    <td>${esc(s.durationMs)} ms</td>
-    <td>${arts.join("")}</td>
-    <td><ol class="steps">${steps}</ol>${errPreview}</td>
-  </tr>`;
+  return `<article class="sc-card ${badge}">
+    <div class="sc-head">
+      <span class="sc-badge ${badge}">${esc(badgeText)}</span>
+      <h3 class="sc-title">${esc(s.name)}</h3>
+      <div class="sc-meta">약 ${esc(sec)}초 소요 · ${crit || "기준 태그 없음"}</div>
+    </div>
+    <ol class="step-list">${steps || "<li class=\"skip\">스텝 없음</li>"}</ol>
+    ${artBlock}
+    ${errBlock}
+  </article>`;
+}
+
+function criterionLabelKo(id) {
+  const def = CRITERIA[/** @type {keyof typeof CRITERIA} */ (id)];
+  return def?.labelKo ?? id;
 }
 
 /**
  * @param {any} st
  */
-function formatStepDetail(st) {
+function formatStepDetailHuman(st) {
   const parts = [];
-  if (st.url) parts.push(`url ${esc(st.url)}`);
-  if (st.finalUrl) parts.push(`→ ${esc(st.finalUrl)}`);
-  if (st.status != null) parts.push(`HTTP ${esc(st.status)}`);
-  if (st.selector) parts.push(`sel ${esc(st.selector)}`);
-  if (st.href) parts.push(`href ${esc(st.href)}`);
-  if (st.getByRole) parts.push(`role ${esc(st.getByRole)}`);
-  if (st.accessibleName) parts.push(`이름 ${esc(st.accessibleName)}`);
-  if (st.requestMethod) parts.push(`req ${esc(st.requestMethod)}`);
-  if (st.values) parts.push(`values ${esc(JSON.stringify(st.values))}`);
-  if (st.value != null && String(st.value) !== "") parts.push(`value ${esc(String(st.value))}`);
-  if (st.label != null && String(st.label) !== "") parts.push(`label ${esc(String(st.label))}`);
-  if (st.index != null) parts.push(`index ${esc(String(st.index))}`);
-  if (st.control) parts.push(`control ${esc(st.control)}`);
-  if (st.checked != null) parts.push(`checked ${esc(String(st.checked))}`);
-  if (st.startUrl) parts.push(`from ${esc(st.startUrl)}`);
-  if (st.navigationMode) parts.push(`nav ${esc(st.navigationMode)}`);
-  if (st.popupUrl) parts.push(`popup ${esc(st.popupUrl)}`);
-  if (st.popupClosed != null) parts.push(`popupClosed ${esc(String(st.popupClosed))}`);
-  if (st.dialogs?.length) parts.push(`dialogs ${esc(JSON.stringify(st.dialogs).slice(0, 400))}`);
-  if (st.state) parts.push(`state ${esc(st.state)}`);
-  if (st.error) parts.push(`err ${esc(st.error)}`);
+  if (st.url) parts.push(`주소 ${esc(shortUrl(st.url))}`);
+  if (st.finalUrl && st.finalUrl !== st.url) parts.push(`이동 후 ${esc(shortUrl(st.finalUrl))}`);
+  if (st.status != null) parts.push(`응답 ${esc(st.status)}`);
+  if (st.navigationMode && st.navigationMode !== "same_tab_or_spa") {
+    const navKo =
+      st.navigationMode === "new_tab_or_popup"
+        ? "새 창/탭"
+        : st.navigationMode === "full_navigation_same_tab"
+          ? "같은 탭에서 다른 사이트로 이동"
+          : st.navigationMode === "same_origin_navigation"
+            ? "같은 사이트 안에서 이동"
+            : st.navigationMode;
+    parts.push(esc(navKo));
+  }
+  if (st.popupUrl) parts.push(`팝업 ${esc(shortUrl(st.popupUrl))}`);
+  if (st.dialogs?.length) parts.push(`알림 창 ${st.dialogs.length}회`);
+  if (st.selector) parts.push(`대상 요소`);
+  if (st.href) parts.push(`링크 ${esc(shortUrl(st.href))}`);
+  if (st.accessibleName) parts.push(`이름 「${esc(String(st.accessibleName).slice(0, 40))}」`);
+  if (st.values) parts.push(`선택 값 ${esc(JSON.stringify(st.values))}`);
+  if (st.value != null && String(st.value) !== "") parts.push(`값 ${esc(String(st.value).slice(0, 40))}`);
+  if (st.label != null && String(st.label) !== "") parts.push(`항목 「${esc(String(st.label).slice(0, 40))}」`);
+  if (st.error) parts.push(`<span class="step-detail">원인: ${esc(String(st.error).slice(0, 200))}</span>`);
   if (!parts.length) return "";
-  return ` — <span class="muted">${parts.join(" · ")}</span>`;
+  return ` — <span class="step-detail">${parts.join(" · ")}</span>`;
+}
+
+function shortUrl(u) {
+  try {
+    const x = new URL(u);
+    return (x.hostname + x.pathname).slice(0, 56) + (u.length > 56 ? "…" : "");
+  } catch {
+    return String(u).slice(0, 56);
+  }
 }

@@ -40,6 +40,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -47,6 +51,15 @@ body {
   color: var(--fg);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+code.inline-code {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
 }
 
 .file-banner {
@@ -112,6 +125,16 @@ body {
   max-width: 44rem;
   margin: 0 auto;
   padding: 2.25rem 1.25rem 3.5rem;
+}
+
+.shell.shell--wide {
+  max-width: 56rem;
+}
+
+@media (min-width: 900px) {
+  .shell.shell--wide {
+    max-width: 72rem;
+  }
 }
 
 .hero {
@@ -224,6 +247,20 @@ code {
   text-align: center;
 }
 
+.footer-line {
+  margin: 0 0 0.5rem;
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
+}
+
+.footer-line--muted {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  opacity: 0.88;
+}
+
 .footer a {
   color: var(--accent-dim);
   text-decoration: none;
@@ -274,6 +311,11 @@ code {
   font-size: 0.8125rem;
   color: var(--muted);
   line-height: 1.5;
+}
+
+.field-help--compact {
+  margin: 0 0 0.15rem;
+  max-width: 40rem;
 }
 
 .field input,
@@ -566,4 +608,391 @@ code.break {
   margin-bottom: 0.65rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--card-border);
+}
+
+/* —— 대시보드 내비 · 요약 KPI (SPA 결과 화면) —— */
+.dashboard-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0.5rem;
+  z-index: 30;
+}
+
+.dashboard-nav-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-right: 0.15rem;
+}
+
+.dashboard-nav a {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: var(--bg-page-2);
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.dashboard-nav a:hover {
+  background: var(--accent-soft);
+  border-color: rgba(0, 196, 113, 0.2);
+  color: var(--accent-dim);
+}
+
+.panel h2[id^="section-"] {
+  scroll-margin-top: 5.5rem;
+}
+
+.dashboard-main {
+  min-width: 0;
+}
+
+.summary-kpi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.kpi-tile {
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-page-2);
+  border: 1px solid var(--card-border);
+}
+
+.kpi-tile--accent {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--card) 100%);
+  border-color: rgba(0, 196, 113, 0.18);
+}
+
+.kpi-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.kpi-value {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.kpi-value--mono {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.kpi-hint {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.summary-target-card {
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+  background: var(--card);
+}
+
+.summary-target-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 0.45rem;
+}
+
+.summary-target-url {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.summary-link {
+  color: var(--accent-dim);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.summary-link:hover {
+  text-decoration: underline;
+}
+
+.structure-lead {
+  margin: 0 0 0.75rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.table-link {
+  color: var(--accent-dim);
+  font-weight: 500;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.table-link:hover {
+  text-decoration: underline;
+}
+
+.data--pages .cell-title {
+  font-weight: 600;
+  max-width: 14rem;
+}
+
+.data--pages .cell-status {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.scenarios-meta {
+  margin: 0 0 0.75rem;
+}
+
+.ver-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--bg-page-2);
+  color: var(--muted);
+  border: 1px solid var(--card-border);
+}
+
+.cell-scen-name .scen-name {
+  display: block;
+  font-weight: 600;
+}
+
+.cell-scen-name .scen-id {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.cell-chips {
+  min-width: 8rem;
+}
+
+.cell-chips .chip {
+  margin: 0.12rem 0.12rem 0 0;
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-dim);
+}
+
+.chip--muted {
+  background: var(--bg-page-2);
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.cell-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.data--criteria .cell-criterion .crit-label {
+  display: block;
+  font-weight: 600;
+}
+
+.data--criteria .cell-criterion .crit-code {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: ui-monospace, "Cascadia Code", monospace;
+}
+
+.cell-num--ok {
+  color: var(--accent-dim);
+  font-weight: 700;
+}
+
+.cell-num--bad {
+  color: #e11d48;
+  font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cell-num--bad {
+    color: #fb7185;
+  }
+}
+
+.result-scen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.result-scen-card {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.result-scen-card.is-pass {
+  border-left: 3px solid var(--accent-dim);
+}
+
+.result-scen-card.is-fail {
+  border-left: 3px solid #e11d48;
+}
+
+@media (prefers-color-scheme: dark) {
+  .result-scen-card.is-fail {
+    border-left-color: #fb7185;
+  }
+}
+
+.result-scen-card__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.result-scen-card__title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.35;
+  flex: 1;
+  min-width: 0;
+}
+
+.result-scen-card__meta {
+  margin: 0.45rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.badge {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  text-transform: none;
+}
+
+.badge--ok {
+  background: var(--accent-soft);
+  color: var(--accent-dim);
+}
+
+.badge--bad {
+  background: rgba(225, 29, 72, 0.12);
+  color: #e11d48;
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge--bad {
+    background: rgba(251, 113, 133, 0.15);
+    color: #fda4af;
+  }
+}
+
+.report-actions {
+  margin: 0 0 0.75rem;
+}
+
+.report-actions-text {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+}
+
+.report-actions-divider {
+  color: var(--muted);
+}
+
+.btn-inline {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dim) 100%);
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: none;
+  box-shadow: 0 3px 12px rgba(0, 196, 113, 0.3);
+}
+
+.btn-inline:hover {
+  filter: brightness(1.03);
+}
+
+.hint--subtle:empty {
+  display: none;
+}
+
+.advanced-editor {
+  margin: 0 0 1.15rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--card-border);
+  background: var(--bg-page-2);
+}
+
+.advanced-editor summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.advanced-editor .code-area {
+  margin-top: 0.65rem;
+}
+
+.raw-block--advanced summary {
+  font-size: 0.82rem;
+  color: var(--muted);
 }

@@ -160,6 +160,7 @@ const state = {
 };
 
 const el = {
+  dashboardNav: document.getElementById("dashboard-nav"),
   analyzeForm: document.getElementById("analyze-form"),
   analyzeTargetUrl: document.getElementById("analyze-target-url"),
   analyzeMaxPages: document.getElementById("analyze-max-pages"),
@@ -310,6 +311,21 @@ function esc(s) {
     .replace(/"/g, "&quot;");
 }
 
+/** @param {number | null | undefined} ms */
+function formatDuration(ms) {
+  const n = Number(ms);
+  if (!Number.isFinite(n) || n < 0) return "—";
+  if (n < 1000) return `${Math.round(n)}ms`;
+  return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}초`;
+}
+
+/** @param {string[]} items */
+function chipsHtml(items) {
+  const list = (items || []).filter(Boolean);
+  if (!list.length) return `<span class="chip chip--muted">—</span>`;
+  return list.map((c) => `<span class="chip">${esc(c)}</span>`).join("");
+}
+
 /**
  * @param {string} url
  * @param {{ signal?: AbortSignal; cacheBust?: boolean }} [opts]
@@ -349,22 +365,50 @@ async function pollUntilOk(url, cfg) {
 function renderSummary(structure, scenarios, results) {
   const pages = structure?.pages?.length ?? 0;
   const scenariosCount = scenarios?.scenarios?.length ?? 0;
-  const origin = structure?.origin ?? "—";
-  const target = structure?.targetUrl ?? "—";
-  let resultsLine = "results.json 없음 또는 아직 미배포";
-  if (results?.scenarios) {
-    const ok = results.scenarios.filter((s) => s.passed).length;
-    const tot = results.scenarios.length;
-    resultsLine = `시나리오 통과 ${ok} / ${tot}`;
+  const target = structure?.targetUrl ?? "";
+  const jobId = state.jobId || "—";
+
+  let pass = 0;
+  let tot = 0;
+  /** @type {number | null} */
+  let pct = null;
+  let resultsHint = "테스트가 아직 끝나지 않았거나 결과가 없습니다.";
+  if (results?.scenarios?.length) {
+    tot = results.scenarios.length;
+    pass = results.scenarios.filter((s) => s.passed).length;
+    pct = Math.round((pass / tot) * 100);
+    resultsHint = `${pass}개 통과 · 전체 ${tot}개`;
   }
+
+  const targetBlock =
+    target && target !== "—"
+      ? `<a href="${esc(target)}" target="_blank" rel="noopener noreferrer" class="summary-link">${esc(
+          target,
+        )}</a>`
+      : `<span class="muted">—</span>`;
+
   el.summaryBody.innerHTML = `
-    <dl class="dl-grid">
-      <dt>대상 URL</dt><dd><code>${esc(target)}</code></dd>
-      <dt>Origin</dt><dd><code>${esc(origin)}</code></dd>
-      <dt>크롤 페이지</dt><dd>${esc(pages)}</dd>
-      <dt>시나리오 수</dt><dd>${esc(scenariosCount)}</dd>
-      <dt>실행 요약</dt><dd>${esc(resultsLine)}</dd>
-    </dl>
+    <div class="summary-kpi" role="group" aria-label="작업 요약">
+      <div class="kpi-tile kpi-tile--accent">
+        <span class="kpi-label">작업 ID</span>
+        <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
+        <span class="kpi-hint">이 번호로 나중에 다시 이 결과를 열 수 있습니다.</span>
+      </div>
+      <div class="kpi-tile">
+        <span class="kpi-label">통과율</span>
+        <span class="kpi-value">${pct != null ? `${esc(String(pct))}%` : "—"}</span>
+        <span class="kpi-hint">${esc(resultsHint)}</span>
+      </div>
+      <div class="kpi-tile">
+        <span class="kpi-label">수집한 페이지</span>
+        <span class="kpi-value">${esc(pages)}</span>
+        <span class="kpi-hint">시나리오 ${esc(scenariosCount)}개</span>
+      </div>
+    </div>
+    <div class="summary-target-card">
+      <span class="summary-target-label">분석한 주소</span>
+      <div class="summary-target-url">${targetBlock}</div>
+    </div>
   `;
 }
 
@@ -377,15 +421,20 @@ function renderStructure(structure) {
     .slice(0, 50)
     .map(
       (p) =>
-        `<tr><td>${esc(p.title || "—")}</td><td><code class="break">${esc(p.url)}</code></td><td>${esc(
+        `<tr><td class="cell-title">${esc(p.title || "제목 없음")}</td><td class="cell-url"><a href="${esc(
+          p.url,
+        )}" target="_blank" rel="noopener noreferrer" class="table-link">${esc(p.url)}</a></td><td class="cell-status">${esc(
           p.httpStatus ?? p.error ?? "—",
         )}</td></tr>`,
     )
     .join("");
-  const more = pages.length > 50 ? `<p class="hint">처음 50개만 표시합니다.</p>` : "";
+  const more =
+    pages.length > 50
+      ? `<p class="hint">목록이 길어 처음 50개만 보여 드립니다. 전체는 아래 고급 원본을 펼쳐 보세요.</p>`
+      : "";
   el.structureBody.innerHTML = `
-    <p class="hint">페이지 수: <strong>${pages.length}</strong></p>
-    <div class="table-scroll"><table class="data"><thead><tr><th>제목</th><th>URL</th><th>상태</th></tr></thead>
+    <p class="structure-lead">총 <strong>${pages.length}</strong>개 페이지를 살펴보았습니다.</p>
+    <div class="table-scroll"><table class="data data--pages"><thead><tr><th>페이지 이름</th><th>주소</th><th>응답</th></tr></thead>
     <tbody>${rows || "<tr><td colspan=3>페이지 없음</td></tr>"}</tbody></table></div>${more}
   `;
   el.structureRaw.textContent = JSON.stringify(structure, null, 2);
@@ -396,18 +445,24 @@ function renderStructure(structure) {
  */
 function renderScenarios(doc) {
   const list = doc?.scenarios || [];
+  const ver = doc?.version ?? "?";
   const rows = list
     .map(
       (s) =>
-        `<tr><td><code>${esc(s.id)}</code></td><td>${esc(s.name)}</td><td>${esc(
-          (s.criteria || []).join(", "),
-        )}</td><td>${esc(s.steps?.length ?? 0)}</td></tr>`,
+        `<tr>
+          <td class="cell-scen-name">
+            <span class="scen-name">${esc(s.name || "이름 없음")}</span>
+            ${s.id ? `<span class="scen-id">참고 코드: ${esc(s.id)}</span>` : ""}
+          </td>
+          <td class="cell-chips">${chipsHtml(s.criteria || [])}</td>
+          <td class="cell-num">${esc(s.steps?.length ?? 0)}</td>
+        </tr>`,
     )
     .join("");
   el.scenariosBody.innerHTML = `
-    <p class="hint">시나리오 스키마 버전: <strong>${esc(doc?.version ?? "?")}</strong></p>
-    <div class="table-scroll"><table class="data"><thead><tr><th>ID</th><th>이름</th><th>기준</th><th>스텝 수</th></tr></thead>
-    <tbody>${rows || "<tr><td colspan=4>없음</td></tr>"}</tbody></table></div>
+    <p class="scenarios-meta"><span class="ver-pill">목록 버전 ${esc(ver)}</span></p>
+    <div class="table-scroll"><table class="data data--scenarios"><thead><tr><th>시나리오</th><th>점검 기준</th><th>단계 수</th></tr></thead>
+    <tbody>${rows || "<tr><td colspan=3>시나리오가 없습니다.</td></tr>"}</tbody></table></div>
   `;
   el.scenariosRaw.textContent = JSON.stringify(doc, null, 2);
 }
@@ -421,28 +476,40 @@ function renderResults(results) {
   if (summary && Object.keys(summary).length) {
     const rows = Object.entries(summary)
       .filter(([, row]) => (row.pass || 0) + (row.fail || 0) > 0)
-      .map(
-        ([id, row]) =>
-          `<tr><td><code>${esc(id)}</code></td><td>${esc(row.labelKo || id)}</td><td>${esc(
-            row.pass,
-          )}</td><td>${esc(row.fail)}</td></tr>`,
-      )
+      .map(([id, row]) => {
+        const label = row.labelKo || id;
+        const showCode = row.labelKo && String(row.labelKo) !== String(id);
+        return `<tr>
+          <td class="cell-criterion">
+            <span class="crit-label">${esc(label)}</span>
+            ${showCode ? `<span class="crit-code">${esc(id)}</span>` : ""}
+          </td>
+          <td class="cell-num cell-num--ok">${esc(row.pass)}</td>
+          <td class="cell-num cell-num--bad">${esc(row.fail)}</td>
+        </tr>`;
+      })
       .join("");
-    table = `<h3 class="subh">기준별</h3><div class="table-scroll"><table class="data"><thead><tr><th>ID</th><th>라벨</th><th>통과</th><th>실패</th></tr></thead><tbody>${
-      rows || "<tr><td colspan=4>집계 없음</td></tr>"
-    }</tbody></table></div>`;
+    table = `<h3 class="subh">기준별 요약</h3>
+      <div class="table-scroll"><table class="data data--criteria"><thead><tr><th>점검 항목</th><th>통과</th><th>실패</th></tr></thead><tbody>${
+        rows || "<tr><td colspan=3>집계할 항목이 없습니다.</td></tr>"
+      }</tbody></table></div>`;
   }
   const scen = (results?.scenarios || [])
     .map(
-      (s) =>
-        `<li class="${s.passed ? "ok" : "bad"}"><strong>${esc(s.name)}</strong> — ${
-          s.passed ? "통과" : "실패"
-        } (${esc(s.durationMs)} ms)</li>`,
+      (s) => `
+    <article class="result-scen-card ${s.passed ? "is-pass" : "is-fail"}">
+      <div class="result-scen-card__row">
+        <span class="badge ${s.passed ? "badge--ok" : "badge--bad"}">${s.passed ? "통과" : "실패"}</span>
+        <h4 class="result-scen-card__title">${esc(s.name || "이름 없음")}</h4>
+      </div>
+      <p class="result-scen-card__meta">소요 시간 ${esc(formatDuration(s.durationMs))}</p>
+    </article>`,
     )
     .join("");
   el.resultsBody.innerHTML = `
     ${table}
-    <h3 class="subh">시나리오</h3><ul class="result-list">${scen || "<li>없음</li>"}</ul>
+    <h3 class="subh">시나리오별 결과</h3>
+    <div class="result-scen-grid">${scen || '<p class="hint">시나리오 결과가 없습니다.</p>'}</div>
   `;
   el.resultsRaw.textContent = JSON.stringify(results, null, 2);
 }
@@ -489,7 +556,7 @@ function renderScenarioForms(doc) {
 
     const stepL = document.createElement("label");
     stepL.className = "field";
-    stepL.innerHTML = "<span>스텝 (JSON 배열)</span>";
+    stepL.innerHTML = "<span>동작 순서 (고급 · JSON)</span>";
     const ta = document.createElement("textarea");
     ta.className = "sc-steps code-area";
     ta.rows = 8;
@@ -542,6 +609,7 @@ function wireReport(jobRel) {
 }
 
 function hideAllPanels() {
+  show(el.dashboardNav, false);
   show(el.summarySection, false);
   show(el.scenariosSection, false);
   show(el.editSection, false);
@@ -549,6 +617,25 @@ function hideAllPanels() {
   show(el.resultsSection, false);
   show(el.reportSection, false);
   el.reportFrame.removeAttribute("src");
+}
+
+/**
+ * @param {string} href
+ * @param {boolean} visible
+ */
+function setDashboardNavLinkVisible(href, visible) {
+  const a = el.dashboardNav?.querySelector(`a[href="${href}"]`);
+  if (a instanceof HTMLAnchorElement) a.classList.toggle("hidden", !visible);
+}
+
+function syncDashboardNavLinks() {
+  if (!el.dashboardNav) return;
+  setDashboardNavLinkVisible("#section-summary", !el.summarySection?.classList.contains("hidden"));
+  setDashboardNavLinkVisible("#section-results", !el.resultsSection?.classList.contains("hidden"));
+  setDashboardNavLinkVisible("#section-scenarios", !el.scenariosSection?.classList.contains("hidden"));
+  setDashboardNavLinkVisible("#section-edit", !el.editSection?.classList.contains("hidden"));
+  setDashboardNavLinkVisible("#section-structure", !el.structureSection?.classList.contains("hidden"));
+  setDashboardNavLinkVisible("#section-report", !el.reportSection?.classList.contains("hidden"));
 }
 
 /**
@@ -680,11 +767,9 @@ async function loadJob(jobId, opts = {}) {
   }
   if (el.dispatchHint) {
     if (state.dispatchMeta?.sig) {
-      el.dispatchHint.textContent =
-        "dispatch-meta.json 로드됨 — Worker에 DISPATCH_HMAC_SECRET이 설정되어 있으면 POST에 서명이 포함됩니다.";
+      el.dispatchHint.textContent = "재실행 요청이 안전하게 서명되어 전송됩니다.";
     } else {
-      el.dispatchHint.textContent =
-        "dispatch-meta.json 없음 — 저장소 Actions에 DISPATCH_HMAC_SECRET을 설정한 뒤 파이프라인을 다시 실행하면 생성됩니다.";
+      el.dispatchHint.textContent = "";
     }
   }
 
@@ -710,8 +795,10 @@ async function loadJob(jobId, opts = {}) {
 
   show(el.summarySection, true);
   show(el.structureSection, true);
+  show(el.dashboardNav, true);
   wireReport(jobRel);
   show(el.reportSection, true);
+  syncDashboardNavLinks();
 
   const u = new URL(window.location.href);
   u.searchParams.set("job", jobId);
