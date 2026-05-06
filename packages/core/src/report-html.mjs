@@ -744,7 +744,7 @@ function buildLighthouseSection(lighthouseSummary) {
   if (skipped) {
     note = `<p class="lead">이번 작업에서는 Lighthouse를 실행하지 않았습니다(<code>SKIP_LIGHTHOUSE=1</code> 등). URL 목록은 위와 같습니다.</p>`;
   } else if (items.length === 0) {
-    note = `<p class="lead">Lighthouse 감사 결과가 없습니다. <code>LIGHTHOUSE_MAX</code>가 0이거나 감사할 URL이 없을 수 있습니다. 외부 URL까지 감사하려면 <code>LIGHTHOUSE_EXTERNAL=1</code>을 설정할 수 있습니다.</p>`;
+    note = `<p class="lead">Lighthouse 감사 결과가 없습니다. 내부 정상 응답 페이지가 없거나, 실행 중 오류만 있었을 수 있습니다.</p>`;
   } else {
     note = `<p class="lead">점수는 0–100(또는 실패 시 —)입니다. HTML 리포트에서 세부 감사 항목을 확인할 수 있습니다.</p>`;
   }

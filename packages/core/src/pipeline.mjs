@@ -31,26 +31,23 @@ console.log(
   `Job ${JOB_ID} → ${TARGET_URL} (maxPages=${MAX_PAGES}, maxDepth=${MAX_DEPTH}, trace=${TRACE_MODE})`,
 );
 
+/** @type {any} */
+let structure;
+/** @type {any} */
+let scenariosDoc;
+/** @type {any} */
+let runResults;
+
 const browser = await chromium.launch({ headless: true });
 
 try {
-  const structure = await crawlSite(browser, TARGET_URL, {
+  structure = await crawlSite(browser, TARGET_URL, {
     maxPages: MAX_PAGES,
     maxDepth: MAX_DEPTH,
   });
   fs.writeFileSync(path.join(outDir, "structure.json"), JSON.stringify(structure, null, 2), "utf8");
 
-  let lighthouseSummary;
-  if (process.env.SKIP_LIGHTHOUSE === "1") {
-    lighthouseSummary = lighthouseSummaryFromStructureOnly(structure);
-    console.log("SKIP_LIGHTHOUSE=1 — lighthouse-summary.json 은 URL 목록만 포함합니다.");
-  } else {
-    console.log("Lighthouse 실행 중… (건너뛰려면 SKIP_LIGHTHOUSE=1, 최대 개수는 LIGHTHOUSE_MAX)");
-    lighthouseSummary = await runLighthouseBatch({ structure, outDir });
-  }
-  fs.writeFileSync(path.join(outDir, "lighthouse-summary.json"), JSON.stringify(lighthouseSummary, null, 2), "utf8");
-
-  let scenariosDoc = buildDraftScenarios(structure);
+  scenariosDoc = buildDraftScenarios(structure);
 
   const llmOn =
     process.env.LLM_SCENARIOS === "1" ||
@@ -80,7 +77,7 @@ try {
   }
   if (process.env.STRICT_SCENARIO_VALIDATE === "1" && issues.length) {
     console.error("STRICT_SCENARIO_VALIDATE: failing due to invalid scenarios.");
-    process.exit(1);
+    throw new Error("STRICT_SCENARIO_VALIDATE: invalid scenarios");
   }
 
   fs.writeFileSync(
@@ -97,32 +94,46 @@ try {
     "utf8",
   );
 
-  const runResults = await runScenarios(browser, scenariosDoc, { outDir, traceMode: TRACE_MODE });
+  runResults = await runScenarios(browser, scenariosDoc, { outDir, traceMode: TRACE_MODE });
   fs.writeFileSync(path.join(outDir, "results.json"), JSON.stringify(runResults, null, 2), "utf8");
-
-  const reportGeneratedAt = new Date().toISOString();
-  const html = buildReportHtml({
-    structure,
-    scenariosDoc,
-    runResults,
-    jobId: JOB_ID,
-    reportGeneratedAt,
-    lighthouseSummary,
-  });
-  fs.writeFileSync(path.join(outDir, "report.html"), html, "utf8");
-
-  const dispatchSecret = process.env.DISPATCH_HMAC_SECRET;
-  if (dispatchSecret) {
-    const meta = createDispatchMeta(JOB_ID, dispatchSecret);
-    fs.writeFileSync(path.join(outDir, "dispatch-meta.json"), JSON.stringify(meta, null, 2), "utf8");
-  }
-
-  console.log("Pipeline finished. Outputs in ./output");
-  const failed = runResults.scenarios.filter((s) => !s.passed).length;
-  if (failed > 0) {
-    console.warn(`${failed} scenario(s) failed (non-zero exit for CI visibility).`);
-    process.exitCode = 1;
-  }
 } finally {
   await browser.close();
+  console.log("Playwright 브라우저를 종료했습니다.");
+}
+
+/** @type {any} */
+let lighthouseSummary;
+if (process.env.SKIP_LIGHTHOUSE === "1") {
+  lighthouseSummary = lighthouseSummaryFromStructureOnly(structure);
+  console.log("SKIP_LIGHTHOUSE=1 — lighthouse-summary.json 은 URL 목록만 포함합니다.");
+} else {
+  console.log(
+    `Lighthouse 실행 중… (내부 정상 응답 페이지 전체, 건너뛰려면 SKIP_LIGHTHOUSE=1). Playwright와 별도 Chrome 프로세스입니다.`,
+  );
+  lighthouseSummary = await runLighthouseBatch({ structure, outDir });
+}
+fs.writeFileSync(path.join(outDir, "lighthouse-summary.json"), JSON.stringify(lighthouseSummary, null, 2), "utf8");
+
+const reportGeneratedAt = new Date().toISOString();
+const html = buildReportHtml({
+  structure,
+  scenariosDoc,
+  runResults,
+  jobId: JOB_ID,
+  reportGeneratedAt,
+  lighthouseSummary,
+});
+fs.writeFileSync(path.join(outDir, "report.html"), html, "utf8");
+
+const dispatchSecret = process.env.DISPATCH_HMAC_SECRET;
+if (dispatchSecret) {
+  const meta = createDispatchMeta(JOB_ID, dispatchSecret);
+  fs.writeFileSync(path.join(outDir, "dispatch-meta.json"), JSON.stringify(meta, null, 2), "utf8");
+}
+
+console.log("Pipeline finished. Outputs in ./output");
+const failed = runResults.scenarios.filter((s) => !s.passed).length;
+if (failed > 0) {
+  console.warn(`${failed} scenario(s) failed (non-zero exit for CI visibility).`);
+  process.exitCode = 1;
 }

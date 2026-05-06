@@ -29,6 +29,9 @@ function scoresFromLhr(lhr) {
 }
 
 /**
+ * 내부(크롤 정상 응답) URL 전부만 감사합니다. 외부 URL Lighthouse는 하지 않습니다.
+ * Playwright는 이미 종료된 뒤, chrome-launcher + Lighthouse 전용 Chrome만 사용합니다.
+ *
  * @param {{ structure: any; outDir: string }} p
  */
 export async function runLighthouseBatch(p) {
@@ -38,34 +41,17 @@ export async function runLighthouseBatch(p) {
 
   const internal = internalOkPageUrls(structure);
   const external = externalHttpUrlsSorted(structure);
-
-  const maxTotal = Math.min(80, Math.max(0, parseInt(process.env.LIGHTHOUSE_MAX || "8", 10)));
-  const doExternal =
-    process.env.LIGHTHOUSE_EXTERNAL === "1" || String(process.env.LIGHTHOUSE_EXTERNAL).toLowerCase() === "true";
-
-  /** @type {string[]} */
-  const queue = [];
-  for (const u of internal) {
-    if (queue.length >= maxTotal) break;
-    queue.push(u);
-  }
-  if (doExternal) {
-    for (const u of external) {
-      if (queue.length >= maxTotal) break;
-      if (!queue.includes(u)) queue.push(u);
-    }
-  }
-
-  const internalSet = new Set(internal);
+  const queue = [...internal];
 
   /** @type {any[]} */
   const items = [];
 
-  if (maxTotal === 0 || queue.length === 0) {
+  if (queue.length === 0) {
     return {
       version: 1,
-      skipped: maxTotal === 0,
-      reason: maxTotal === 0 ? "LIGHTHOUSE_MAX=0" : "no URLs",
+      skipped: false,
+      scope: "internal_only",
+      reason: "no_ok_internal_pages",
       generatedAt: new Date().toISOString(),
       internalUrls: internal,
       externalUrls: external,
@@ -81,14 +67,14 @@ export async function runLighthouseBatch(p) {
   });
 
   try {
-    for (const url of queue) {
+    for (let i = 0; i < queue.length; i++) {
+      const url = queue[i];
       const slug = urlSlug(url);
-      const kind = internalSet.has(url) ? "internal" : "external";
       const baseName = `${slug}`;
       /** @type {any} */
       const row = {
         url,
-        kind,
+        kind: "internal",
         scores: {
           performance: null,
           accessibility: null,
@@ -119,6 +105,7 @@ export async function runLighthouseBatch(p) {
         row.error = err instanceof Error ? err.message : String(err);
       }
       items.push(row);
+      console.log(`Lighthouse ${i + 1}/${queue.length} ${url.slice(0, 72)}${url.length > 72 ? "…" : ""}`);
     }
   } finally {
     await chrome.kill();
@@ -127,8 +114,8 @@ export async function runLighthouseBatch(p) {
   return {
     version: 1,
     skipped: false,
+    scope: "internal_only",
     generatedAt: new Date().toISOString(),
-    lighthouseMax: maxTotal,
     internalUrls: internal,
     externalUrls: external,
     auditedUrls: queue,
@@ -144,6 +131,7 @@ export function lighthouseSummaryFromStructureOnly(structure) {
   return {
     version: 1,
     skipped: true,
+    scope: "internal_only",
     reason: "lighthouse not run",
     generatedAt: new Date().toISOString(),
     internalUrls: internalOkPageUrls(structure),
