@@ -8,6 +8,7 @@ import { chromium } from "playwright";
 import { runScenarios } from "./runner.mjs";
 import { buildReportHtml } from "./report-html.mjs";
 import { CRITERIA, CRITERION_IDS, STEP_TYPES, validateScenarioSteps } from "./schema.mjs";
+import { createDispatchMeta } from "./dispatch-sign.mjs";
 
 const inputDir = path.join(process.cwd(), "input");
 const outDir = path.join(process.cwd(), "output");
@@ -83,6 +84,12 @@ try {
     jobId: JOB_ID,
   });
   fs.writeFileSync(path.join(outDir, "report.html"), html, "utf8");
+
+  const dispatchSecret = process.env.DISPATCH_HMAC_SECRET;
+  if (dispatchSecret) {
+    const meta = createDispatchMeta(JOB_ID, dispatchSecret);
+    fs.writeFileSync(path.join(outDir, "dispatch-meta.json"), JSON.stringify(meta, null, 2), "utf8");
+  }
 
   console.log("Run-tests-only finished. Outputs in ./output");
   const failed = runResults.scenarios.filter((s) => !s.passed).length;

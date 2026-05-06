@@ -37,6 +37,12 @@ jobs:
       - name: Checkout main (scripts)
         uses: actions/checkout@v4
 
+      - name: Verify repository_dispatch 서명
+        if: github.event_name == 'repository_dispatch'
+        env:
+          DISPATCH_HMAC_SECRET: ${{ secrets.DISPATCH_HMAC_SECRET }}
+        run: node scripts/verify-dispatch-event.mjs
+
       - name: Checkout gh-pages (기존 job 산출물)
         uses: actions/checkout@v4
         with:
@@ -106,6 +112,7 @@ jobs:
         env:
           JOB_ID: ${{ steps.prep.outputs.job_id }}
           TRACE_MODE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.trace_mode || 'failure' }}
+          DISPATCH_HMAC_SECRET: ${{ secrets.DISPATCH_HMAC_SECRET }}
         run: npm run run-tests-only
 
       - name: Publish updated job folder

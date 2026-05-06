@@ -29,12 +29,13 @@ function githubRepo() {
 const qs = new URLSearchParams(window.location.search);
 const initialJob = (qs.get("job") || qs.get("jobId") || "").trim();
 
-/** @type {{ jobId: string; structure: any; scenariosDoc: any; results: any | null }} */
+/** @type {{ jobId: string; structure: any; scenariosDoc: any; results: any | null; dispatchMeta: any | null }} */
 const state = {
   jobId: "",
   structure: null,
   scenariosDoc: null,
   results: null,
+  dispatchMeta: null,
 };
 
 const el = {
@@ -58,6 +59,7 @@ const el = {
   triggerUrl: document.getElementById("trigger-url"),
   triggerSecret: document.getElementById("trigger-secret"),
   btnPostRerun: document.getElementById("btn-post-rerun"),
+  dispatchHint: document.getElementById("dispatch-hint"),
   linkActionsManual: document.getElementById("link-actions-manual"),
   structureSection: document.getElementById("structure-section"),
   structureBody: document.getElementById("structure-body"),
@@ -391,6 +393,22 @@ async function loadJob(jobId) {
   state.structure = structure;
   state.scenariosDoc = scenarios;
   state.results = results;
+  state.dispatchMeta = null;
+
+  try {
+    state.dispatchMeta = await fetchJson(jobFileUrl(jobId, "dispatch-meta.json"), { signal });
+  } catch {
+    state.dispatchMeta = null;
+  }
+  if (el.dispatchHint) {
+    if (state.dispatchMeta?.sig) {
+      el.dispatchHint.textContent =
+        "dispatch-meta.json 로드됨 — Worker에 DISPATCH_HMAC_SECRET이 설정되어 있으면 POST에 서명이 포함됩니다.";
+    } else {
+      el.dispatchHint.textContent =
+        "dispatch-meta.json 없음 — 저장소 Actions에 DISPATCH_HMAC_SECRET을 설정한 뒤 파이프라인을 다시 실행하면 생성됩니다.";
+    }
+  }
 
   renderSummary(structure, scenarios, results);
   renderStructure(structure);
@@ -504,6 +522,12 @@ el.btnPostRerun?.addEventListener("click", async () => {
     return;
   }
   setStatus("Worker에 POST 중…", "load");
+  const payload = { job_id: state.jobId, scenarios };
+  if (state.dispatchMeta?.sig != null && state.dispatchMeta?.exp != null) {
+    payload.dispatch_sig = state.dispatchMeta.sig;
+    payload.dispatch_exp = state.dispatchMeta.exp;
+  }
+
   try {
     const r = await fetch(url, {
       method: "POST",
@@ -512,7 +536,7 @@ el.btnPostRerun?.addEventListener("click", async () => {
         "Content-Type": "application/json",
         ...(secret ? { "X-QA-Secret": secret } : {}),
       },
-      body: JSON.stringify({ job_id: state.jobId, scenarios }),
+      body: JSON.stringify(payload),
     });
     const text = await r.text();
     if (!r.ok) {

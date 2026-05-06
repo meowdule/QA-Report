@@ -5,6 +5,12 @@ compatibility_date = "2024-01-01"
 
 [vars]
 GITHUB_REPO = "owner/repo"
+# 쉼표 구분. 설정 시 브라우저 Origin 이 목록에 없으면 POST 거절
+# ALLOWED_ORIGINS = "https://user.github.io,https://user.github.io/repo"
+# RATE_LIMIT_PER_MIN = "30"
+# MAX_BODY_BYTES = "262144"
+# MAX_SCENARIO_BYTES = "62000"
 
 # wrangler secret put GITHUB_TOKEN
 # wrangler secret put WEBHOOK_SECRET
+# wrangler secret put DISPATCH_HMAC_SECRET   # Actions secrets.DISPATCH_HMAC_SECRET 과 동일 값 권장

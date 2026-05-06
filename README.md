@@ -168,13 +168,22 @@ npx playwright show-trace traces/<시나리오-id>.zip
 2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포하고, Pages의 **Trigger Worker URL** 필드에 붙여 넣습니다(브라우저 `localStorage`에 저장됨).
 3. `web/index.html` 의 `data-github-repo` 를 본인 `owner/repo` 로 바꾸면 수동 실행 링크가 맞춰집니다.
 
-### Phase 5 — 트리거 레이어 하드닝
+### Phase 5 — 트리거 레이어 하드닝 ✅
 
-- [ ] Rate limit, 페이로드 크기 제한
-- [ ] job별 서명 토큰 검증
-- [ ] (선택) 간단 API 키 또는 Cloudflare Access와 연동
+- [x] **Worker:** IP별 분당 요청 제한, 본문·`scenarios` JSON 크기 상한, 선택 **`ALLOWED_ORIGINS`**
+- [x] **Job 서명:** `DISPATCH_HMAC_SECRET` + `jobs/<jobId>/dispatch-meta.json` (`HMAC-SHA256(jobId:exp)`). SPA가 POST 시 포함, Worker가 검증 후 `repository_dispatch`에 동일 필드 전달
+- [x] **Actions 이중 검증:** `DISPATCH_HMAC_SECRET` 이 있으면 `run-custom-scenarios` 가 `repository_dispatch` 수신 시 `scripts/verify-dispatch-event.mjs` 실행(없으면 스킵)
+- [x] **API 키:** Worker `WEBHOOK_SECRET` ↔ 헤더 `X-QA-Secret` (Phase 4 유지, 운영 권장)
+- [x] **Cloudflare Access:** Worker 앞단에 Access를 두는 방식은 [Cloudflare 문서](https://developers.cloudflare.com/cloudflare-one/policies/access/)를 참고(코드 변경 없음)
 
-**완료 기준:** 무차별 디스패치·토큰 유출 위험이 설계 수준에서 통제됨.
+**완료 기준:** 남용·임의 Job 덮어쓰기 완화(서명+Rate limit+Origin), PAT는 Worker/Actions 시크릿에만 존재.
+
+#### Phase 5 설정 체크리스트
+
+1. GitHub 저장소 **Settings → Secrets and variables → Actions** 에 `DISPATCH_HMAC_SECRET` 추가(임의 긴 랜덤 문자열).
+2. Cloudflare Worker **Secrets** 에 동일 값 `DISPATCH_HMAC_SECRET` 저장.
+3. `WEBHOOK_SECRET` 을 양쪽에 맞추고, Worker `ALLOWED_ORIGINS` 에 GitHub Pages URL을 지정.
+4. **Analyze** / **Run custom scenarios** 를 한 번씩 실행해 `dispatch-meta.json` 이 `jobs/<id>/` 에 생기는지 확인.
 
 ### Phase 6 — LLM 연동(선택)
 

@@ -68,6 +68,7 @@ jobs:
           MAX_DEPTH: ${{ github.event.inputs.max_depth }}
           TRACE_MODE: ${{ github.event.inputs.trace_mode }}
           JOB_ID: ${{ github.run_id }}
+          DISPATCH_HMAC_SECRET: ${{ secrets.DISPATCH_HMAC_SECRET }}
         run: node src/pipeline.mjs
 
       - name: Publish job artifacts to gh-pages
