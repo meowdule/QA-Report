@@ -33,7 +33,7 @@
         <p class="eyebrow">QA 리포트</p>
         <h1>사이트 분석 · 시나리오 테스트</h1>
         <p class="lede">
-          한 화면에서 <strong>분석 → 결과 확인 → 시나리오 조정 → 재테스트</strong>까지 진행합니다.
+          한 화면에서 <strong>분석 → 결과 확인 → 시나리오 조정 → 재테스트</strong>까지 진행합니다.<br>
           작업마다 번호가 새로 생겨 서로 다른 분석 결과가 섞이지 않습니다.
         </p>
       </header>
@@ -79,7 +79,7 @@
             >
             <a
               id="dash-nav-report"
-              class="hidden"
+              class="dashboard-nav-report hidden"
               href="#"
               target="_blank"
               rel="noopener noreferrer"
@@ -88,12 +88,9 @@
                   fill="currentColor"
                   d="M21 2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 14H3V4h18v12z"
                 /></svg>
-              리포트 (새 탭)</a
+              리포트</a
             >
           </nav>
-          <p id="dashboard-report-hint" class="dash-report-hint hidden">
-            전체 HTML 리포트는 위 <strong>리포트 (새 탭)</strong>에서 엽니다. 이 페이지에는 작업 요약·편집만 표시합니다.
-          </p>
 
           <details class="panel analyze-details" id="analyze-panel" open>
             <summary class="analyze-summary">
@@ -146,10 +143,10 @@
 
           <details class="panel job-id-details" id="job-id-panel" aria-label="예전 작업 번호로 결과 열기">
             <summary class="job-id-summary">
-              <span class="panel-step" aria-hidden="true">2</span> 예전에 받은 작업 번호로 열기 (선택)
+              <span class="panel-step" aria-hidden="true">2</span>작업 번호로 불러오기
             </summary>
             <p class="panel-intro">
-              주소 끝에 <code class="inline-code">?job=번호</code>가 있으면 자동으로 불러옵니다. 번호만 알고 있을 때 여기 입력해 주세요.
+              작업 번호를 알고 있을 때 여기 입력해 주세요.
             </p>
             <form id="job-form" class="job-form">
               <label class="field">
@@ -223,7 +220,7 @@
 
       <footer class="footer">
         <p class="footer-line">
-          본 도구로 생성된 리포트는 내부 점검·기록용으로 활용해 주세요. 타사 사이트를 대상으로 할 때는 해당 사이트의 이용약관을 준수해야 합니다.
+          본 도구로 생성된 리포트는 내부 점검·기록용으로 활용해 주세요.<br>타사 사이트를 대상으로 할 때는 해당 사이트의 이용약관을 준수해야 합니다.
         </p>
         <p class="footer-line footer-line--muted">© QA 리포트 · 교육·문서 목적의 예시 UI</p>
       </footer>

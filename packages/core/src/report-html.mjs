@@ -22,11 +22,17 @@ function buildPassGaugeSvg(passPct, passed, total) {
   const pct = Math.max(0, Math.min(100, Math.round(Number(passPct) || 0)));
   const dash = Math.round((pct / 100) * PASS_GAUGE_ARC);
   const sub = total ? "시나리오 기준 통과율" : "실행 결과 없음";
-  return `<svg class="pass-gauge-svg" viewBox="0 0 320 148" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
+  return `<svg class="pass-gauge-svg" viewBox="0 0 320 168" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
+    <defs>
+      <linearGradient id="reportPassGaugeGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+        <stop offset="0%" stop-color="#5eead4"/>
+        <stop offset="100%" stop-color="#0f766e"/>
+      </linearGradient>
+    </defs>
     <path class="pass-gauge-track" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke-width="18" stroke-linecap="round"/>
-    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="#0d9488" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
+    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="url(#reportPassGaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
     <text x="160" y="88" text-anchor="middle" class="pass-gauge-pct">${esc(pct)}%</text>
-    <text x="160" y="108" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
+    <text x="160" y="112" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
   </svg>`;
 }
 
@@ -94,7 +100,7 @@ function buildLhDonutSvg(score, stroke) {
   const s = score == null || Number.isNaN(Number(score)) ? null : Math.max(0, Math.min(100, Math.round(Number(score))));
   const dash = s == null ? 0 : Math.round((s / 100) * c);
   return `<svg class="lh-donut" viewBox="0 0 88 88" aria-hidden="true">
-    <circle cx="44" cy="44" r="${r}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+    <circle class="lh-donut-track" cx="44" cy="44" r="${r}" fill="none" stroke-width="8"/>
     <circle class="lh-donut-arc" cx="44" cy="44" r="${r}" fill="none" stroke="${esc(stroke)}" stroke-width="8" stroke-linecap="round"
       transform="rotate(-90 44 44)" stroke-dasharray="${dash} ${c}"/>
     <text x="44" y="50" text-anchor="middle" class="lh-donut-num">${s == null ? "—" : esc(String(s))}</text>
@@ -115,13 +121,17 @@ function buildLighthouseBoardHtml(lighthouseSummary) {
   const avgs = lighthouseCategoryAverages(items);
   if (skipped) {
     return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
-      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <div class="lh-board-head">
+        <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      </div>
       <p class="lh-board-empty">이번 작업에서는 Lighthouse를 실행하지 않았습니다.</p>
     </div>`;
   }
   if (items.length === 0) {
     return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
-      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <div class="lh-board-head">
+        <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      </div>
       <p class="lh-board-empty">감사할 내부 페이지가 없거나 결과가 없습니다.</p>
     </div>`;
   }
@@ -130,10 +140,6 @@ function buildLighthouseBoardHtml(lighthouseSummary) {
     const stroke = lhStrokeColor(score);
     const badge = lhBadgeLabel(score);
     const donut = buildLhDonutSvg(score, stroke);
-    const foot =
-      score == null
-        ? "0–100 스코어 · 측정 없음"
-        : `0–100 스코어 · 현재 ${esc(score)}점`;
     return `<div class="lh-mini-card">
       <div class="lh-mini-head">
         <span class="lh-mini-title">${esc(cat.title)}</span>
@@ -143,11 +149,13 @@ function buildLighthouseBoardHtml(lighthouseSummary) {
         <div class="lh-donut-wrap">${donut}</div>
         <p class="lh-mini-desc">${esc(cat.desc)}</p>
       </div>
-      <div class="lh-mini-foot">${foot}</div>
     </div>`;
   }).join("");
   return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
-    <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+    <div class="lh-board-head">
+      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <span class="lh-board-scale">0–100 스코어</span>
+    </div>
     <p class="lh-board-sub">감사 페이지 ${esc(items.length)}개 기준 평균 점수</p>
     <div class="lh-board-grid">${cards}</div>
   </div>`;
@@ -429,10 +437,23 @@ export function buildReportHtml(p) {
       .target-card-job { text-align: left; width: 100%; }
     }
     .target-card .lbl { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem; }
-    .target-card a { color: var(--accent); font-weight: 600; word-break: break-all; text-decoration: none; }
-    .target-card a:hover { text-decoration: underline; }
+    .target-url-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem 0.75rem;
+    }
+    .target-url-row > a {
+      color: var(--accent);
+      font-weight: 600;
+      word-break: break-all;
+      text-decoration: none;
+      flex: 1 1 14rem;
+      min-width: 0;
+    }
+    .target-url-row > a:hover { text-decoration: underline; }
     .target-job-id { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); word-break: break-all; }
-    .meta-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.55rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .meta-chips { display: inline-flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; font-size: 0.8rem; color: var(--muted); align-items: center; }
     .meta-chips span { padding: 0.22rem 0.55rem; background: #f4f6fb; border-radius: 999px; font-weight: 600; color: var(--muted); }
     .summary-dashboard {
       display: grid;
@@ -444,7 +465,15 @@ export function buildReportHtml(p) {
     @media (min-width: 860px) {
       .summary-dashboard { grid-template-columns: 1fr 1fr; }
     }
-    .sd-pass-col, .sd-lh-col { min-width: 0; }
+    .sd-pass-col, .sd-lh-col {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sd-pass-col .sd-gauge-card,
+    .sd-lh-col .lh-board {
+      flex: 1;
+    }
     .sd-hash-tags {
       display: flex;
       flex-wrap: wrap;
@@ -465,28 +494,56 @@ export function buildReportHtml(p) {
     .hash-tag--ok { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
     .hash-tag--fail { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
     .lh-board {
-      background: linear-gradient(160deg, #1a2234 0%, #121826 100%);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: var(--surface);
+      border: 1px solid rgba(229, 232, 242, 0.95);
       border-radius: var(--radius);
-      padding: 1.1rem 1.15rem 1.15rem;
+      padding: 1.1rem 1.15rem 1.1rem;
       box-shadow: var(--shadow);
-      color: #e2e8f0;
-      min-height: 100%;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
     }
-    .lh-board-title { margin: 0; font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; color: #f8fafc; }
-    .lh-board-sub { margin: 0.35rem 0 0.85rem; font-size: 0.78rem; color: #94a3b8; }
-    .lh-board-empty { margin: 0.5rem 0 0; font-size: 0.85rem; color: #94a3b8; }
+    .lh-board::before {
+      content: "";
+      position: absolute;
+      top: 0; right: 0;
+      width: 52%;
+      height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(13, 148, 136, 0.07), transparent 58%);
+      pointer-events: none;
+    }
+    .lh-board-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .lh-board-title { margin: 0; font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); }
+    .lh-board-scale {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .lh-board-sub { margin: 0.35rem 0 0.85rem; font-size: 0.78rem; color: var(--muted); position: relative; z-index: 1; }
+    .lh-board-empty { margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--muted); position: relative; z-index: 1; }
     .lh-board-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 0.75rem;
+      position: relative;
+      z-index: 1;
     }
     @media (min-width: 520px) {
       .lh-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .lh-mini-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: linear-gradient(165deg, #f8fafc 0%, #eef2f7 100%);
+      border: 1px solid var(--line);
       border-radius: 16px;
       padding: 0.85rem 0.95rem;
       display: flex;
@@ -494,29 +551,23 @@ export function buildReportHtml(p) {
       gap: 0.55rem;
     }
     .lh-mini-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-    .lh-mini-title { font-size: 0.88rem; font-weight: 800; color: #f1f5f9; }
+    .lh-mini-title { font-size: 0.88rem; font-weight: 800; color: var(--text); }
     .lh-badge {
       font-size: 0.68rem;
       font-weight: 700;
       padding: 0.2rem 0.5rem;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.2);
-      color: #cbd5e1;
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid var(--line);
       white-space: nowrap;
     }
     .lh-mini-body { display: flex; align-items: flex-start; gap: 0.65rem; }
     .lh-donut-wrap { flex-shrink: 0; width: 72px; height: 72px; }
     .lh-donut { width: 72px; height: 72px; display: block; }
-    .lh-donut-num { font-size: 17px; font-weight: 800; fill: #f8fafc; }
-    .lh-mini-desc { margin: 0; font-size: 0.72rem; line-height: 1.45; color: #94a3b8; flex: 1; min-width: 0; }
-    .lh-mini-foot {
-      font-size: 0.68rem;
-      color: #cbd5e1;
-      background: rgba(0,0,0,0.25);
-      border-radius: 999px;
-      padding: 0.35rem 0.65rem;
-      margin-top: auto;
-    }
+    .lh-donut-track { stroke: var(--gauge-track); }
+    .lh-donut-num { font-size: 17px; font-weight: 800; fill: var(--text); }
+    .lh-mini-desc { margin: 0; font-size: 0.72rem; line-height: 1.45; color: var(--muted); flex: 1; min-width: 0; }
     .sd-gauge-card {
       background: var(--surface);
       border: 1px solid rgba(229, 232, 242, 0.95);
@@ -538,15 +589,17 @@ export function buildReportHtml(p) {
     .sd-card-head { margin-bottom: 0.35rem; position: relative; }
     .sd-card-title { margin: 0; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; }
     .sd-card-desc { margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--muted); }
-    .pass-gauge-svg { width: 100%; max-width: 340px; margin: 0 auto; display: block; }
+    .pass-gauge-svg {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      display: block;
+      overflow: visible;
+      min-height: 168px;
+    }
     .pass-gauge-track { stroke: var(--gauge-track); }
     .pass-gauge-pct { font-size: 42px; font-weight: 800; fill: var(--text); letter-spacing: -0.04em; }
     .pass-gauge-sub { font-size: 13px; fill: var(--muted); }
-    .sd-metrics {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
     .two-col-urls {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -554,6 +607,13 @@ export function buildReportHtml(p) {
     }
     @media (max-width: 720px) { .two-col-urls { grid-template-columns: 1fr; } }
     .two-col-urls h3 { margin: 0 0 0.45rem; font-size: 0.92rem; font-weight: 800; }
+    #sites .sites-subh {
+      margin: 1.15rem 0 0.5rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+    #sites .sites-subh:first-of-type { margin-top: 0; }
+    .sites-table td { vertical-align: top; }
     .url-list { margin: 0; padding-left: 1.1rem; font-size: 0.84rem; word-break: break-all; }
     .url-list li { margin: 0.28rem 0; }
     .url-list .empty { list-style: none; margin-left: -1.1rem; color: var(--muted); }
@@ -637,9 +697,19 @@ export function buildReportHtml(p) {
     .crit-bar-cell { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
     .crit-bar-pct { font-size: 0.78rem; font-weight: 800; color: var(--text); min-width: 2.5rem; }
     .crawl-one { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.85rem; line-height: 1.5; }
-    .stat-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+    @media (max-width: 720px) {
+      .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 420px) {
+      .stat-grid { grid-template-columns: 1fr; }
+    }
     .stat-chip {
-      padding: 0.45rem 0.65rem;
+      padding: 0.5rem 0.65rem;
       background: #f8f9fe;
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -647,6 +717,9 @@ export function buildReportHtml(p) {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
     .stat-chip strong { color: var(--text); font-weight: 700; }
     .stat-ico-svg {
@@ -715,10 +788,12 @@ export function buildReportHtml(p) {
   <div class="target-card">
     <div class="target-card-main">
       <div class="lbl">분석한 사이트</div>
-      <a href="${esc(targetUrl)}" target="_blank" rel="noopener noreferrer">${esc(targetUrl)}</a>
-      <div class="meta-chips">
-        <span>시나리오 버전 ${esc(scenariosDoc.version ?? "—")}</span>
-        <span>기록 모드: ${esc(traceMode === "failure" ? "실패 시만" : traceMode === "all" ? "전체" : "끔")}</span>
+      <div class="target-url-row">
+        <a href="${esc(targetUrl)}" target="_blank" rel="noopener noreferrer">${esc(targetUrl)}</a>
+        <div class="meta-chips">
+          <span>시나리오 버전 ${esc(scenariosDoc.version ?? "—")}</span>
+          <span>기록 모드: ${esc(traceMode === "failure" ? "실패 시만" : traceMode === "all" ? "전체" : "끔")}</span>
+        </div>
       </div>
     </div>
     <div class="target-card-job">
@@ -750,8 +825,6 @@ export function buildReportHtml(p) {
   </section>
 
   <nav class="jump no-print" aria-label="섹션 이동">
-    <a href="#summary">요약</a>
-    <a href="#criteria">점검 기준</a>
     <a href="#sites">내부·외부 URL</a>
     <a href="#scenarios">시나리오별 결과</a>
     <a href="#errors">오류 메시지</a>
@@ -1044,7 +1117,7 @@ function buildSiteListsSection(structure, lighthouseSummary) {
   const pageByUrl = new Map((structure.pages || []).map((p) => [p.url, p]));
   const extSources = externalSourcesByUrl(structure);
 
-  const liIn = internal
+  const rowsIn = internal
     .map((u) => {
       const p = pageByUrl.get(u);
       const row0 = crawlMeta.get(u) || { depth: null, parent: undefined };
@@ -1058,20 +1131,20 @@ function buildSiteListsSection(structure, lighthouseSummary) {
           ? `이동 경로: <a href="${esc(parent)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(parent))}</a>에서 링크로 발견 · 방문 시점 깊이 ${esc(row.depth != null ? row.depth : "—")}`
           : `시작 URL에서 바로 방문 · 깊이 ${esc(row.depth != null ? row.depth : 0)}`;
         const sum = internalPageSummaryLine(p, visited, structure, row);
-        return `<li class="url-rich-item">
-          <a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>
-          <p class="url-rich-meta">${metaLine}</p>
-          <p class="url-rich-summary">${sum}</p>
-        </li>`;
+        return `<tr>
+          <td style="word-break:break-all"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
+          <td style="font-size:0.84rem;color:var(--muted)">${metaLine}</td>
+          <td style="font-size:0.84rem">${sum}</td>
+        </tr>`;
       }
-      return `<li class="url-rich-item">
-        <a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>
-        <p class="url-rich-meta">수집 구조에 이 URL의 상세가 없습니다.</p>
-      </li>`;
+      return `<tr>
+        <td style="word-break:break-all"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
+        <td colspan="2" style="color:var(--muted)">수집 구조에 이 URL의 상세가 없습니다.</td>
+      </tr>`;
     })
     .join("");
 
-  const liEx = external
+  const rowsEx = external
     .map((u) => {
       const srcs = extSources.get(u) || [];
       const srcHtml =
@@ -1083,25 +1156,35 @@ function buildSiteListsSection(structure, lighthouseSummary) {
                 return `<a href="${esc(s.fromUrl)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(s.fromUrl))}</a> (깊이 ${esc(s.depth)})${anchor}`;
               })
               .join("<br/>");
-      return `<li class="url-rich-item">
-        <a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>
-        <p class="url-rich-meta">발견 위치:<br/>${srcHtml}</p>
-      </li>`;
+      return `<tr>
+        <td style="word-break:break-all"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></td>
+        <td style="font-size:0.84rem;color:var(--muted)">${srcHtml}</td>
+      </tr>`;
     })
     .join("");
 
   return `<section class="section" id="sites">
     <h2>내부·외부 URL</h2>
-    <p class="lead">크롤로 <strong>실제로 방문·수집한 내부 페이지</strong>와, 페이지에서 찾은 <strong>외부 https 링크</strong>입니다. 각 항목에 <strong>어느 페이지에서 링크되었는지</strong>와 한 줄 요약을 붙였습니다.</p>
-    <div class="two-col-urls">
-      <div id="sites-internal">
-        <h3>내부 (방문)</h3>
-        <ul class="url-list url-list--rich">${liIn || '<li class="empty">내부 페이지가 없습니다.</li>'}</ul>
-      </div>
-      <div id="sites-external">
-        <h3>외부 (링크 수집)</h3>
-        <ul class="url-list url-list--rich">${liEx || '<li class="empty">수집된 외부 https 링크가 없습니다.</li>'}</ul>
-      </div>
+    <p class="lead">크롤로 <strong>실제로 방문·수집한 내부 페이지</strong>와, 페이지에서 찾은 <strong>외부 https 링크</strong>입니다. 경로·깊이·한 줄 요약은 표로 정리했습니다.</p>
+    <h3 class="sites-subh">내부 (방문)</h3>
+    <div class="scroll-x">
+      <table class="data sites-table">
+        <thead><tr><th>URL</th><th>발견·경로</th><th>요약</th></tr></thead>
+        <tbody>${
+          rowsIn ||
+          '<tr><td colspan="3" style="color:var(--muted)">내부 페이지가 없습니다.</td></tr>'
+        }</tbody>
+      </table>
+    </div>
+    <h3 class="sites-subh">외부 (링크 수집)</h3>
+    <div class="scroll-x">
+      <table class="data sites-table">
+        <thead><tr><th>URL</th><th>발견 위치</th></tr></thead>
+        <tbody>${
+          rowsEx ||
+          '<tr><td colspan="2" style="color:var(--muted)">수집된 외부 https 링크가 없습니다.</td></tr>'
+        }</tbody>
+      </table>
     </div>
   </section>`;
 }

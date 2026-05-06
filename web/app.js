@@ -257,11 +257,17 @@ function passGaugeSvg(passPct, passed, total) {
   const pct = Math.max(0, Math.min(100, Math.round(Number(passPct) || 0)));
   const dash = Math.round((pct / 100) * PASS_GAUGE_ARC);
   const sub = total ? "시나리오 기준 통과율" : "실행 결과 없음";
-  return `<svg class="pass-gauge-svg" viewBox="0 0 320 148" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
+  return `<svg class="pass-gauge-svg" viewBox="0 0 320 168" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
+    <defs>
+      <linearGradient id="spaPassGaugeGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+        <stop offset="0%" stop-color="#5eead4"/>
+        <stop offset="100%" stop-color="#0f766e"/>
+      </linearGradient>
+    </defs>
     <path class="pass-gauge-track" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke-width="18" stroke-linecap="round"/>
-    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="var(--accent-dim, #0d9488)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
+    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="url(#spaPassGaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
     <text x="160" y="88" text-anchor="middle" class="pass-gauge-pct">${esc(pct)}%</text>
-    <text x="160" y="108" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
+    <text x="160" y="112" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
   </svg>`;
 }
 
@@ -305,7 +311,7 @@ function lhDonutSvgSpa(score, stroke) {
   const s = score == null || Number.isNaN(Number(score)) ? null : Math.max(0, Math.min(100, Math.round(Number(score))));
   const dash = s == null ? 0 : Math.round((s / 100) * c);
   return `<svg class="lh-donut" viewBox="0 0 88 88" aria-hidden="true">
-    <circle cx="44" cy="44" r="${r}" fill="none" stroke="rgba(148,163,184,0.25)" stroke-width="8"/>
+    <circle class="lh-donut-track" cx="44" cy="44" r="${r}" fill="none" stroke-width="8"/>
     <circle cx="44" cy="44" r="${r}" fill="none" stroke="${esc(stroke)}" stroke-width="8" stroke-linecap="round"
       transform="rotate(-90 44 44)" stroke-dasharray="${dash} ${c}"/>
     <text x="44" y="50" text-anchor="middle" class="lh-donut-num">${s == null ? "—" : esc(String(s))}</text>
@@ -327,13 +333,17 @@ function lighthouseBoardHtmlSpa(summary) {
   const skipped = summary?.skipped === true;
   if (skipped) {
     return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
-      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <div class="lh-board-head">
+        <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      </div>
       <p class="lh-board-empty">이번 작업에서는 Lighthouse를 실행하지 않았습니다.</p>
     </div>`;
   }
   if (!items.length) {
     return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
-      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <div class="lh-board-head">
+        <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      </div>
       <p class="lh-board-empty">감사 결과가 없습니다.</p>
     </div>`;
   }
@@ -358,8 +368,6 @@ function lighthouseBoardHtmlSpa(summary) {
     const score = avgs[cat.key];
     const stroke = lhStrokeColorSpa(score);
     const donut = lhDonutSvgSpa(score, stroke);
-    const foot =
-      score == null ? "0–100 스코어 · 측정 없음" : `0–100 스코어 · 현재 ${esc(score)}점`;
     return `<div class="lh-mini-card">
       <div class="lh-mini-head">
         <span class="lh-mini-title">${esc(cat.title)}</span>
@@ -369,11 +377,13 @@ function lighthouseBoardHtmlSpa(summary) {
         <div class="lh-donut-wrap">${donut}</div>
         <p class="lh-mini-desc">${esc(cat.desc)}</p>
       </div>
-      <div class="lh-mini-foot">${foot}</div>
     </div>`;
   }).join("");
   return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
-    <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+    <div class="lh-board-head">
+      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <span class="lh-board-scale">0–100 스코어</span>
+    </div>
     <p class="lh-board-sub">감사 페이지 ${esc(items.length)}개 기준 평균 점수</p>
     <div class="lh-board-grid">${cards}</div>
   </div>`;
@@ -779,7 +789,6 @@ const el = {
   resultsSection: document.getElementById("results-section"),
   resultsBody: document.getElementById("results-body"),
   dashNavReport: document.getElementById("dash-nav-report"),
-  dashboardReportHint: document.getElementById("dashboard-report-hint"),
 };
 
 /** @type {AbortController | null} */
@@ -1150,7 +1159,6 @@ function hideAllPanels() {
   show(el.summarySection, false);
   show(el.editSection, false);
   show(el.resultsSection, false);
-  show(el.dashboardReportHint, false);
   if (el.dashNavReport instanceof HTMLAnchorElement) {
     el.dashNavReport.classList.add("hidden");
     el.dashNavReport.href = "#";
@@ -1339,7 +1347,6 @@ async function loadJob(jobId, opts = {}) {
 
   show(el.summarySection, true);
   show(el.dashboardNav, true);
-  show(el.dashboardReportHint, true);
   wireReport(jobRel);
   syncDashboardNavLinks();
 
