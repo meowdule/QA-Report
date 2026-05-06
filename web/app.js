@@ -1344,6 +1344,8 @@ async function loadJob(jobId, opts = {}) {
 
   show(el.summarySection, true);
   show(el.dashboardNav, true);
+  document.getElementById("analyze-panel")?.removeAttribute("open");
+  document.getElementById("job-id-panel")?.removeAttribute("open");
   wireReport(jobRel);
   syncDashboardNavLinks();
 

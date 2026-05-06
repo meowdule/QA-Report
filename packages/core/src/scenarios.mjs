@@ -1,4 +1,4 @@
-import { normalizeStructureUrl } from "./crawl.mjs";
+import { displayPathRelativeToSeed, normalizeStructureUrl } from "./crawl.mjs";
 import { CRITERION_IDS, STEP_TYPES } from "./schema.mjs";
 
 const MAX_LINK_NAV_SCENARIOS = 8;
@@ -17,14 +17,17 @@ const MAX_FORM_ARIA_TOGGLE = 2;
  */
 export function buildDraftScenarios(structure) {
   const pages = structure.pages.filter((p) => !p.error && p.httpStatus >= 200 && p.httpStatus < 400);
+  const seed = structure.targetUrl || pages[0]?.url || "";
   /** @type {any[]} */
   const scenarios = [];
 
   pages.forEach((p, i) => {
     const n = i + 1;
+    const pathHint = displayPathRelativeToSeed(seed, p.url);
+    const titleExtra = p.title && String(p.title).trim() && String(p.title).trim() !== pathHint ? ` · ${String(p.title).trim().slice(0, 48)}` : "";
     scenarios.push({
       id: `render-${n}`,
-      name: `페이지 렌더링: ${p.title || p.url}`,
+      name: `렌더 ${pathHint}${titleExtra}`,
       criteria: ["page_rendering", "console_errors"],
       steps: [
         { type: "navigate", url: p.url },
@@ -81,10 +84,20 @@ export function buildDraftScenarios(structure) {
     const second = uniq[1];
     const third = uniq[2];
     if (second) {
-      addLinkClickScenario(p.url, second, `링크 이동: ${shortUrl(p.url)} → ${shortUrl(second)}`, p.linkClickMeta);
+      addLinkClickScenario(
+        p.url,
+        second,
+        `링크 ${displayPathRelativeToSeed(seed, p.url)} → ${displayPathRelativeToSeed(seed, second)}`,
+        p.linkClickMeta,
+      );
     }
     if (third && linkNavCount < MAX_LINK_NAV_SCENARIOS) {
-      addLinkClickScenario(p.url, third, `링크 이동(3번째): ${shortUrl(p.url)} → ${shortUrl(third)}`, p.linkClickMeta);
+      addLinkClickScenario(
+        p.url,
+        third,
+        `링크(3) ${displayPathRelativeToSeed(seed, p.url)} → ${displayPathRelativeToSeed(seed, third)}`,
+        p.linkClickMeta,
+      );
     }
   }
 
@@ -92,7 +105,12 @@ export function buildDraftScenarios(structure) {
   if (home?.links?.length && linkNavCount < MAX_LINK_NAV_SCENARIOS) {
     const first = home.links.find((u) => u !== home.url) || home.links[0];
     if (first && !usedLinkPairs.has(`${home.url}→${first}`)) {
-      addLinkClickScenario(home.url, first, "핵심 액션: 홈에서 첫 동일 출처 링크 클릭", home.linkClickMeta);
+      addLinkClickScenario(
+        home.url,
+        first,
+        `링크(홈) ${displayPathRelativeToSeed(seed, home.url)} → ${displayPathRelativeToSeed(seed, first)}`,
+        home.linkClickMeta,
+      );
     }
   }
 

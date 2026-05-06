@@ -1,6 +1,16 @@
+import { displayPathRelativeToSeed } from "./crawl.mjs";
 import { CRITERIA } from "./schema.mjs";
 import { externalHttpUrlsSorted, internalOkPageUrls } from "./site-lists.mjs";
 import { statChipIconHtml } from "../../../web/ui-icons.mjs";
+
+/** 시나리오 상세 섹션 묶음 순서 (schema 의 CriterionId 부분집합) */
+const CRITERION_GROUP_ORDER = /** @type {const} */ ([
+  "page_rendering",
+  "core_action",
+  "input_data",
+  "primary_flow",
+  "console_errors",
+]);
 
 function esc(s) {
   return String(s ?? "")
@@ -311,9 +321,10 @@ export function buildReportHtml(p) {
   const pages = structure.pages?.length ?? 0;
   const traceMode = runResults.traceMode ?? "failure";
 
+  const seedUrl = structure.targetUrl || structure.pages?.[0]?.url || "";
   const criteriaRows = buildCriteriaTable(runResults.criteriaSummary);
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
-  const scenarioRows = runResults.scenarios.map((s) => buildScenarioTableRow(s)).join("");
+  const scenarioDetailHtml = buildScenarioDetailGrouped(runResults, seedUrl);
   const crawlInsightHtml = buildCrawlInsightSection(structure);
   const siteListsHtml = buildSiteListsSection(structure, lighthouseSummary);
   const lighthouseDetailHtml = buildLighthouseDetailSection(lighthouseSummary);
@@ -742,9 +753,29 @@ export function buildReportHtml(p) {
     .stat-ico-svg--cyan { color: #0891b2; }
     .stat-ico-svg--emerald { color: #059669; }
     .stat-ico-svg--muted { color: #64748b; }
-    .scenario-table td { font-size: 0.86rem; }
-    .scenario-steps { margin: 0; padding-left: 1rem; }
-    .scenario-steps li { margin: 0.18rem 0; }
+    .scenario-table td { font-size: 0.86rem; vertical-align: top; }
+    .scenario-table td:nth-child(2) { max-width: 14rem; word-break: break-word; }
+    .scenario-table td:nth-child(4) { max-width: 11rem; font-size: 0.78rem; }
+    .scenario-table td:last-child { max-width: 19rem; font-size: 0.74rem; line-height: 1.38; }
+    .scenario-steps { margin: 0; padding-left: 0.85rem; }
+    .scenario-steps li { margin: 0.08rem 0; font-size: 0.72rem; line-height: 1.35; }
+    .scenario-grp {
+      margin: 0.65rem 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      padding: 0 0.65rem 0.55rem;
+    }
+    .scenario-grp-sum {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 0.55rem 0;
+      margin: 0;
+    }
+    .scenario-grp-sum::-webkit-details-marker { display: none; }
+    .scenario-grp-meta { font-weight: 600; color: var(--muted); font-size: 0.8rem; margin-left: 0.35rem; }
     .status-chip { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.74rem; font-weight: 700; }
     .status-chip.pass { color: var(--ok); background: var(--ok-bg); }
     .status-chip.fail { color: var(--bad); background: var(--bad-bg); }
@@ -767,7 +798,7 @@ export function buildReportHtml(p) {
       body { background: #fff; }
       .wrap { max-width: none; padding: 0; }
       .summary-dashboard { grid-template-columns: 1fr 1fr !important; }
-      .section, .target-card, .summary-dashboard, .sd-gauge-card, .lh-board { break-inside: avoid; box-shadow: none; }
+      .section, .target-card, .summary-dashboard, .sd-gauge-card, .lh-board, .scenario-grp { break-inside: avoid; box-shadow: none; }
     }
   </style>
 </head>
@@ -807,7 +838,7 @@ export function buildReportHtml(p) {
 
   <section class="section" id="criteria">
     <h2>점검 기준별 요약</h2>
-    <p class="lead">각 항목이 몇 번 통과·실패했는지 보여 줍니다. 한 시나리오에 여러 기준이 붙을 수 있습니다.</p>
+    <p class="lead">각 항목이 몇 번 통과·실패했는지 보여 줍니다. <strong>기준 이름</strong>을 누르면 아래 시나리오 상세에서 해당 묶음으로 이동합니다.</p>
     <div class="scroll-x">
       <table class="data">
         <thead>
@@ -817,7 +848,6 @@ export function buildReportHtml(p) {
             <th>통과 비율</th>
             <th>통과</th>
             <th>실패</th>
-            <th>관련 시나리오</th>
           </tr>
         </thead>
         <tbody>${criteriaRows}</tbody>
@@ -842,13 +872,8 @@ export function buildReportHtml(p) {
 
   <section class="section" id="scenarios">
     <h2>시나리오별 상세</h2>
-    <p class="lead">이전 형태처럼 표로 각 시나리오의 상태, 소요 시간, 실행 단계를 확인할 수 있습니다.</p>
-    <div class="scroll-x">
-      <table class="data scenario-table">
-        <thead><tr><th>상태</th><th>시나리오</th><th>소요</th><th>점검 기준</th><th>실행 단계</th></tr></thead>
-        <tbody>${scenarioRows}</tbody>
-      </table>
-    </div>
+    <p class="lead">점검 기준별로 묶었습니다. 인쇄·PDF 저장 시에는 모두 펼쳐진 상태로 출력됩니다.</p>
+    ${scenarioDetailHtml}
   </section>
 
   ${crawlInsightHtml}
@@ -960,12 +985,12 @@ function buildCrawlInsightSection(structure) {
  */
 function buildCriteriaTable(summary) {
   if (!summary || Object.keys(summary).length === 0) {
-    return `<tr><td colspan="6" style="color:var(--muted)">표시할 요약이 없습니다.</td></tr>`;
+    return `<tr><td colspan="5" style="color:var(--muted)">표시할 요약이 없습니다.</td></tr>`;
   }
 
   const entries = Object.entries(summary).filter(([, row]) => (row.pass || 0) + (row.fail || 0) > 0);
   if (!entries.length) {
-    return `<tr><td colspan="6" style="color:var(--muted)">이번 실행에 태깅된 기준이 없습니다.</td></tr>`;
+    return `<tr><td colspan="5" style="color:var(--muted)">이번 실행에 태깅된 기준이 없습니다.</td></tr>`;
   }
 
   return entries
@@ -975,20 +1000,13 @@ function buildCriteriaTable(summary) {
       const desc = def?.description ?? "";
       const total = row.pass + row.fail;
       const rate = total ? Math.round((row.pass / total) * 100) : 0;
-      const scenList = (row.scenarioIds || [])
-        .map(
-          /** @param {{ id: string; passed: boolean }} s */ (s) =>
-            `<span class="${s.passed ? "crit-ok" : "crit-bad"}">${esc(s.id)}</span>`,
-        )
-        .join(" ");
       const bar = `<div class="crit-bar-cell"><div class="crit-bar-track" title="${esc(rate)}%"><span class="crit-bar-fill" style="width:${esc(rate)}%"></span></div><span class="crit-bar-pct">${esc(rate)}%</span></div>`;
       return `<tr>
-        <td><strong>${esc(label)}</strong></td>
+        <td><strong><a href="#scenarios-grp-${esc(id)}">${esc(label)}</a></strong></td>
         <td style="color:var(--muted);font-size:0.88rem">${esc(desc)}</td>
         <td>${bar}</td>
         <td class="crit-ok">${esc(row.pass)}</td>
         <td class="crit-bad">${esc(row.fail)}</td>
-        <td style="word-break:break-word;font-size:0.85rem">${scenList || "—"}</td>
       </tr>`;
     })
     .join("");
@@ -1025,7 +1043,66 @@ function buildFailedConsoleSection(scenarios) {
 /**
  * @param {any} s
  */
-function buildScenarioTableRow(s) {
+function primaryCriterionForScenario(s) {
+  const c = s.criteria || [];
+  for (const id of CRITERION_GROUP_ORDER) {
+    if (c.includes(id)) return id;
+  }
+  return /** @type {string} */ (c[0] || "other");
+}
+
+/**
+ * @param {any} runResults
+ * @param {string} seedUrl
+ */
+function buildScenarioDetailGrouped(runResults, seedUrl) {
+  const list = runResults.scenarios || [];
+  if (!list.length) {
+    return `<p style="color:var(--muted);margin:0">실행된 시나리오가 없습니다.</p>`;
+  }
+
+  /** @type {Record<string, any[]>} */
+  const groups = {};
+  for (const s of list) {
+    const k = primaryCriterionForScenario(s);
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(s);
+  }
+
+  const extraIds = Object.keys(groups).filter((id) => !CRITERION_GROUP_ORDER.includes(id) && id !== "other");
+  extraIds.sort();
+
+  /** @type {string[]} */
+  const order = [
+    ...CRITERION_GROUP_ORDER.filter((id) => groups[id]?.length),
+    ...extraIds.filter((id) => groups[id]?.length),
+  ];
+  if (groups.other?.length) order.push("other");
+
+  return order
+    .map((id) => {
+      const g = groups[id];
+      const def = CRITERIA[/** @type {keyof typeof CRITERIA} */ (id)];
+      const title = def?.labelKo ?? id;
+      const rows = g.map((s) => buildScenarioTableRow(s, seedUrl)).join("");
+      return `<details class="scenario-grp" open id="scenarios-grp-${esc(id)}">
+  <summary class="scenario-grp-sum">${esc(title)}<span class="scenario-grp-meta">${esc(String(g.length))}건</span></summary>
+  <div class="scroll-x">
+    <table class="data scenario-table">
+      <thead><tr><th>상태</th><th>시나리오</th><th>소요</th><th>점검 기준</th><th>실행 단계</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+</details>`;
+    })
+    .join("\n");
+}
+
+/**
+ * @param {any} s
+ * @param {string} seedUrl
+ */
+function buildScenarioTableRow(s, seedUrl) {
   const badgeText = s.passed ? "통과" : "실패";
   const badgeCls = s.passed ? "pass" : "fail";
   const crit = (s.criteria || []).map((c) => `<span class="pill">${esc(criterionLabelKo(c))}</span>`).join(" ");
@@ -1033,10 +1110,12 @@ function buildScenarioTableRow(s) {
   const steps = (s.steps || [])
     .map((st) => {
       const label = STEP_LABEL_KO[st.type] || st.type;
-      return `<li>${stepIconSvg(st.type)}<strong>${esc(label)}</strong>${formatStepDetailHuman(st)}</li>`;
+      return `<li>${stepIconSvg(st.type)}<strong>${esc(label)}</strong>${formatStepDetailHuman(st, seedUrl)}</li>`;
     })
     .join("");
-  return `<tr>
+  const sid = s.id != null ? String(s.id) : "";
+  const rid = sid ? ` id="scen-${esc(sid)}"` : "";
+  return `<tr${rid}>
     <td><span class="status-chip ${badgeCls}">${esc(badgeText)}</span></td>
     <td><strong>${esc(s.name)}</strong></td>
     <td>${esc(sec)}초</td>
@@ -1051,35 +1130,89 @@ function criterionLabelKo(id) {
 }
 
 /**
- * @param {any} st
+ * Playwright/러너 오류 문구를 짧게 (예: timeout 8000ms)
+ * @param {unknown} raw
  */
-function formatStepDetailHuman(st) {
-  const parts = [];
-  if (st.url) parts.push(`주소 ${esc(shortUrl(st.url))}`);
-  if (st.finalUrl && st.finalUrl !== st.url) parts.push(`이동 후 ${esc(shortUrl(st.finalUrl))}`);
-  if (st.status != null) parts.push(`응답 ${esc(st.status)}`);
-  if (st.navigationMode && st.navigationMode !== "same_tab_or_spa") {
-    const navKo =
-      st.navigationMode === "new_tab_or_popup"
-        ? "새 창/탭"
-        : st.navigationMode === "full_navigation_same_tab"
-          ? "같은 탭에서 다른 사이트로 이동"
-          : st.navigationMode === "same_origin_navigation"
-            ? "같은 사이트 안에서 이동"
-            : st.navigationMode;
-    parts.push(esc(navKo));
+function shortenStepError(raw) {
+  const s = String(raw ?? "");
+  const m = s.match(/Timeout\s+(\d+)\s*ms/i);
+  if (m) return `timeout ${m[1]}ms`;
+  const trimmed = s.trim();
+  if (trimmed.length > 96) return `${trimmed.slice(0, 93)}…`;
+  return trimmed;
+}
+
+/**
+ * @param {any} st
+ * @param {string} seedUrl
+ */
+function formatStepDetailHuman(st, seedUrl) {
+  const seed = seedUrl || "";
+
+  if (st.type === "navigate") {
+    const relTo = st.finalUrl
+      ? displayPathRelativeToSeed(seed, st.finalUrl)
+      : displayPathRelativeToSeed(seed, st.url || "");
+    const relFrom =
+      st.url && st.finalUrl && String(st.url) !== String(st.finalUrl)
+        ? displayPathRelativeToSeed(seed, st.url)
+        : "";
+    let line = relFrom ? `${relFrom} → ${relTo}` : relTo;
+    if (st.status != null) line += ` · ${st.status}`;
+    return ` — <span class="step-detail">${esc(line)}</span>`;
   }
-  if (st.popupUrl) parts.push(`팝업 ${esc(shortUrl(st.popupUrl))}`);
-  if (st.dialogs?.length) parts.push(`알림 창 ${st.dialogs.length}회`);
-  if (st.selector) parts.push(`대상 요소`);
-  if (st.href) parts.push(`링크 ${esc(shortUrl(st.href))}`);
-  if (st.accessibleName) parts.push(`이름 「${esc(String(st.accessibleName).slice(0, 40))}」`);
-  if (st.values) parts.push(`선택 값 ${esc(JSON.stringify(st.values))}`);
-  if (st.value != null && String(st.value) !== "") parts.push(`값 ${esc(String(st.value).slice(0, 40))}`);
-  if (st.label != null && String(st.label) !== "") parts.push(`항목 「${esc(String(st.label).slice(0, 40))}」`);
-  if (st.error) parts.push(`<span class="step-detail">원인: ${esc(String(st.error).slice(0, 200))}</span>`);
+
+  /** @type {string[]} */
+  const parts = [];
+
+  if (st.type === "click") {
+    if (st.finalUrl) {
+      if (st.url && String(st.url) !== String(st.finalUrl)) {
+        parts.push(`${displayPathRelativeToSeed(seed, st.url)} → ${displayPathRelativeToSeed(seed, st.finalUrl)}`);
+      } else {
+        parts.push(displayPathRelativeToSeed(seed, st.finalUrl));
+      }
+    }
+    if (st.status != null) parts.push(String(st.status));
+    if (st.navigationMode && st.navigationMode !== "same_tab_or_spa") {
+      if (st.navigationMode === "new_tab_or_popup") parts.push("새 탭");
+      else if (st.navigationMode === "full_navigation_same_tab") parts.push("외부 이동");
+      else if (st.navigationMode === "same_origin_navigation") parts.push("동일 사이트");
+    }
+    if (st.href) parts.push(`href ${displayPathRelativeToSeed(seed, st.href)}`);
+    if (st.accessibleName) parts.push(String(st.accessibleName).slice(0, 24));
+    if (st.selector) parts.push("요소");
+    if (st.error) parts.push(shortenStepError(st.error));
+  } else if (st.type === "waitForResponse") {
+    if (st.urlPattern) parts.push(String(st.urlPattern).slice(0, 36));
+    if (st.error) parts.push(shortenStepError(st.error));
+    else if (st.status != null) parts.push(String(st.status));
+  } else if (st.type === "fill" || st.type === "selectOption" || st.type === "check") {
+    if (st.label) parts.push(`「${String(st.label).slice(0, 20)}」`);
+    if (st.value != null && String(st.value) !== "") parts.push(String(st.value).slice(0, 20));
+    if (st.selector) parts.push("필드");
+    if (st.error) parts.push(shortenStepError(st.error));
+  } else if (st.type === "assertVisible") {
+    if (st.selector) parts.push("영역");
+    if (st.error) parts.push(shortenStepError(st.error));
+  } else if (st.type === "waitForSelector") {
+    if (st.selector) parts.push("대기");
+    if (st.error) parts.push(shortenStepError(st.error));
+  } else if (st.type === "assertNoConsoleError") {
+    if (st.error) parts.push(shortenStepError(st.error));
+  } else {
+    if (st.url) parts.push(displayPathRelativeToSeed(seed, st.url));
+    if (st.finalUrl && String(st.finalUrl) !== String(st.url)) parts.push(`→ ${displayPathRelativeToSeed(seed, st.finalUrl)}`);
+    if (st.status != null) parts.push(String(st.status));
+    if (st.href) parts.push(`href ${displayPathRelativeToSeed(seed, st.href)}`);
+    if (st.error) parts.push(shortenStepError(st.error));
+  }
+
+  if (st.popupUrl) parts.push(`팝업 ${displayPathRelativeToSeed(seed, st.popupUrl)}`);
+  if (st.dialogs?.length) parts.push(`대화 ${st.dialogs.length}`);
+
   if (!parts.length) return "";
-  return ` — <span class="step-detail">${parts.join(" · ")}</span>`;
+  return ` — <span class="step-detail">${esc(parts.join(" · "))}</span>`;
 }
 
 function shortUrl(u) {
@@ -1113,6 +1246,7 @@ function mergeSiteLists(structure, lighthouseSummary) {
  */
 function buildSiteListsSection(structure, lighthouseSummary) {
   const { internal, external } = mergeSiteLists(structure, lighthouseSummary);
+  const seed = structure?.targetUrl || internal[0] || "";
   const visited = new Set((structure.pages || []).map((p) => p.url));
   const crawlMeta = computeCrawlMeta(structure);
   const pageByUrl = new Map((structure.pages || []).map((p) => [p.url, p]));
@@ -1130,7 +1264,7 @@ function buildSiteListsSection(structure, lighthouseSummary) {
         const parent = row.parent;
         const depthCell = esc(row.depth != null ? String(row.depth) : "—");
         const metaLine = parent
-          ? `<a href="${esc(parent)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(parent))}</a>`
+          ? `<a href="${esc(parent)}" target="_blank" rel="noopener noreferrer" title="${esc(parent)}">${esc(displayPathRelativeToSeed(seed, parent))}</a>`
           : `<span class="sites-src-start">시작</span>`;
         const sum = internalPageSummaryCompact(p, visited);
         return `<tr>
@@ -1163,7 +1297,7 @@ function buildSiteListsSection(structure, lighthouseSummary) {
           : srcs
               .map((s) => {
                 const lab = s.label ? ` · ${esc(String(s.label).slice(0, 28))}` : "";
-                return `<a href="${esc(s.fromUrl)}" target="_blank" rel="noopener noreferrer">${esc(shortUrl(s.fromUrl))}</a>${lab}`;
+                return `<a href="${esc(s.fromUrl)}" target="_blank" rel="noopener noreferrer" title="${esc(s.fromUrl)}">${esc(displayPathRelativeToSeed(seed, s.fromUrl))}</a>${lab}`;
               })
               .join("<br/>");
       return `<tr>
@@ -1212,15 +1346,13 @@ function buildLighthouseDetailSection(lighthouseSummary) {
   const skipped = lighthouseSummary?.skipped === true;
   const rows = items
     .map((row) => {
-      const { url, kind, scores, reportHtml, error } = row;
+      const { url, scores, reportHtml, error } = row;
       const link =
         typeof reportHtml === "string"
           ? `<a href="${esc(reportHtml)}" target="_blank" rel="noopener noreferrer">HTML 리포트</a>`
           : "—";
       const err = error ? ` <span class="crit-bad">${esc(String(error).slice(0, 160))}</span>` : "";
-      const kindKo = kind === "external" ? "외부" : "내부";
       return `<tr>
-        <td><span class="pill">${esc(kindKo)}</span></td>
         <td style="word-break:break-all"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url)}</a>${err}</td>
         <td>${scoreCell(scores?.performance)}</td>
         <td>${scoreCell(scores?.accessibility)}</td>
@@ -1245,10 +1377,10 @@ function buildLighthouseDetailSection(lighthouseSummary) {
     ${note}
     <div class="scroll-x">
       <table class="data">
-        <thead><tr><th>구분</th><th>URL</th><th>성능</th><th>접근성</th><th>권장</th><th>SEO</th><th>리포트</th></tr></thead>
+        <thead><tr><th>URL</th><th>성능</th><th>접근성</th><th>권장</th><th>SEO</th><th>리포트</th></tr></thead>
         <tbody>${
           rows ||
-          '<tr><td colspan="7" style="color:var(--muted)">표시할 Lighthouse 실행 결과가 없습니다.</td></tr>'
+          '<tr><td colspan="6" style="color:var(--muted)">표시할 Lighthouse 실행 결과가 없습니다.</td></tr>'
         }</tbody>
       </table>
     </div>

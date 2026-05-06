@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { normalizeStructureUrl } from "../src/crawl.mjs";
+import { displayPathRelativeToSeed, normalizeStructureUrl } from "../src/crawl.mjs";
 import { copyWebIconToOutput } from "../src/copy-web-icon.mjs";
 import { buildMaskedPack } from "../src/llm-enrich.mjs";
 import { buildReportHtml } from "../src/report-html.mjs";
@@ -25,6 +25,12 @@ test("normalizeStructureUrl strips anchor hash and trailing slash; keeps SPA has
     normalizeStructureUrl("https://ex.com/app/#!/legacy", base),
     "https://ex.com/app#!/legacy",
   );
+});
+
+test("displayPathRelativeToSeed shows path+hash from seed origin", () => {
+  const seed = "https://ex.com/app/";
+  assert.equal(displayPathRelativeToSeed(seed, "https://ex.com/app/#/x"), "/app#/x");
+  assert.equal(displayPathRelativeToSeed(seed, "https://ex.com/other"), "/other");
 });
 
 test("validateScenarioSteps accepts waitForSelector", () => {

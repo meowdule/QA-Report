@@ -27,6 +27,31 @@ export function normalizeStructureUrl(href, base) {
 }
 
 /**
+ * 시드(분석 시작 URL) 대비 짧은 표시용 문자열 (path + 클라이언트 hash). 리포트·초안 시나리오 이름에 사용.
+ * @param {string} seedHref
+ * @param {string} absHref
+ */
+export function displayPathRelativeToSeed(seedHref, absHref) {
+  const abs = String(absHref ?? "");
+  const seedStr = seedHref && String(seedHref).trim() ? String(seedHref) : abs;
+  try {
+    const seed = new URL(seedStr);
+    const u = new URL(abs, seedStr);
+    if (u.origin !== seed.origin) {
+      const tail = `${u.pathname || "/"}${u.search}${u.hash}`;
+      return tail.length > 64 ? `${tail.slice(0, 61)}…` : tail;
+    }
+    let path = u.pathname || "/";
+    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+    const hash = u.hash && u.hash !== "#" ? u.hash : "";
+    const out = `${path}${hash}` || "/";
+    return out.length > 72 ? `${out.slice(0, 69)}…` : out;
+  } catch {
+    return abs.length > 64 ? `${abs.slice(0, 61)}…` : abs;
+  }
+}
+
+/**
  * 동일 사이트(same origin) 링크를 BFS 로 제한 크롤합니다.
  * 링크: a, area, 흔한 data-* 패턴. 각 페이지에서 클릭 후보(button, role 등)와
  * 폼 컨트롤(select 단일/다중, 라디오 그룹, 체크박스, 스위치·aria 토글, label[for])도 수집합니다.

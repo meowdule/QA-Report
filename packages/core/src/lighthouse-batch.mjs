@@ -86,12 +86,28 @@ export async function runLighthouseBatch(p) {
         error: null,
       };
       try {
-        const runnerResult = await lighthouse(url, {
-          logLevel: "error",
-          port: chrome.port,
-          output: "html",
-          onlyCategories: ["performance", "accessibility", "best-practices", "seo"],
-        });
+        const runnerResult = await lighthouse(
+          url,
+          {
+            logLevel: "error",
+            port: chrome.port,
+            output: "html",
+            onlyCategories: ["performance", "accessibility", "best-practices", "seo"],
+          },
+          {
+            extends: "lighthouse:default",
+            settings: {
+              formFactor: "desktop",
+              screenEmulation: {
+                mobile: false,
+                width: 1350,
+                height: 940,
+                deviceScaleFactor: 1,
+                disabled: false,
+              },
+            },
+          },
+        );
         const lhr = runnerResult?.lhr;
         const htmlReport = runnerResult?.report;
         if (lhr) {
