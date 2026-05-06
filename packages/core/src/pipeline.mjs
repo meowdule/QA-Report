@@ -6,6 +6,7 @@ import { enrichScenariosWithLLM } from "./llm-enrich.mjs";
 import { buildDraftScenarios } from "./scenarios.mjs";
 import { runScenarios } from "./runner.mjs";
 import { buildReportHtml } from "./report-html.mjs";
+import { lighthouseSummaryFromStructureOnly, runLighthouseBatch } from "./lighthouse-batch.mjs";
 import { CRITERIA, CRITERION_IDS, STEP_TYPES, validateScenarioSteps } from "./schema.mjs";
 import { copyWebIconToOutput } from "./copy-web-icon.mjs";
 import { createDispatchMeta } from "./dispatch-sign.mjs";
@@ -96,6 +97,7 @@ try {
     runResults,
     jobId: JOB_ID,
     reportGeneratedAt,
+    lighthouseSummary,
   });
   fs.writeFileSync(path.join(outDir, "report.html"), html, "utf8");
 

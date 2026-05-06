@@ -1,4 +1,5 @@
 import { CRITERIA } from "./schema.mjs";
+import { externalHttpUrlsSorted, internalOkPageUrls } from "./site-lists.mjs";
 
 function esc(s) {
   return String(s ?? "")
@@ -37,10 +38,11 @@ function stepIconSvg(kind) {
 }
 
 /**
- * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string; reportGeneratedAt?: string }} p
+ * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string; reportGeneratedAt?: string; lighthouseSummary?: any }} p
  */
 export function buildReportHtml(p) {
   const { structure, scenariosDoc, runResults, jobId } = p;
+  const lighthouseSummary = p.lighthouseSummary;
   const reportGeneratedAt = p.reportGeneratedAt ?? runResults.finishedAt ?? new Date().toISOString();
   const passed = runResults.scenarios.filter((s) => s.passed).length;
   const total = runResults.scenarios.length;
@@ -51,6 +53,8 @@ export function buildReportHtml(p) {
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
   const scenarioRows = runResults.scenarios.map((s) => buildScenarioTableRow(s)).join("");
   const crawlInsightHtml = buildCrawlInsightSection(structure);
+  const siteListsHtml = buildSiteListsSection(structure, lighthouseSummary);
+  const lighthouseSectionHtml = buildLighthouseSection(lighthouseSummary);
 
   const passPct = total ? Math.round((passed / total) * 100) : 0;
   const targetUrl = structure.targetUrl || "—";
@@ -165,15 +169,63 @@ export function buildReportHtml(p) {
     }
     .kpi .num { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
     .kpi .num.ok { color: var(--ok); }
-    .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
-    .kpi-bar {
-      margin-top: 0.45rem;
-      height: 0.42rem;
-      border-radius: 999px;
-      background: #e2e8f0;
-      overflow: hidden;
+    .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.35rem; font-weight: 500; }
+    .kpi--stripe { border-left: 4px solid #cbd5e1; padding-left: 0.85rem; }
+    .kpi--stripe.kpi--accent-line { border-left-color: var(--accent); }
+    .kpi--stripe.kpi--ok-line { border-left-color: var(--ok); }
+    .kpi-pass-visual {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.15rem;
     }
-    .kpi-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #0d9488, #10b981); }
+    .kpi-dots { display: inline-flex; gap: 0.22rem; align-items: center; }
+    .kpi-dot {
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 50%;
+      background: #e2e8f0;
+    }
+    .kpi-dot.on { background: var(--accent); box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2); }
+    .kpi-ring {
+      --p: 0;
+      position: relative;
+      z-index: 0;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: conic-gradient(var(--ok) calc(var(--p) * 1%), #e2e8f0 0);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .kpi-ring::after {
+      content: "";
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: var(--surface);
+    }
+    .kpi-ring-cap {
+      position: absolute;
+      z-index: 1;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--ok);
+      line-height: 1;
+    }
+    .kpi-ring-cap small { font-size: 0.62rem; font-weight: 700; opacity: 0.85; }
+    .kpi-ring-wrap { position: relative; display: grid; place-items: center; width: 3rem; height: 3rem; }
+    .two-col-urls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.25rem;
+    }
+    @media (max-width: 720px) { .two-col-urls { grid-template-columns: 1fr; } }
+    .two-col-urls h3 { margin: 0 0 0.45rem; font-size: 0.92rem; font-weight: 800; }
+    .url-list { margin: 0; padding-left: 1.1rem; font-size: 0.84rem; word-break: break-all; }
+    .url-list li { margin: 0.28rem 0; }
+    .url-list .empty { list-style: none; margin-left: -1.1rem; color: var(--muted); }
     .step-ico-svg { width: 1.1rem; height: 1.1rem; vertical-align: -0.2rem; margin-right: 0.35rem; color: var(--muted); }
     .jump {
       display: flex;
@@ -289,18 +341,44 @@ export function buildReportHtml(p) {
   </div>
 
   <div class="kpi-row" id="summary">
-    <div class="kpi"><div class="num">${esc(pages)}</div><div class="lbl">크롤 페이지</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
-    <div class="kpi"><div class="num">${esc(total)}</div><div class="lbl">실행한 시나리오 수</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
-    <div class="kpi"><div class="num">${esc(passed)} / ${esc(total)}</div><div class="lbl">통과한 시나리오</div><div class="kpi-bar"><span style="width:${esc(passPct)}%"></span></div></div>
-    <div class="kpi"><div class="num ok">${esc(passPct)}%</div><div class="lbl">전체 통과율</div><div class="kpi-bar"><span style="width:${esc(passPct)}%"></span></div></div>
+    <div class="kpi kpi--stripe kpi--accent-line">
+      <div class="kpi-pass-visual">
+        <span class="num">${esc(pages)}</span>
+        <span class="kpi-dots" aria-hidden="true"><span class="kpi-dot on"></span><span class="kpi-dot on"></span><span class="kpi-dot on"></span></span>
+      </div>
+      <div class="lbl">크롤 페이지</div>
+    </div>
+    <div class="kpi kpi--stripe">
+      <div class="num">${esc(total)}</div>
+      <div class="lbl">실행한 시나리오 수</div>
+    </div>
+    <div class="kpi kpi--stripe kpi--ok-line">
+      <div class="num">${esc(passed)} / ${esc(total)}</div>
+      <div class="lbl">통과한 시나리오</div>
+    </div>
+    <div class="kpi kpi--stripe kpi--ok-line">
+      <div class="kpi-pass-visual">
+        <div class="kpi-ring-wrap">
+          <div class="kpi-ring" style="--p:${esc(passPct)}"></div>
+          <span class="kpi-ring-cap">${esc(passPct)}<small>%</small></span>
+        </div>
+      </div>
+      <div class="lbl">전체 통과율</div>
+    </div>
   </div>
 
   <nav class="jump no-print" aria-label="섹션 이동">
+    <a href="#sites">내부·외부 URL</a>
+    <a href="#lighthouse">Lighthouse</a>
     <a href="#criteria">점검 기준 요약</a>
     <a href="#scenarios">시나리오별 결과</a>
     <a href="#errors">오류 메시지</a>
     <a href="#crawl">수집 범위</a>
   </nav>
+
+  ${siteListsHtml}
+
+  ${lighthouseSectionHtml}
 
   <section class="section" id="criteria">
     <h2>점검 기준별 요약</h2>
@@ -585,4 +663,103 @@ function shortUrl(u) {
   } catch {
     return String(u).slice(0, 56);
   }
+}
+
+/**
+ * @param {any} structure
+ * @param {any} lighthouseSummary
+ */
+function mergeSiteLists(structure, lighthouseSummary) {
+  const internal =
+    Array.isArray(lighthouseSummary?.internalUrls) && lighthouseSummary.internalUrls.length
+      ? lighthouseSummary.internalUrls
+      : internalOkPageUrls(structure);
+  const external =
+    Array.isArray(lighthouseSummary?.externalUrls) && lighthouseSummary.externalUrls.length
+      ? lighthouseSummary.externalUrls
+      : externalHttpUrlsSorted(structure);
+  return { internal, external };
+}
+
+/**
+ * @param {any} structure
+ * @param {any} lighthouseSummary
+ */
+function buildSiteListsSection(structure, lighthouseSummary) {
+  const { internal, external } = mergeSiteLists(structure, lighthouseSummary);
+  const liIn = internal
+    .map((u) => `<li><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></li>`)
+    .join("");
+  const liEx = external
+    .map((u) => `<li><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></li>`)
+    .join("");
+  return `<section class="section" id="sites">
+    <h2>내부·외부 URL</h2>
+    <p class="lead">크롤로 <strong>실제로 방문·수집한 내부 페이지</strong>와, 페이지에서 찾은 <strong>외부 https 링크</strong>입니다.</p>
+    <div class="two-col-urls">
+      <div id="sites-internal">
+        <h3>내부 (방문)</h3>
+        <ul class="url-list">${liIn || '<li class="empty">내부 페이지가 없습니다.</li>'}</ul>
+      </div>
+      <div id="sites-external">
+        <h3>외부 (링크 수집)</h3>
+        <ul class="url-list">${liEx || '<li class="empty">수집된 외부 https 링크가 없습니다.</li>'}</ul>
+      </div>
+    </div>
+  </section>`;
+}
+
+/** @param {number | null | undefined} v */
+function scoreCell(v) {
+  if (v == null || Number.isNaN(Number(v))) return "—";
+  return esc(String(v));
+}
+
+/** @param {any} lighthouseSummary */
+function buildLighthouseSection(lighthouseSummary) {
+  const items = Array.isArray(lighthouseSummary?.items) ? lighthouseSummary.items : [];
+  const skipped = lighthouseSummary?.skipped === true;
+  const rows = items
+    .map((row) => {
+      const { url, kind, scores, reportHtml, error } = row;
+      const link =
+        typeof reportHtml === "string"
+          ? `<a href="${esc(reportHtml)}" target="_blank" rel="noopener noreferrer">HTML 리포트</a>`
+          : "—";
+      const err = error ? ` <span class="crit-bad">${esc(String(error).slice(0, 160))}</span>` : "";
+      const kindKo = kind === "external" ? "외부" : "내부";
+      return `<tr>
+        <td><span class="pill">${esc(kindKo)}</span></td>
+        <td style="word-break:break-all"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url)}</a>${err}</td>
+        <td>${scoreCell(scores?.performance)}</td>
+        <td>${scoreCell(scores?.accessibility)}</td>
+        <td>${scoreCell(scores?.["best-practices"])}</td>
+        <td>${scoreCell(scores?.seo)}</td>
+        <td>${link}</td>
+      </tr>`;
+    })
+    .join("");
+
+  let note;
+  if (skipped) {
+    note = `<p class="lead">이번 작업에서는 Lighthouse를 실행하지 않았습니다(<code>SKIP_LIGHTHOUSE=1</code> 등). URL 목록은 위와 같습니다.</p>`;
+  } else if (items.length === 0) {
+    note = `<p class="lead">Lighthouse 감사 결과가 없습니다. <code>LIGHTHOUSE_MAX</code>가 0이거나 감사할 URL이 없을 수 있습니다. 외부 URL까지 감사하려면 <code>LIGHTHOUSE_EXTERNAL=1</code>을 설정할 수 있습니다.</p>`;
+  } else {
+    note = `<p class="lead">점수는 0–100(또는 실패 시 —)입니다. HTML 리포트에서 세부 감사 항목을 확인할 수 있습니다.</p>`;
+  }
+
+  return `<section class="section" id="lighthouse">
+    <h2>Lighthouse 요약</h2>
+    ${note}
+    <div class="scroll-x">
+      <table class="data">
+        <thead><tr><th>구분</th><th>URL</th><th>성능</th><th>접근성</th><th>권장</th><th>SEO</th><th>리포트</th></tr></thead>
+        <tbody>${
+          rows ||
+          '<tr><td colspan="7" style="color:var(--muted)">표시할 Lighthouse 실행 결과가 없습니다.</td></tr>'
+        }</tbody>
+      </table>
+    </div>
+  </section>`;
 }

@@ -45,15 +45,54 @@
             class="dashboard-nav hidden"
             aria-label="결과 화면 바로가기"
           >
-            <span class="dashboard-nav-label">바로가기</span>
-            <a href="#section-summary"><span aria-hidden="true">📌</span> 요약</a>
-            <a href="#section-results"><span aria-hidden="true">📊</span> 테스트 결과</a>
-            <a href="#section-edit"><span aria-hidden="true">🧩</span> 수정 · 재실행</a>
-            <a href="#section-report"><span aria-hidden="true">🖥️</span> 리포트</a>
+            <span class="dashboard-nav-label"
+              ><svg class="dash-nav-ico dash-nav-ico--label" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                /></svg>
+              바로가기</span
+            >
+            <a href="#section-summary"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M19 3H5a2 2 0 0 0-2 2v14l7-3 7 3V5a2 2 0 0 0-2-2z"
+                /></svg>
+              요약</a
+            >
+            <a href="#section-results"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M3 13h4v8H3v-8zm7-6h4v14h-4V7zm7-4h4v18h-4V3z"
+                /></svg>
+              테스트 결과</a
+            >
+            <a href="#section-edit"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"
+                /></svg>
+              수정 · 재실행</a
+            >
+            <a href="#section-report"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M21 2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 14H3V4h18v12z"
+                /></svg>
+              리포트</a
+            >
           </nav>
 
-          <section class="panel" id="analyze-panel" aria-labelledby="analyze-heading">
-            <h2 id="analyze-heading"><span class="panel-step" aria-hidden="true">1</span> 새 사이트 분석</h2>
+          <details class="panel analyze-details" id="analyze-panel" open>
+            <summary class="analyze-summary">
+              <h2 id="analyze-heading">
+                <span class="panel-step" aria-hidden="true">1</span> 새 사이트 분석
+              </h2>
+            </summary>
             <p class="panel-intro">HTTPS 페이지 URL을 입력한 뒤 분석을 시작하세요.</p>
             <form id="analyze-form" class="job-form">
               <label class="field">
@@ -95,7 +134,7 @@
             <p class="hint subtle">
               분석에는 수 분 걸릴 수 있습니다. 진행 중에는 이 탭을 닫지 마세요.
             </p>
-          </section>
+          </details>
 
           <details class="panel job-id-details" id="job-id-panel" aria-label="예전 작업 번호로 결과 열기">
             <summary class="job-id-summary">

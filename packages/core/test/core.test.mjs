@@ -88,6 +88,44 @@ test("buildReportHtml includes favicon link", () => {
   assert.match(html, /Icon\.svg/);
 });
 
+test("buildReportHtml includes site lists and lighthouse section", () => {
+  const html = buildReportHtml({
+    structure: {
+      targetUrl: "https://ex.com/",
+      pages: [
+        {
+          url: "https://ex.com/",
+          httpStatus: 200,
+          outboundNav: [{ category: "external_http", url: "https://other.test/x" }],
+        },
+      ],
+    },
+    scenariosDoc: { scenarios: [] },
+    runResults: {
+      scenarios: [],
+      criteriaSummary: {},
+      finishedAt: new Date().toISOString(),
+    },
+    jobId: "j1",
+    lighthouseSummary: {
+      skipped: false,
+      items: [
+        {
+          url: "https://ex.com/",
+          kind: "internal",
+          scores: { performance: 90, accessibility: 100, "best-practices": 95, seo: 92 },
+          reportHtml: "lighthouse/abc.html",
+        },
+      ],
+    },
+  });
+  assert.match(html, /id="sites"/);
+  assert.match(html, /id="lighthouse"/);
+  assert.match(html, /https:\/\/other\.test\/x/);
+  assert.match(html, /Lighthouse 요약/);
+  assert.match(html, /lighthouse\/abc\.html/);
+});
+
 test("copyWebIconToOutput copies Icon.svg when repo web asset exists", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "qa-core-"));
   const cwd = path.join(coreCwd);

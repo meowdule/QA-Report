@@ -34,6 +34,14 @@ on:
         options:
           - "false"
           - "true"
+      skip_lighthouse:
+        description: "Lighthouse 감사 생략 (URL 목록만 리포트에 포함)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 permissions:
   contents: write
@@ -86,6 +94,7 @@ jobs:
           LLM_MODEL: ${{ vars.LLM_MODEL }}
           JOB_ID: ${{ github.run_id }}
           DISPATCH_HMAC_SECRET: ${{ secrets.DISPATCH_HMAC_SECRET }}
+          SKIP_LIGHTHOUSE: ${{ github.event.inputs.skip_lighthouse == 'true' && '1' || '0' }}
         run: node src/pipeline.mjs
 
       - name: Publish job artifacts to gh-pages

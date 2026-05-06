@@ -107,6 +107,12 @@ jobs:
           if [ -f "gh-pages/jobs/${REL}/scenarios.draft.json" ]; then
             cp "gh-pages/jobs/${REL}/scenarios.draft.json" packages/core/input/scenarios.draft.json
           fi
+          if [ -f "gh-pages/jobs/${REL}/lighthouse-summary.json" ]; then
+            cp "gh-pages/jobs/${REL}/lighthouse-summary.json" packages/core/input/lighthouse-summary.json
+          fi
+          if [ -d "gh-pages/jobs/${REL}/lighthouse" ]; then
+            cp -r "gh-pages/jobs/${REL}/lighthouse" packages/core/input/lighthouse
+          fi
 
       - name: Setup Node
         uses: actions/setup-node@v4

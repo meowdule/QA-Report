@@ -545,8 +545,11 @@ function buildStepEditorRow(st) {
   fields.className = "step-block-fields";
   fillStepFields(fields, clean);
 
-  row.appendChild(head);
-  row.appendChild(tools);
+  const toolbar = document.createElement("div");
+  toolbar.className = "step-block-toolbar";
+  toolbar.appendChild(head);
+  toolbar.appendChild(tools);
+  row.appendChild(toolbar);
   row.appendChild(fields);
   return row;
 }
@@ -625,7 +628,7 @@ if (window.location.protocol === "file:") {
   document.getElementById("file-protocol-banner")?.classList.remove("hidden");
 }
 
-/** @type {{ jobId: string; jobStoragePath: string; structure: any; scenariosDoc: any; results: any | null; dispatchMeta: any | null }} */
+/** @type {{ jobId: string; jobStoragePath: string; structure: any; scenariosDoc: any; results: any | null; dispatchMeta: any | null; lighthouseSummary: any | null }} */
 const state = {
   jobId: "",
   jobStoragePath: "",
@@ -633,6 +636,7 @@ const state = {
   scenariosDoc: null,
   results: null,
   dispatchMeta: null,
+  lighthouseSummary: null,
 };
 
 const el = {
@@ -812,7 +816,52 @@ async function pollUntilOk(url, cfg) {
   throw lastErr || new Error("poll failed");
 }
 
-function renderSummary(structure, scenarios, results) {
+/**
+ * @param {any} summary
+ */
+function lighthouseAvgChipsHtml(summary) {
+  const items = summary?.items || [];
+  if (!items.length || summary?.skipped) {
+    return `<div class="summary-lh muted" role="region" aria-label="Lighthouse 요약">
+      <span class="kpi-label">Lighthouse</span>
+      <p class="hint">감사 결과가 없거나 건너뛰었습니다. 상세 리포트에서 URL·점수를 확인하세요.</p>
+    </div>`;
+  }
+  const keys = /** @type {const} */ (["performance", "accessibility", "best-practices", "seo"]);
+  const labels = {
+    performance: "성능",
+    accessibility: "접근성",
+    "best-practices": "권장",
+    seo: "SEO",
+  };
+  /** @type {Record<string, number[]>} */
+  const acc = Object.fromEntries(keys.map((k) => [k, []]));
+  for (const row of items) {
+    for (const k of keys) {
+      const v = row.scores?.[k];
+      if (typeof v === "number" && !Number.isNaN(v)) acc[k].push(v);
+    }
+  }
+  const chips = keys
+    .map((k) => {
+      const a = acc[k];
+      const avg = a.length ? Math.round(a.reduce((s, x) => s + x, 0) / a.length) : null;
+      return `<span class="lh-chip">${esc(labels[k])} <strong>${avg == null ? "—" : esc(String(avg))}</strong></span>`;
+    })
+    .join("");
+  return `<div class="summary-lh" role="region" aria-label="Lighthouse 요약">
+    <span class="kpi-label">Lighthouse 평균 (${esc(items.length)}페이지 감사)</span>
+    <div class="lh-chip-row">${chips}</div>
+  </div>`;
+}
+
+/**
+ * @param {any} structure
+ * @param {any} scenarios
+ * @param {any} results
+ * @param {any} [lighthouseSummary]
+ */
+function renderSummary(structure, scenarios, results, lighthouseSummary) {
   const pages = structure?.pages?.length ?? 0;
   const scenariosCount = scenarios?.scenarios?.length ?? 0;
   const target = structure?.targetUrl ?? "";
@@ -839,23 +888,27 @@ function renderSummary(structure, scenarios, results) {
 
   const failN = tot > 0 ? tot - pass : 0;
   const donutMini = tot > 0 ? donutChartHtml(pass, failN) : "";
+  const lhBlock = lighthouseAvgChipsHtml(lighthouseSummary);
 
   el.summaryBody.innerHTML = `
-    <div class="summary-kpi" role="group" aria-label="작업 요약">
-      <div class="kpi-tile kpi-tile--accent kpi-tile--target">
-        <span class="kpi-label">작업 ID · 분석한 주소</span>
-        <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
-        <div class="summary-target-url">${targetBlock}</div>
+    <div class="summary-stack">
+      <div class="summary-kpi" role="group" aria-label="작업 요약">
+        <div class="kpi-tile kpi-tile--accent kpi-tile--target">
+          <span class="kpi-label">작업 ID · 분석한 주소</span>
+          <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
+          <div class="summary-target-url">${targetBlock}</div>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-label">시나리오</span>
+          <span class="kpi-value">${esc(scenariosCount)}개</span>
+          <span class="kpi-hint">수집 페이지 ${esc(pages)}개</span>
+        </div>
+        <div class="kpi-tile kpi-tile--viz kpi-tile--result">
+          ${donutMini || `<span class="kpi-label">통과율</span><span class="kpi-value">—</span><span class="kpi-hint">${esc(resultsHint)}</span>`}
+          ${donutMini ? `<span class="kpi-hint kpi-hint--below">${esc(resultsHint)}</span>` : ""}
+        </div>
       </div>
-      <div class="kpi-tile">
-        <span class="kpi-label">시나리오</span>
-        <span class="kpi-value">${esc(scenariosCount)}개</span>
-        <span class="kpi-hint">수집 페이지 ${esc(pages)}개</span>
-      </div>
-      <div class="kpi-tile kpi-tile--viz kpi-tile--result">
-        ${donutMini || `<span class="kpi-label">통과율</span><span class="kpi-value">—</span><span class="kpi-hint">${esc(resultsHint)}</span>`}
-        ${donutMini ? `<span class="kpi-hint kpi-hint--below">${esc(resultsHint)}</span>` : ""}
-      </div>
+      ${lhBlock}
     </div>
   `;
 }
@@ -916,11 +969,7 @@ function renderScenarioForms(doc) {
     const lab = document.createElement("span");
     lab.className = "scenario-summary-label";
     lab.textContent = `시나리오 ${i + 1}`;
-    const namePrev = document.createElement("span");
-    namePrev.className = "scenario-summary-name";
-    namePrev.textContent = s.name || "이름 없음";
     titleWrap.appendChild(lab);
-    titleWrap.appendChild(namePrev);
     const badge = document.createElement("span");
     badge.className = "scenario-step-badge";
     badge.textContent = `${(s.steps || []).length}단계`;
@@ -947,24 +996,23 @@ function renderScenarioForms(doc) {
     critLbl.textContent = "적용할 점검 기준";
     critWrap.appendChild(critLbl);
     const grid = document.createElement("div");
-    grid.className = "criteria-grid";
+    grid.className = "criteria-strip";
     for (const id of CRITERION_ORDER) {
       const def = CRITERIA_DEF[id];
       if (!def) continue;
       const labEl = document.createElement("label");
-      labEl.className = "crit-option";
+      labEl.className = "crit-chip";
+      labEl.title = def.desc;
       const cb = document.createElement("input");
       cb.type = "checkbox";
       cb.className = "sc-crit-cb";
       cb.value = id;
       cb.checked = (s.criteria || []).includes(id);
-      const strong = document.createElement("strong");
-      strong.textContent = def.label;
-      const small = document.createElement("small");
-      small.textContent = def.desc;
+      const span = document.createElement("span");
+      span.className = "crit-chip-text";
+      span.textContent = def.label;
       labEl.appendChild(cb);
-      labEl.appendChild(strong);
-      labEl.appendChild(small);
+      labEl.appendChild(span);
       grid.appendChild(labEl);
     }
     critWrap.appendChild(grid);
@@ -1160,6 +1208,15 @@ async function loadJob(jobId, opts = {}) {
   } catch {
     state.dispatchMeta = null;
   }
+
+  /** @type {any} */
+  let lighthouseSummary = null;
+  try {
+    lighthouseSummary = await fetchJson(jobFileUrl(jobRel, "lighthouse-summary.json"), { signal });
+  } catch {
+    lighthouseSummary = null;
+  }
+  state.lighthouseSummary = lighthouseSummary;
   if (el.dispatchHint) {
     if (state.dispatchMeta?.sig) {
       el.dispatchHint.textContent = "재실행 요청이 안전하게 서명되어 전송됩니다.";
@@ -1168,7 +1225,7 @@ async function loadJob(jobId, opts = {}) {
     }
   }
 
-  renderSummary(structure, scenarios, results);
+  renderSummary(structure, scenarios, results, lighthouseSummary);
   if (scenarios) {
     renderScenarioForms(scenarios);
     show(el.editSection, true);

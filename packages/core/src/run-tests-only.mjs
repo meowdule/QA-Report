@@ -10,6 +10,7 @@ import { buildReportHtml } from "./report-html.mjs";
 import { CRITERIA, CRITERION_IDS, STEP_TYPES, validateScenarioSteps } from "./schema.mjs";
 import { copyWebIconToOutput } from "./copy-web-icon.mjs";
 import { createDispatchMeta } from "./dispatch-sign.mjs";
+import { lighthouseSummaryFromStructureOnly } from "./lighthouse-batch.mjs";
 
 const inputDir = path.join(process.cwd(), "input");
 const outDir = path.join(process.cwd(), "output");
@@ -20,6 +21,7 @@ const TRACE_MODE = _t === "all" || _t === "off" || _t === "failure" ? _t : "fail
 const structurePath = path.join(inputDir, "structure.json");
 const finalPath = path.join(inputDir, "scenarios.final.json");
 const draftBackupPath = path.join(inputDir, "scenarios.draft.json");
+const lighthouseInputPath = path.join(inputDir, "lighthouse-summary.json");
 
 if (!fs.existsSync(structurePath)) {
   console.error("Missing input/structure.json");
@@ -76,6 +78,22 @@ fs.writeFileSync(
 
 copyWebIconToOutput(outDir);
 
+/** @type {any} */
+let lighthouseSummary = lighthouseSummaryFromStructureOnly(structure);
+if (fs.existsSync(lighthouseInputPath)) {
+  lighthouseSummary = JSON.parse(fs.readFileSync(lighthouseInputPath, "utf8"));
+}
+fs.writeFileSync(path.join(outDir, "lighthouse-summary.json"), JSON.stringify(lighthouseSummary, null, 2), "utf8");
+
+const lhInDir = path.join(inputDir, "lighthouse");
+const lhOutDir = path.join(outDir, "lighthouse");
+if (fs.existsSync(lhInDir) && fs.statSync(lhInDir).isDirectory()) {
+  fs.mkdirSync(lhOutDir, { recursive: true });
+  for (const f of fs.readdirSync(lhInDir)) {
+    fs.copyFileSync(path.join(lhInDir, f), path.join(lhOutDir, f));
+  }
+}
+
 console.log(`Run-tests-only job ${JOB_ID} · trace=${TRACE_MODE}`);
 
 const browser = await chromium.launch({ headless: true });
@@ -91,6 +109,7 @@ try {
     runResults,
     jobId: JOB_ID,
     reportGeneratedAt,
+    lighthouseSummary,
   });
   fs.writeFileSync(path.join(outDir, "report.html"), html, "utf8");
 
