@@ -30,8 +30,9 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 ├── .github/workflows/        # Pages 배포, Analyze & Test
 ├── packages/core/            # 크롤·시나리오 생성·실행·리포트 (Playwright, schema.mjs)
 ├── scripts/                  # gh-pages에 jobs/ 게시 스크립트
-├── web/                      # Pages용 정적 앱
-└── docs/trigger/             # (선택) 트리거 예제 — 미추가
+├── web/                      # Pages용 정적 앱 (Job 조회·시나리오 편집·POST 재실행)
+├── workers/trigger/          # Cloudflare Worker 예제 (repository_dispatch)
+└── docs/trigger/             # (선택) 미사용
 ```
 
 `gh-pages` 배포 후 공개 경로 예시:
@@ -119,6 +120,8 @@ node src/pipeline.mjs
 
 결과는 `packages/core/output/` 에 생성됩니다(`gitignore` 됨). Trace·스크린샷은 `output/traces/`, `output/screenshots/` 에 있습니다.
 
+**크롤 없이 시나리오만 재실행(로컬):** `input/structure.json`, `input/scenarios.final.json` 을 둔 뒤 `npm run run-tests-only` (선택으로 `input/scenarios.draft.json` 원본 유지).
+
 ### Phase 2 — 시나리오 스키마·리포트 품질 ✅
 
 - [x] 스텝 타입: `navigate`, `click`, `fill`, `assertVisible`, `assertNoConsoleError`, `waitForResponse` (`packages/core/src/schema.mjs` · `schema.json` 산출)
@@ -150,13 +153,20 @@ npx playwright show-trace traces/<시나리오-id>.zip
 2. Pages 사이트에서 `https://<owner>.github.io/<repo>/?job=<run_id>` 로 열거나, 화면에 ID를 입력해 **불러오기**를 누릅니다.
 3. 배포 직후 `jobs/<id>/` 가 아직 없으면 **폴링**이 켜져 있으면 자동으로 재시도합니다.
 
-### Phase 4 — 도메인에서 시나리오 편집 + 실행
+### Phase 4 — 도메인에서 시나리오 편집 + 실행 ✅
 
-- [ ] 테이블/폼 기반 에디터 ↔ JSON 동기화
-- [ ] “실행” 클릭 시 **편집본 전체**를 트리거 API로 POST → second workflow(`test`) 디스패치
-- [ ] `test` 잡이 최종 시나리오를 받아 실행 후 동일 `jobId`(또는 `jobId` 파생)로 리포트 갱신
+- [x] `web/` 에서 시나리오 문서 **JSON 텍스트** + **시나리오별 폼**(이름, 기준, 스텝 JSON) ↔ **폼 → JSON / JSON → 폼** 동기화
+- [x] **POST** 로 Trigger Worker URL에 `{ job_id, scenarios }` 전달 → Worker가 GitHub **`repository_dispatch`** (`run-custom-scenarios`) 호출
+- [x] **`.github/workflows/run-custom-scenarios.yml`**: 기존 `jobs/<jobId>/structure.json`(및 초안)을 `gh-pages`에서 가져와 `scenarios.final.json`으로 테스트만 재실행(`run-tests-only.mjs`) 후 **동일 `jobs/<jobId>/`** 에 `report.html`·`results.json` 등 갱신
+- [x] Worker 미사용 시: Actions **Run custom scenarios (re-test)** 워크플로에서 동일 JSON 수동 입력
 
-**완료 기준:** 사 specification대로 “수정 → 실행 → 대시보드”가 도메인에서 닫힌 루프.
+**완료 기준:** Pages에서 수정 →(Worker POST 또는 Actions 수동)→ 같은 Job 폴더의 대시보드가 갱신된다.
+
+#### Phase 4 설정 요약
+
+1. **저장소** `Settings → Secrets and variables` 에서 Worker용 PAT는 **Worker 시크릿에만** 저장합니다.
+2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포하고, Pages의 **Trigger Worker URL** 필드에 붙여 넣습니다(브라우저 `localStorage`에 저장됨).
+3. `web/index.html` 의 `data-github-repo` 를 본인 `owner/repo` 로 바꾸면 수동 실행 링크가 맞춰집니다.
 
 ### Phase 5 — 트리거 레이어 하드닝
 

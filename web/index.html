@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-github-repo="meowdule/QA-Report">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,12 +10,12 @@
   <body>
     <main class="shell">
       <header class="hero">
-        <p class="eyebrow">Phase 3 · GitHub Pages</p>
+        <p class="eyebrow">Phase 4 · GitHub Pages</p>
         <h1>Site Analyzer &amp; Scenario Tester</h1>
         <p class="lede">
-          Actions 실행 후 부여된 <strong>Job ID</strong>(<code>run_id</code>)로
-          <code>jobs/&lt;jobId&gt;/</code> 결과를 이 도메인에서 조회합니다. URL에
-          <code>?job=ID</code> 를 붙이면 자동으로 불러옵니다.
+          <strong>Job ID</strong>로 결과를 불러오고, 시나리오 JSON을 수정한 뒤
+          <strong>Trigger Worker</strong>에 POST 하거나 Actions에서 수동 재실행할 수 있습니다.
+          URL에 <code>?job=ID</code> 가 있으면 자동으로 불러옵니다.
         </p>
       </header>
 
@@ -45,8 +45,8 @@
         </form>
         <p id="job-status" class="status" role="status"></p>
         <p class="hint">
-          GitHub Actions 실행 상세 상단의 숫자 ID와 동일합니다. 프로젝트 페이지 기준 경로는
-          <code>…/jobs/&lt;id&gt;/report.html</code> 입니다.
+          재실행 후에는 같은 Job 폴더의 <code>report.html</code> 등이 덮어씌워집니다. 필요하면 Actions에서
+          <code>run_id</code> 별 폴더를 따로 보관하세요.
         </p>
       </section>
 
@@ -62,6 +62,46 @@
           <summary>scenarios.draft.json 원문</summary>
           <pre id="scenarios-raw"></pre>
         </details>
+      </section>
+
+      <section id="edit-section" class="panel hidden" aria-labelledby="edit-heading">
+        <h2 id="edit-heading">시나리오 편집 · 재실행</h2>
+        <p class="hint">
+          아래 JSON은 <code>scenarios.draft.json</code> 전체 문서입니다. 폼으로 빠르게 고친 뒤
+          <strong>폼 → JSON</strong>으로 반영하거나, JSON만 직접 수정해도 됩니다.
+        </p>
+        <textarea id="scenarios-json" class="code-area" rows="16" spellcheck="false" aria-label="시나리오 JSON"></textarea>
+        <div class="job-actions">
+          <button type="button" class="btn ghost" id="btn-json-to-form">JSON → 폼</button>
+          <button type="button" class="btn ghost" id="btn-form-to-json">폼 → JSON</button>
+          <button type="button" class="btn primary" id="btn-validate-json">JSON 유효성 검사</button>
+        </div>
+        <p id="json-hint" class="hint" role="status"></p>
+        <h3 class="subh">폼 (시나리오별)</h3>
+        <div id="scenario-form-rows" class="scenario-forms"></div>
+
+        <h3 class="subh">원클릭 재실행 (Worker)</h3>
+        <label class="field">
+          <span>Trigger Worker URL</span>
+          <input
+            id="trigger-url"
+            type="url"
+            autocomplete="off"
+            placeholder="https://your-worker.workers.dev/"
+          />
+        </label>
+        <label class="field">
+          <span>X-QA-Secret (Worker에 설정한 경우)</span>
+          <input id="trigger-secret" type="password" autocomplete="off" placeholder="선택" />
+        </label>
+        <div class="job-actions">
+          <button type="button" class="btn primary" id="btn-post-rerun">POST로 재실행 요청</button>
+        </div>
+        <p class="hint">
+          Worker 미배포 시:
+          <a id="link-actions-manual" href="#" target="_blank" rel="noopener">GitHub Actions — Run custom scenarios</a>
+          에서 동일 Job ID와 JSON을 붙여 넣어 실행하세요.
+        </p>
       </section>
 
       <section id="structure-section" class="panel hidden">
@@ -86,6 +126,7 @@
         <h2>HTML 대시보드</h2>
         <p class="hint">
           <a id="report-link" href="#" target="_blank" rel="noopener">새 탭에서 report.html 열기</a>
+          · 재실행 완료 후 <strong>새로고침</strong> 또는 다시 불러오기로 iframe을 갱신하세요.
         </p>
         <div class="iframe-wrap">
           <iframe id="report-frame" title="QA report" sandbox="allow-same-origin allow-scripts"></iframe>
@@ -93,7 +134,7 @@
       </section>
 
       <footer class="footer">
-        GitHub 저장소 README에서 Phase 4(편집·재실행) 이후 단계를 확인하세요.
+        Worker 예제: 저장소 <code>workers/trigger/</code> · README Phase 5에서 남용 방지를 강화할 수 있습니다.
       </footer>
     </main>
     <script type="module" src="./app.js"></script>

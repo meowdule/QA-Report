@@ -22,8 +22,20 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+function githubRepo() {
+  return document.documentElement.dataset.githubRepo || "meowdule/QA-Report";
+}
+
 const qs = new URLSearchParams(window.location.search);
 const initialJob = (qs.get("job") || qs.get("jobId") || "").trim();
+
+/** @type {{ jobId: string; structure: any; scenariosDoc: any; results: any | null }} */
+const state = {
+  jobId: "",
+  structure: null,
+  scenariosDoc: null,
+  results: null,
+};
 
 const el = {
   form: document.getElementById("job-form"),
@@ -36,6 +48,17 @@ const el = {
   scenariosSection: document.getElementById("scenarios-section"),
   scenariosBody: document.getElementById("scenarios-body"),
   scenariosRaw: document.getElementById("scenarios-raw"),
+  editSection: document.getElementById("edit-section"),
+  scenariosJson: document.getElementById("scenarios-json"),
+  scenarioFormRows: document.getElementById("scenario-form-rows"),
+  jsonHint: document.getElementById("json-hint"),
+  btnJsonToForm: document.getElementById("btn-json-to-form"),
+  btnFormToJson: document.getElementById("btn-form-to-json"),
+  btnValidateJson: document.getElementById("btn-validate-json"),
+  triggerUrl: document.getElementById("trigger-url"),
+  triggerSecret: document.getElementById("trigger-secret"),
+  btnPostRerun: document.getElementById("btn-post-rerun"),
+  linkActionsManual: document.getElementById("link-actions-manual"),
   structureSection: document.getElementById("structure-section"),
   structureBody: document.getElementById("structure-body"),
   structureRaw: document.getElementById("structure-raw"),
@@ -200,10 +223,113 @@ function renderResults(results) {
   el.resultsRaw.textContent = JSON.stringify(results, null, 2);
 }
 
+/**
+ * @param {any} doc
+ */
+function renderScenarioForms(doc) {
+  if (!el.scenarioFormRows) return;
+  el.scenarioFormRows.replaceChildren();
+  const list = doc?.scenarios || [];
+  list.forEach((s, i) => {
+    const det = document.createElement("details");
+    det.className = "scenario-block";
+    det.dataset.index = String(i);
+    if (i === 0) det.open = true;
+
+    const sum = document.createElement("summary");
+    sum.textContent = s.id || `scenario-${i}`;
+    det.appendChild(sum);
+
+    const wrap = document.createElement("div");
+    wrap.className = "scenario-fields";
+
+    const nameL = document.createElement("label");
+    nameL.className = "field";
+    nameL.innerHTML = "<span>이름</span>";
+    const nameI = document.createElement("input");
+    nameI.type = "text";
+    nameI.className = "sc-name";
+    nameI.value = s.name || "";
+    nameL.appendChild(nameI);
+    wrap.appendChild(nameL);
+
+    const critL = document.createElement("label");
+    critL.className = "field";
+    critL.innerHTML = "<span>기준 (쉼표 구분)</span>";
+    const critI = document.createElement("input");
+    critI.type = "text";
+    critI.className = "sc-crit";
+    critI.value = (s.criteria || []).join(", ");
+    critL.appendChild(critI);
+    wrap.appendChild(critL);
+
+    const stepL = document.createElement("label");
+    stepL.className = "field";
+    stepL.innerHTML = "<span>스텝 (JSON 배열)</span>";
+    const ta = document.createElement("textarea");
+    ta.className = "sc-steps code-area";
+    ta.rows = 8;
+    ta.spellcheck = false;
+    ta.value = JSON.stringify(s.steps || [], null, 2);
+    stepL.appendChild(ta);
+    wrap.appendChild(stepL);
+
+    det.appendChild(wrap);
+    el.scenarioFormRows.appendChild(det);
+  });
+}
+
+/**
+ * @param {any} baseDoc
+ */
+function readScenarioFormsIntoDoc(baseDoc) {
+  const doc = JSON.parse(JSON.stringify(baseDoc));
+  const blocks = /** @type {HTMLElement[]} */ ([...document.querySelectorAll(".scenario-block")]);
+  blocks.forEach((det, i) => {
+    if (!doc.scenarios[i]) return;
+    const name = det.querySelector(".sc-name")?.value ?? doc.scenarios[i].name;
+    const crit = det.querySelector(".sc-crit")?.value ?? "";
+    const stepsRaw = det.querySelector(".sc-steps")?.value ?? "[]";
+    doc.scenarios[i].name = name;
+    doc.scenarios[i].criteria = crit
+      .split(",")
+      .map((x) => x.trim())
+      .filter(Boolean);
+    doc.scenarios[i].steps = JSON.parse(stepsRaw);
+  });
+  return doc;
+}
+
+function syncJsonFromState() {
+  if (!el.scenariosJson || !state.scenariosDoc) return;
+  el.scenariosJson.value = JSON.stringify(state.scenariosDoc, null, 2);
+}
+
+function parseJsonEditor() {
+  const raw = el.scenariosJson?.value?.trim();
+  if (!raw) throw new Error("JSON 이 비어 있습니다.");
+  return JSON.parse(raw);
+}
+
 function wireReport(jobId) {
   const reportUrl = jobFileUrl(jobId, "report.html");
   el.reportLink.href = reportUrl;
   el.reportFrame.src = reportUrl;
+}
+
+function wireManualActionsLink() {
+  const repo = githubRepo();
+  el.linkActionsManual.href = `https://github.com/${repo}/actions/workflows/run-custom-scenarios.yml`;
+}
+
+function hideAllPanels() {
+  show(el.summarySection, false);
+  show(el.scenariosSection, false);
+  show(el.editSection, false);
+  show(el.structureSection, false);
+  show(el.resultsSection, false);
+  show(el.reportSection, false);
+  el.reportFrame.removeAttribute("src");
 }
 
 /**
@@ -258,16 +384,26 @@ async function loadJob(jobId) {
   try {
     results = await fetchJson(resultsUrl, { signal });
   } catch {
-    /* 선택 파일 */
+    /* optional */
   }
+
+  state.jobId = jobId;
+  state.structure = structure;
+  state.scenariosDoc = scenarios;
+  state.results = results;
 
   renderSummary(structure, scenarios, results);
   renderStructure(structure);
   if (scenarios) {
     renderScenarios(scenarios);
     show(el.scenariosSection, true);
+    syncJsonFromState();
+    renderScenarioForms(scenarios);
+    show(el.editSection, true);
+    el.jsonHint.textContent = "";
   } else {
     show(el.scenariosSection, false);
+    show(el.editSection, false);
   }
   if (results) {
     renderResults(results);
@@ -294,15 +430,6 @@ async function loadJob(jobId) {
   }
 }
 
-function hideAllPanels() {
-  show(el.summarySection, false);
-  show(el.scenariosSection, false);
-  show(el.structureSection, false);
-  show(el.resultsSection, false);
-  show(el.reportSection, false);
-  el.reportFrame.removeAttribute("src");
-}
-
 el.form?.addEventListener("submit", (ev) => {
   ev.preventDefault();
   const jobId = el.input.value.trim();
@@ -315,6 +442,98 @@ el.btnStop?.addEventListener("click", () => {
   el.btnStop.hidden = true;
   setStatus("사용자가 중지했습니다.", "warn");
 });
+
+el.btnJsonToForm?.addEventListener("click", () => {
+  try {
+    const doc = parseJsonEditor();
+    if (!Array.isArray(doc.scenarios)) throw new Error("scenarios 배열이 필요합니다.");
+    state.scenariosDoc = doc;
+    renderScenarioForms(doc);
+    el.jsonHint.textContent = "폼을 시나리오 JSON에 맞게 갱신했습니다.";
+    el.jsonHint.dataset.kind = "ok";
+  } catch (e) {
+    el.jsonHint.textContent = /** @type {Error} */ (e).message;
+    el.jsonHint.dataset.kind = "err";
+  }
+});
+
+el.btnFormToJson?.addEventListener("click", () => {
+  if (!state.scenariosDoc) return;
+  try {
+    const merged = readScenarioFormsIntoDoc(state.scenariosDoc);
+    state.scenariosDoc = merged;
+    syncJsonFromState();
+    el.jsonHint.textContent = "JSON을 폼 내용으로 갱신했습니다.";
+    el.jsonHint.dataset.kind = "ok";
+  } catch (e) {
+    el.jsonHint.textContent = /** @type {Error} */ (e).message;
+    el.jsonHint.dataset.kind = "err";
+  }
+});
+
+el.btnValidateJson?.addEventListener("click", () => {
+  try {
+    const doc = parseJsonEditor();
+    if (!Array.isArray(doc.scenarios)) throw new Error("최상위에 scenarios 배열이 있어야 합니다.");
+    state.scenariosDoc = doc;
+    el.jsonHint.textContent = `유효한 JSON입니다. 시나리오 ${doc.scenarios.length}개.`;
+    el.jsonHint.dataset.kind = "ok";
+  } catch (e) {
+    el.jsonHint.textContent = /** @type {Error} */ (e).message;
+    el.jsonHint.dataset.kind = "err";
+  }
+});
+
+el.btnPostRerun?.addEventListener("click", async () => {
+  const url = el.triggerUrl?.value?.trim();
+  const secret = el.triggerSecret?.value?.trim();
+  if (!state.jobId) {
+    setStatus("Job ID가 없습니다. 먼저 불러오기를 실행하세요.", "err");
+    return;
+  }
+  let scenarios;
+  try {
+    scenarios = parseJsonEditor();
+  } catch (e) {
+    el.jsonHint.textContent = /** @type {Error} */ (e).message;
+    el.jsonHint.dataset.kind = "err";
+    return;
+  }
+  if (!url) {
+    setStatus("Trigger Worker URL을 입력하세요. (또는 아래 Actions 링크)", "warn");
+    return;
+  }
+  setStatus("Worker에 POST 중…", "load");
+  try {
+    const r = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        ...(secret ? { "X-QA-Secret": secret } : {}),
+      },
+      body: JSON.stringify({ job_id: state.jobId, scenarios }),
+    });
+    const text = await r.text();
+    if (!r.ok) {
+      setStatus(`Worker 오류 ${r.status}: ${text.slice(0, 400)}`, "err");
+      return;
+    }
+    setStatus("요청 접수됨(202). Actions에서 워크플로가 시작되면 같은 Job 폴더가 갱신됩니다.", "ok");
+  } catch (e) {
+    setStatus(`네트워크 오류: ${/** @type {Error} */ (e).message}`, "err");
+  }
+});
+
+el.triggerUrl?.addEventListener("change", () => {
+  const v = el.triggerUrl.value.trim();
+  if (v) localStorage.setItem("qa_trigger_url", v);
+});
+
+wireManualActionsLink();
+if (el.triggerUrl) {
+  el.triggerUrl.value = localStorage.getItem("qa_trigger_url") || "";
+}
 
 if (initialJob) {
   el.input.value = initialJob;

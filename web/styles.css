@@ -289,3 +289,63 @@ code.break {
   display: block;
   background: #fff;
 }
+
+.code-area {
+  width: 100%;
+  max-width: 100%;
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--fg);
+  resize: vertical;
+  min-height: 8rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .code-area {
+    background: #0f1419;
+    color: #e7ecf3;
+  }
+}
+
+#json-hint[data-kind="err"] {
+  color: #f85149;
+}
+
+#json-hint[data-kind="ok"] {
+  color: #3fb950;
+}
+
+.scenario-forms {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.scenario-block {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.35rem 0.65rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.scenario-block summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.25rem 0;
+}
+
+.scenario-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.scenario-fields .field textarea.sc-steps {
+  min-height: 6rem;
+}

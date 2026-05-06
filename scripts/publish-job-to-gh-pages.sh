@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DEFAULT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+ROOT="${REPO_ROOT:-$DEFAULT_ROOT}"
 cd "$ROOT"
 
 JOB_ID="${JOB_ID:?JOB_ID is required}"
@@ -27,7 +29,7 @@ else
   git checkout --orphan gh-pages-bootstrap
   git rm -rf . >/dev/null 2>&1 || true
   git clean -fdx
-  cp -r "${ROOT}/web/." .
+  cp -r "${DEFAULT_ROOT}/web/." .
   git add -A
   git commit -m "Initialize gh-pages from web (bootstrap for Phase 1)"
   git branch -M gh-pages

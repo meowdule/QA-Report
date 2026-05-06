@@ -6,7 +6,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "pipeline": "node src/pipeline.mjs"
+    "pipeline": "node src/pipeline.mjs",
+    "run-tests-only": "node src/run-tests-only.mjs"
   },
   "dependencies": {
     "playwright": "^1.50.0"
