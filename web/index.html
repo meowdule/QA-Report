@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  로컬 소스: 빈 값 유지.
-  GitHub Actions「Deploy GitHub Pages」가 저장소 Secrets(WORKER_BASE_URL, QA_WEBHOOK_SECRET)를 여기에 주입합니다.
+  Worker 주소는 web/app.js 의 DEFAULT_WORKER_BASE_URL 에 한 번만 두면 됩니다(여러 사이트 분석 시에도 동일).
+  필요 시에만 여기 data-worker-base-url 로 덮어쓸 수 있습니다.
 -->
 <html
   lang="ko"
@@ -13,6 +13,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="./Icon.svg" type="image/svg+xml" />
     <title>Site Analyzer &amp; Scenario Tester</title>
     <link
       rel="stylesheet"

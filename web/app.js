@@ -1,6 +1,17 @@
 /**
  * GitHub Pages 프로젝트 사이트 기준으로 jobs/ 경로를 해석합니다.
  */
+
+/**
+ * Cloudflare Worker 루트 URL (끝 슬래시 없음). `workers/trigger` 배포 후 주소를 여기 한 번만 넣고 푸시하면 됩니다.
+ * 분석 대상 사이트(URL)를 바꿔 가며 쓸 때는 **이 값을 다시 바꿀 필요 없음** — 같은 Worker가 모든 요청을 처리합니다.
+ * 비우면 `index.html`의 `data-worker-base-url`만 사용합니다.
+ */
+const DEFAULT_WORKER_BASE_URL = "";
+
+/** Worker에 WEBHOOK_SECRET 을 쓰는 경우에만 동일 값. 비우면 헤더 미전송. */
+const DEFAULT_QA_WEBHOOK_SECRET = "";
+
 function pagesBase() {
   const { origin, pathname } = window.location;
   let p = pathname;
@@ -104,11 +115,13 @@ function githubRepo() {
   return document.documentElement.dataset.githubRepo || "meowdule/QA-Report";
 }
 
-/** Cloudflare Worker 루트 (슬래시 없음). `data-worker-base-url` */
+/** Cloudflare Worker 루트 (슬래시 없음). HTML data → 없으면 DEFAULT_WORKER_BASE_URL */
 function workerBaseUrl() {
-  const u = document.documentElement.dataset.workerBaseUrl?.trim();
-  if (!u) return "";
-  return u.replace(/\/+$/, "");
+  const fromHtml = document.documentElement.dataset.workerBaseUrl?.trim();
+  if (fromHtml) return fromHtml.replace(/\/+$/, "");
+  const fallback = DEFAULT_WORKER_BASE_URL.trim();
+  if (fallback) return fallback.replace(/\/+$/, "");
+  return "";
 }
 
 function analyzeWorkerEndpoint() {
@@ -122,9 +135,11 @@ function workerRerunEndpoint() {
   return b ? `${b}/` : "";
 }
 
-/** `data-qa-webhook-secret` → `X-QA-Secret` (Worker WEBHOOK_SECRET 과 동일) */
+/** HTML data → 없으면 DEFAULT_QA_WEBHOOK_SECRET */
 function qaWebhookSecret() {
-  return document.documentElement.dataset.qaWebhookSecret?.trim() || "";
+  const fromHtml = document.documentElement.dataset.qaWebhookSecret?.trim();
+  if (fromHtml) return fromHtml;
+  return DEFAULT_QA_WEBHOOK_SECRET.trim();
 }
 
 const qs = new URLSearchParams(window.location.search);

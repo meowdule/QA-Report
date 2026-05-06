@@ -2,10 +2,12 @@ import fs from "fs";
 import path from "path";
 import { chromium } from "playwright";
 import { crawlSite } from "./crawl.mjs";
+import { enrichScenariosWithLLM } from "./llm-enrich.mjs";
 import { buildDraftScenarios } from "./scenarios.mjs";
 import { runScenarios } from "./runner.mjs";
 import { buildReportHtml } from "./report-html.mjs";
 import { CRITERIA, CRITERION_IDS, STEP_TYPES, validateScenarioSteps } from "./schema.mjs";
+import { copyWebIconToOutput } from "./copy-web-icon.mjs";
 import { createDispatchMeta } from "./dispatch-sign.mjs";
 
 const TARGET_URL = process.env.TARGET_URL;
@@ -22,6 +24,7 @@ if (!TARGET_URL) {
 
 const outDir = path.join(process.cwd(), "output");
 fs.mkdirSync(outDir, { recursive: true });
+copyWebIconToOutput(outDir);
 
 console.log(
   `Job ${JOB_ID} → ${TARGET_URL} (maxPages=${MAX_PAGES}, maxDepth=${MAX_DEPTH}, trace=${TRACE_MODE})`,
@@ -36,12 +39,37 @@ try {
   });
   fs.writeFileSync(path.join(outDir, "structure.json"), JSON.stringify(structure, null, 2), "utf8");
 
-  const scenariosDoc = buildDraftScenarios(structure);
+  let scenariosDoc = buildDraftScenarios(structure);
+
+  const llmOn =
+    process.env.LLM_SCENARIOS === "1" ||
+    process.env.LLM_SCENARIOS === "true" ||
+    process.env.ENABLE_LLM_SCENARIOS === "1" ||
+    process.env.ENABLE_LLM_SCENARIOS === "true";
+  if (llmOn) {
+    const { doc, log } = await enrichScenariosWithLLM(structure, scenariosDoc);
+    scenariosDoc = doc;
+    fs.writeFileSync(path.join(outDir, "llm-enrich-log.json"), JSON.stringify(log, null, 2), "utf8");
+    console.log(
+      `LLM scenario enrich: merged=${log.merged ?? 0} skipped=${log.skippedDuplicates ?? 0} errors=${(log.errors || []).length}`,
+    );
+  } else {
+    fs.writeFileSync(
+      path.join(outDir, "llm-enrich-log.json"),
+      JSON.stringify({ skipped: true, reason: "Set LLM_SCENARIOS=1 or ENABLE_LLM_SCENARIOS=1 to run Phase 6." }, null, 2),
+      "utf8",
+    );
+  }
+
   fs.writeFileSync(path.join(outDir, "scenarios.draft.json"), JSON.stringify(scenariosDoc, null, 2), "utf8");
 
   const issues = validateScenarioSteps(scenariosDoc);
   if (issues.length) {
     console.warn("Scenario validation:", JSON.stringify(issues, null, 2));
+  }
+  if (process.env.STRICT_SCENARIO_VALIDATE === "1" && issues.length) {
+    console.error("STRICT_SCENARIO_VALIDATE: failing due to invalid scenarios.");
+    process.exit(1);
   }
 
   fs.writeFileSync(

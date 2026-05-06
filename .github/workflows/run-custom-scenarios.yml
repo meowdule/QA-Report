@@ -115,10 +115,11 @@ jobs:
           cache: npm
           cache-dependency-path: packages/core/package-lock.json
 
-      - name: Install & Playwright
+      - name: Install npm & unit tests & Playwright
         working-directory: packages/core
         run: |
           npm ci
+          npm test
           npx playwright install --with-deps chromium
 
       - name: Run tests only

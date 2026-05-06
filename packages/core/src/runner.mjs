@@ -80,8 +80,9 @@ async function runOneScenario(browser, sc, opt) {
   const artifacts = {};
 
   try {
+    const browserContext = page.context();
     for (const step of sc.steps) {
-      const sr = await runStep(page, step, { consoleErrors, pageErrors });
+      const sr = await runStep(page, step, { consoleErrors, pageErrors }, browserContext);
       stepResults.push(sr);
       if (!sr.ok) {
         scenarioFailed = true;
@@ -146,8 +147,9 @@ async function runOneScenario(browser, sc, opt) {
  * @param {import('playwright').Page} page
  * @param {any} step
  * @param {{ consoleErrors: any[]; pageErrors: any[] }} buckets
+ * @param {import('playwright').BrowserContext} browserContext
  */
-async function runStep(page, step, buckets) {
+async function runStep(page, step, buckets, browserContext) {
   switch (step.type) {
     case "navigate": {
       try {
@@ -178,24 +180,42 @@ async function runStep(page, step, buckets) {
     }
     case "click": {
       try {
-        if (step.href) {
-          await clickLinkByResolvedHref(page, step.href);
-        } else if (step.selector) {
-          await page.click(step.selector, { timeout: 10_000 });
-        } else {
-          return { type: step.type, ok: false, error: "Missing href or selector" };
-        }
-        return { type: step.type, href: step.href, selector: step.selector, ok: true, finalUrl: page.url() };
+        const r = await performClick(page, browserContext, step);
+        if (!r.ok) return { type: step.type, ok: false, error: r.error };
+        return {
+          type: step.type,
+          href: step.href,
+          selector: step.selector,
+          getByRole: step.getByRole,
+          ok: true,
+          startUrl: r.startUrl,
+          finalUrl: r.finalUrl,
+          navigationMode: r.navigationMode,
+          popupUrl: r.popupUrl,
+          dialogs: r.dialogs?.length ? r.dialogs : undefined,
+          popupClosed: r.popupClosed,
+        };
       } catch (e) {
         if (step.fallbackSelector) {
           try {
-            await page.locator(step.fallbackSelector).first().click({ timeout: 10_000 });
+            const r2 = await performClick(page, browserContext, {
+              ...step,
+              href: undefined,
+              getByRole: undefined,
+              selector: step.fallbackSelector,
+            });
+            if (!r2.ok) return { type: step.type, ok: false, error: String(r2.error) };
             return {
               type: step.type,
               href: step.href,
               ok: true,
               note: "used fallbackSelector",
-              finalUrl: page.url(),
+              startUrl: r2.startUrl,
+              finalUrl: r2.finalUrl,
+              navigationMode: r2.navigationMode,
+              popupUrl: r2.popupUrl,
+              dialogs: r2.dialogs?.length ? r2.dialogs : undefined,
+              popupClosed: r2.popupClosed,
             };
           } catch (e2) {
             return { type: step.type, ok: false, error: String(e2?.message || e2) };
@@ -212,6 +232,76 @@ async function runStep(page, step, buckets) {
         return { type: step.type, selector: step.selector, ok: true };
       } catch (e) {
         return { type: step.type, selector: step.selector, ok: false, error: String(e?.message || e) };
+      }
+    }
+    case "selectOption": {
+      try {
+        const loc = page.locator(step.selector).first();
+        await loc.waitFor({ state: "attached", timeout: 12_000 });
+        await loc.scrollIntoViewIfNeeded().catch(() => {});
+        if (step.values && Array.isArray(step.values) && step.values.length > 0) {
+          await loc.selectOption(step.values.map((v) => String(v)));
+        } else if (step.label != null && String(step.label) !== "") {
+          await loc.selectOption({ label: String(step.label), exact: true });
+        } else if (step.value != null && String(step.value) !== "") {
+          await loc.selectOption(String(step.value));
+        } else if (step.index != null && Number.isFinite(Number(step.index))) {
+          await loc.selectOption({ index: Number(step.index) });
+        } else {
+          return {
+            type: step.type,
+            selector: step.selector,
+            ok: false,
+            error: "selectOption needs values[], label, value, or index",
+          };
+        }
+        return { type: step.type, selector: step.selector, ok: true };
+      } catch (e) {
+        return { type: step.type, selector: step.selector, ok: false, error: String(e?.message || e) };
+      }
+    }
+    case "check": {
+      try {
+        const loc = page.locator(step.selector).first();
+        await loc.waitFor({ state: "attached", timeout: 12_000 });
+        await loc.scrollIntoViewIfNeeded().catch(() => {});
+        const want = step.checked !== false;
+        const control = step.control ? String(step.control) : "checkbox";
+        if (want) {
+          await loc.check({ timeout: 10_000 });
+        } else if (control === "radio") {
+          return {
+            type: step.type,
+            selector: step.selector,
+            ok: false,
+            error: "uncheck radio is not supported; pick another option in the group",
+          };
+        } else {
+          await loc.uncheck({ timeout: 10_000 });
+        }
+        return {
+          type: step.type,
+          selector: step.selector,
+          control,
+          checked: want,
+          ok: true,
+        };
+      } catch (e) {
+        return { type: step.type, selector: step.selector, ok: false, error: String(e?.message || e) };
+      }
+    }
+    case "waitForSelector": {
+      const state = step.state === "attached" ? "attached" : "visible";
+      const timeout = step.timeout ?? 15_000;
+      try {
+        await page.waitForSelector(step.selector, { state, timeout });
+        return { type: step.type, selector: step.selector, state, ok: true };
+      } catch (e) {
+        const err = { type: step.type, selector: step.selector, ok: false, error: String(e?.message || e) };
+        if (step.optional) {
+          return { ...err, ok: true, skipped: true, note: `optional: ${err.error}` };
+        }
+        return err;
       }
     }
     case "waitForResponse": {
@@ -264,27 +354,157 @@ function safeFileId(id) {
   return String(id).replace(/[^a-z0-9-_]+/gi, "_").slice(0, 120) || "scenario";
 }
 
+function escapeRe(s) {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&").slice(0, 120);
+}
+
+function normalizeNavUrl(u) {
+  try {
+    const x = new URL(u);
+    x.hash = "";
+    let path = x.pathname;
+    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+    x.pathname = path || "/";
+    return x.href;
+  } catch {
+    return u;
+  }
+}
+
+function pageOrigin(u) {
+  try {
+    return new URL(u).origin;
+  } catch {
+    return "";
+  }
+}
+
 /**
  * @param {import('playwright').Page} page
  * @param {string} targetHref
+ * @returns {Promise<import('playwright').Locator | null>}
  */
-async function clickLinkByResolvedHref(page, targetHref) {
-  const want = new URL(targetHref).href;
-  const count = await page.locator("a[href]").count();
-  for (let i = 0; i < count; i++) {
-    const a = page.locator("a[href]").nth(i);
-    const h = await a.getAttribute("href");
-    if (!h) continue;
-    let abs;
-    try {
-      abs = new URL(h, page.url()).href;
-    } catch {
-      continue;
-    }
-    if (abs === want) {
-      await a.click({ timeout: 12_000 });
-      return;
+async function findLinkLocatorForHref(page, targetHref) {
+  const want = normalizeNavUrl(new URL(targetHref, page.url()).href);
+  const selectors = ['a[href]', '[role="link"][href]'];
+  for (const sel of selectors) {
+    const count = await page.locator(sel).count();
+    for (let i = 0; i < count; i++) {
+      const el = page.locator(sel).nth(i);
+      const h = await el.getAttribute("href");
+      if (!h) continue;
+      let abs;
+      try {
+        abs = normalizeNavUrl(new URL(h, page.url()).href);
+      } catch {
+        continue;
+      }
+      if (abs === want) return el;
     }
   }
-  throw new Error(`No anchor resolved to ${want}`);
+  return null;
+}
+
+/**
+ * 클릭 후 동작: 브라우저 다이얼로그(alert 등) 기록·dismiss, target=_blank 는 새 페이지 이벤트로 감지 후 닫음,
+ * 동일 탭 전체 이동은 URL 비교로 구분(외부 사이트·mailto 등은 Playwright 맥락에 따라 다름).
+ * @param {import('playwright').Page} page
+ * @param {import('playwright').BrowserContext} context
+ * @param {any} step
+ */
+async function performClick(page, context, step) {
+  const startUrl = page.url();
+  /** @type {{ type: string; message: string }[]} */
+  const dialogs = [];
+  const onDialog = async (d) => {
+    dialogs.push({ type: d.type(), message: d.message().slice(0, 800) });
+    await d.dismiss().catch(() => {});
+  };
+  page.on("dialog", onDialog);
+
+  let popup = /** @type {import('playwright').Page | null} */ (null);
+  let popupUrl;
+  let popupClosed = false;
+
+  try {
+    let expectPopup =
+      step.opensNewTab === true ||
+      step.target === "_blank" ||
+      step.target === "blank";
+
+    /** @type {import('playwright').Locator | null} */
+    let loc = null;
+
+    if (step.href) {
+      loc = await findLinkLocatorForHref(page, step.href);
+      if (!loc) return { ok: false, error: `No link resolved to ${step.href}` };
+      const targetAttr = ((await loc.getAttribute("target")) || "").trim().toLowerCase();
+      if (targetAttr === "_blank" || targetAttr === "blank") expectPopup = true;
+    } else if (step.getByRole) {
+      const role = step.getByRole;
+      const nm = step.accessibleName || step.name;
+      loc = nm
+        ? page.getByRole(role, { name: new RegExp(escapeRe(String(nm)), "i") })
+        : page.getByRole(role).first();
+      const t = ((await loc.getAttribute("target").catch(() => null)) || "").trim().toLowerCase();
+      if (t === "_blank" || t === "blank") expectPopup = true;
+    } else if (step.selector) {
+      loc = page.locator(step.selector).first();
+      const tag = (await loc.evaluate((el) => el.tagName).catch(() => "")) || "";
+      if (tag === "A" || tag === "AREA") {
+        const t = ((await loc.getAttribute("target").catch(() => null)) || "").trim().toLowerCase();
+        if (t === "_blank" || t === "blank") expectPopup = true;
+      }
+    } else {
+      return { ok: false, error: "Missing href, getByRole, or selector" };
+    }
+
+    const popupTimeout = expectPopup ? 12_000 : step.detectPopupMs ?? 0;
+    /** @type {Promise<import('playwright').Page | null>} */
+    let popupPromise = Promise.resolve(null);
+    if (popupTimeout > 0) {
+      popupPromise = context.waitForEvent("page", { timeout: popupTimeout }).catch(() => null);
+    }
+
+    await loc.scrollIntoViewIfNeeded().catch(() => {});
+    await loc.click({ timeout: 12_000 });
+
+    popup = await popupPromise;
+    if (popup) {
+      try {
+        await popup.waitForLoadState("domcontentloaded", { timeout: 12_000 }).catch(() => {});
+      } catch {
+        /* ignore */
+      }
+      popupUrl = popup.url();
+      if (!step.keepPopupOpen) {
+        await popup.close().catch(() => {});
+        popupClosed = true;
+      }
+    } else {
+      await page.waitForLoadState("domcontentloaded", { timeout: 15_000 }).catch(() => {});
+    }
+
+    const finalUrl = page.url();
+    let navigationMode = "same_tab_or_spa";
+    if (popup) {
+      navigationMode = "new_tab_or_popup";
+    } else if (pageOrigin(finalUrl) !== pageOrigin(startUrl)) {
+      navigationMode = "full_navigation_same_tab";
+    } else if (finalUrl !== startUrl) {
+      navigationMode = "same_origin_navigation";
+    }
+
+    return {
+      ok: true,
+      startUrl,
+      finalUrl,
+      navigationMode,
+      popupUrl,
+      dialogs,
+      popupClosed: !!popupClosed,
+    };
+  } finally {
+    page.off("dialog", onDialog);
+  }
 }

@@ -22,6 +22,7 @@ export function buildReportHtml(p) {
   const criteriaRows = buildCriteriaTable(runResults.criteriaSummary);
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
   const scenarioRows = runResults.scenarios.map((s) => buildScenarioRow(s)).join("");
+  const crawlInsightHtml = buildCrawlInsightSection(structure);
 
   const passPct = total ? Math.round((passed / total) * 100) : 0;
 
@@ -32,6 +33,7 @@ export function buildReportHtml(p) {
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="noindex, nofollow"/>
   <title>QA 리포트 · Job ${esc(jobId)}</title>
+  <link rel="icon" href="./Icon.svg" type="image/svg+xml"/>
   <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <style>
     :root {
@@ -226,6 +228,20 @@ export function buildReportHtml(p) {
       color: var(--muted);
       text-align: center;
     }
+    table.data tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.025); }
+    .crawl-card { border-left: 4px solid var(--accent); }
+    .crawl-card h2::before { content: "◆ "; color: var(--accent2); font-size: 0.85em; }
+    .hero { position: relative; }
+    .hero::after {
+      content: "";
+      display: block;
+      width: 4rem;
+      height: 4px;
+      margin: 1rem auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    h2 { display: flex; align-items: center; gap: 0.35rem; }
   </style>
 </head>
 <body>
@@ -256,6 +272,8 @@ export function buildReportHtml(p) {
       <div class="stat"><strong>${esc(total)}</strong><span class="lbl">실행 시나리오 수</span></div>
     </div>
   </div>
+
+  ${crawlInsightHtml}
 
   <div class="card">
     <h2>기준별 통과 요약</h2>
@@ -307,11 +325,102 @@ export function buildReportHtml(p) {
     <a href="./structure.json">structure.json</a> ·
     <a href="./scenarios.draft.json">scenarios.draft.json</a> ·
     <a href="./results.json">results.json</a> ·
-    <a href="./schema.json">schema.json</a>
+    <a href="./schema.json">schema.json</a> ·
+    <a href="./llm-enrich-log.json">llm-enrich-log.json</a> <span class="muted">(Phase 6 사용 시)</span>
   </p>
 </div>
 </body>
 </html>`;
+}
+
+/**
+ * @param {any} structure
+ */
+function buildCrawlInsightSection(structure) {
+  const list = structure?.pages || [];
+  const ok = list.filter((p) => !p.error && p.httpStatus >= 200 && p.httpStatus < 400);
+  let sumLinks = 0;
+  let sumInteract = 0;
+  let pagesWithClickable = 0;
+  let sumSelectSingle = 0;
+  let sumSelectMulti = 0;
+  let sumRadioGroups = 0;
+  let sumCheckbox = 0;
+  let sumSwitch = 0;
+  let sumAriaToggle = 0;
+  let sumOutboundExt = 0;
+  let sumOutboundMail = 0;
+  let sumOutboundTel = 0;
+  let sumBlankTargets = 0;
+  for (const p of ok) {
+    sumLinks += (p.links || []).length;
+    const intr = p.interactables || [];
+    sumInteract += intr.length;
+    if (
+      intr.some((x) =>
+        ["button", "roleButton", "inputButton", "clickableDiv", "anchor", "roleLink"].includes(x.kind),
+      )
+    ) {
+      pagesWithClickable++;
+    }
+    for (const fc of p.formControls || []) {
+      if (fc.kind === "select") {
+        if (fc.multiple) sumSelectMulti++;
+        else sumSelectSingle++;
+      } else if (fc.kind === "radioGroup") sumRadioGroups++;
+      else if (fc.kind === "checkbox") sumCheckbox++;
+      else if (fc.kind === "switch") sumSwitch++;
+      else if (fc.kind === "ariaToggle") sumAriaToggle++;
+    }
+    const ob = p.outboundNav || [];
+    for (const x of ob) {
+      if (x.category === "external_http") sumOutboundExt++;
+      else if (x.category === "mailto") sumOutboundMail++;
+      else if (x.category === "tel") sumOutboundTel++;
+    }
+    const lcm = p.linkClickMeta;
+    if (lcm && typeof lcm === "object") {
+      for (const v of Object.values(lcm)) {
+        if (v && typeof v === "object" && v.opensNewTab) sumBlankTargets++;
+      }
+    }
+  }
+  const errCount = list.length - ok.length;
+  const sumFormControls =
+    sumSelectSingle + sumSelectMulti + sumRadioGroups + sumCheckbox + sumSwitch + sumAriaToggle;
+  return `<div class="card crawl-card">
+    <h2>크롤 · UI 인터랙션 범위</h2>
+    <p class="muted">
+      링크(<code>a</code>, <code>area</code>, <code>data-href</code> 등), 버튼·<code>role=button|link</code>,
+      일부 <code>onclick</code> div, 그리고 폼 컨트롤(<code>&lt;select&gt;</code> 단일/다중,
+      <code>label[for]</code>·래핑 <code>label</code>로 읽은 텍스트, 라디오 그룹, 체크박스,
+      <code>role=switch</code>, <code>aria-checked</code> 토글)을 수집합니다. 각 항목은
+      <code>selectionMode</code>(<code>single</code> / <code>multi</code> / <code>group-single</code> / <code>boolean</code>)로 구분됩니다.
+      동일 출처 링크는 URL별 <code>linkClickMeta</code>(<code>target=_blank</code> 여부)가 붙고,
+      크롤 범위 밖 링크는 <code>outboundNav</code>(외부 웹·mailto·tel·javascript)로만 집계됩니다.
+      <strong>클릭 러너:</strong> <code>alert</code>/<code>confirm</code> 등 브라우저 다이얼로그는 메시지를 기록한 뒤 dismiss합니다.
+      <code>target=_blank</code> 또는 시나리오의 <code>opensNewTab</code> 이면 새 탭을 감지해 URL을 기록하고 기본적으로 탭을 닫습니다.
+      토스트·인라인 메시지는 자동으로 모든 셀렉터를 알 수 없어 <code>waitForSelector</code>(필요 시 <code>optional</code>) 스텝·Phase 6 LLM 초안을 권장합니다.
+      그래도 <strong>모든</strong> SPA·모달·섀도 DOM·커스텀 라우터는 보장되지 않습니다.
+    </p>
+    <div class="grid">
+      <div class="stat"><strong>${esc(ok.length)}</strong><span class="lbl">HTTP 정상 페이지</span></div>
+      <div class="stat"><strong>${esc(errCount)}</strong><span class="lbl">오류·스킵 페이지</span></div>
+      <div class="stat"><strong>${esc(sumLinks)}</strong><span class="lbl">수집 동일출처 링크(합계)</span></div>
+      <div class="stat"><strong>${esc(sumInteract)}</strong><span class="lbl">클릭 후보 요소(합계)</span></div>
+      <div class="stat"><strong>${esc(pagesWithClickable)}</strong><span class="lbl">클릭 후보가 있는 페이지</span></div>
+      <div class="stat"><strong>${esc(sumFormControls)}</strong><span class="lbl">폼 컨트롤(합계)</span></div>
+      <div class="stat"><strong>${esc(sumSelectSingle)}</strong><span class="lbl"><code>select</code> 단일</span></div>
+      <div class="stat"><strong>${esc(sumSelectMulti)}</strong><span class="lbl"><code>select multiple</code></span></div>
+      <div class="stat"><strong>${esc(sumRadioGroups)}</strong><span class="lbl">라디오 그룹</span></div>
+      <div class="stat"><strong>${esc(sumCheckbox)}</strong><span class="lbl">체크박스</span></div>
+      <div class="stat"><strong>${esc(sumSwitch + sumAriaToggle)}</strong><span class="lbl">스위치·토글</span></div>
+      <div class="stat"><strong>${esc(sumBlankTargets)}</strong><span class="lbl">동일출처 링크 중 새 탭(<code>_blank</code>)</span></div>
+      <div class="stat"><strong>${esc(sumOutboundExt)}</strong><span class="lbl">외부 HTTP 링크(수집)</span></div>
+      <div class="stat"><strong>${esc(sumOutboundMail)}</strong><span class="lbl"><code>mailto</code></span></div>
+      <div class="stat"><strong>${esc(sumOutboundTel)}</strong><span class="lbl"><code>tel</code></span></div>
+    </div>
+  </div>`;
 }
 
 /**
@@ -428,7 +537,21 @@ function formatStepDetail(st) {
   if (st.status != null) parts.push(`HTTP ${esc(st.status)}`);
   if (st.selector) parts.push(`sel ${esc(st.selector)}`);
   if (st.href) parts.push(`href ${esc(st.href)}`);
+  if (st.getByRole) parts.push(`role ${esc(st.getByRole)}`);
+  if (st.accessibleName) parts.push(`이름 ${esc(st.accessibleName)}`);
   if (st.requestMethod) parts.push(`req ${esc(st.requestMethod)}`);
+  if (st.values) parts.push(`values ${esc(JSON.stringify(st.values))}`);
+  if (st.value != null && String(st.value) !== "") parts.push(`value ${esc(String(st.value))}`);
+  if (st.label != null && String(st.label) !== "") parts.push(`label ${esc(String(st.label))}`);
+  if (st.index != null) parts.push(`index ${esc(String(st.index))}`);
+  if (st.control) parts.push(`control ${esc(st.control)}`);
+  if (st.checked != null) parts.push(`checked ${esc(String(st.checked))}`);
+  if (st.startUrl) parts.push(`from ${esc(st.startUrl)}`);
+  if (st.navigationMode) parts.push(`nav ${esc(st.navigationMode)}`);
+  if (st.popupUrl) parts.push(`popup ${esc(st.popupUrl)}`);
+  if (st.popupClosed != null) parts.push(`popupClosed ${esc(String(st.popupClosed))}`);
+  if (st.dialogs?.length) parts.push(`dialogs ${esc(JSON.stringify(st.dialogs).slice(0, 400))}`);
+  if (st.state) parts.push(`state ${esc(st.state)}`);
   if (st.error) parts.push(`err ${esc(st.error)}`);
   if (!parts.length) return "";
   return ` — <span class="muted">${parts.join(" · ")}</span>`;

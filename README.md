@@ -37,7 +37,7 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 
 `gh-pages` 배포 후 공개 경로 예시:
 
-- `/jobs/{jobId}/structure.json` — 구조·크롤 요약
+- `/jobs/{jobId}/structure.json` — 구조·크롤 요약(페이지별 `formControls`·`selectionMode` 포함)
 - `/jobs/{jobId}/scenarios.draft.json` — 초안 시나리오
 - `/jobs/{jobId}/report.html` — 최종 대시보드
 
@@ -89,8 +89,8 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 
 - [x] 입력: `target_url`, `max_pages`, `max_depth`(워크플로 입력)
 - [x] Playwright로 시작 URL 로드, 동일 출처 링크 수집, BFS 크롤(깊이·페이지 수 제한)
-- [x] 산출물: `structure.json`, 링크 그래프 `graph`
-- [x] 휴리스틱 시나리오 초안 → `scenarios.draft.json`(스텝: `navigate`, `assertVisible`, `click`, `fill`, `assertNoConsoleError`)
+- [x] 산출물: `structure.json`(페이지별 `links`, `interactables`, **`formControls`**: `select` 단일/다중, 라디오 그룹, 체크박스, 스위치·`aria-checked` 토글 등), 링크 그래프 `graph`
+- [x] 휴리스틱 시나리오 초안 → `scenarios.draft.json`(스텝: `navigate`, `assertVisible`, `click`, `fill`, `selectOption`, `check`, `waitForResponse`, `waitForSelector`, `assertNoConsoleError`)
 - [x] 초안 기준 Playwright 스모크 실행 → `results.json`
 - [x] `report.html` 및 JSON을 **`gh-pages`의 날짜/시간 폴더**에 커밋 푸시 (`run_id`별 메타 동반)
 
@@ -104,6 +104,18 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
    `https://<owner>.github.io/<repo>/jobs/<날짜>/<시간>_<run_id>/report.html`  
    (`run_id` 는 해당 워크플로 실행 상세 페이지 상단의 숫자 ID 와 동일합니다.)
 4. 일부 시나리오가 실패하면 워크플로는 **경고(노란색)** 로 끝날 수 있으나, 산출물은 `continue-on-error` 및 `if: always()` 로 **`jobs/` 에 게시**됩니다.
+
+#### 단위 테스트 (`packages/core`)
+
+```powershell
+Set-Location packages/core
+npm ci
+npm test
+```
+
+크롤·시나리오·스키마·리포트 HTML·아이콘 복사 등 순수 로직을 검증합니다(브라우저 E2E 없음). CI의 **Analyze** / **Run custom scenarios** 워크플로에서도 `npm test` 가 실행됩니다.
+
+**참고:** 예전에 게시된 `jobs/.../report.html` 만 있고 같은 폴더에 `Icon.svg` 가 없으면 탭 아이콘이 비어 보일 수 있습니다. 해당 Job을 한 번 재실행하거나 분석 파이프라인을 다시 돌리면 `Icon.svg` 가 함께 올라갑니다.
 
 #### 로컬에서 파이프라인만 실행
 
@@ -125,7 +137,8 @@ node src/pipeline.mjs
 
 ### Phase 2 — 시나리오 스키마·리포트 품질 ✅
 
-- [x] 스텝 타입: `navigate`, `click`, `fill`, `assertVisible`, `assertNoConsoleError`, `waitForResponse` (`packages/core/src/schema.mjs` · `schema.json` 산출)
+- [x] 스텝 타입: `navigate`, `click`, `fill`, `selectOption`, `check`, `assertVisible`, `assertNoConsoleError`, `waitForResponse`, `waitForSelector` (`packages/core/src/schema.mjs` · `schema.json` 산출)
+- [x] 클릭 스텝: 브라우저 다이얼로그 기록·dismiss, `target=_blank` / `opensNewTab` 시 새 탭 감지·URL 기록·탭 닫기, 동일 탭 네비게이션 URL 비교 (`runner.mjs`)
 - [x] 5가지 기준(`page_rendering`, `core_action`, `input_data`, `console_errors`, `primary_flow`)과 주요 스텝·메트릭 매핑 표준화
 - [x] 대시보드: 기준별 통과/실패 표, 실패 시 **스크린샷**(`screenshots/`)·**Trace**(`traces/*.zip`, 기본은 실패 시만 저장), 실패 시나리오 **콘솔·페이지 오류** 블록
 - [x] `TRACE_MODE` 환경 변수 / Actions 입력 `trace_mode`: `failure` | `all` | `off`
@@ -150,7 +163,7 @@ npx playwright show-trace traces/<시나리오-id>.zip
 
 #### Phase 3 사용법
 
-1. **권장:** 저장소 **Settings → Secrets and variables → Actions** 에 **`WORKER_BASE_URL`**(Cloudflare Worker 루트 URL, 슬래시 없음)과 필요 시 **`QA_WEBHOOK_SECRET`**(Worker `WEBHOOK_SECRET` 과 동일)을 추가합니다. **`Deploy GitHub Pages`** 워크플로가 `web/index.html` 에 자동 주입하므로, Pages 이용자는 별도 설정 없이 **분석 시작**만 누르면 됩니다. 시크릿을 넣은 뒤 Actions에서 **Deploy GitHub Pages** 를 한 번 실행하거나 `web/` 변경을 푸시하세요.
+1. **Pages에서 분석:** `workers/trigger` 로 Cloudflare Worker를 한 번 배포한 뒤, **`web/app.js`** 상단 **`DEFAULT_WORKER_BASE_URL`** 에 그 Worker 루트 URL(슬래시 없음)을 넣고 커밋합니다. **여러 사이트를 돌려도 이 URL은 그대로** 두면 됩니다. (선택) Worker에 `WEBHOOK_SECRET` 을 쓰면 같은 파일의 **`DEFAULT_QA_WEBHOOK_SECRET`** 에 동일 값을 넣습니다.
 2. Worker를 쓰지 않을 때: Actions에서 **Analyze site and run tests** 실행 후 **Job ID**(워크플로 `run_id`)를 확인합니다.
 3. Pages에서 `https://<owner>.github.io/<repo>/?job=<run_id>` 로 열거나, Job ID를 입력해 **불러오기**를 누릅니다.
 4. 배포 직후 `jobs/<id>/` 가 아직 없으면 **폴링**이 켜져 있으면 자동으로 재시도합니다.
@@ -169,7 +182,7 @@ Worker의 `/analyze`·토큰 권한·환경 변수는 **`workers/trigger/README.
 #### Phase 4 설정 요약
 
 1. **저장소** `Settings → Secrets and variables` 에서 Worker용 PAT는 **Worker 시크릿에만** 저장합니다.
-2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포한 뒤, 위 **`WORKER_BASE_URL`** 등 시크릿만 맞추면 됩니다(소스의 `data-*` 는 비워 둔 채 유지).
+2. **`workers/trigger/README.md`** 를 참고해 Worker를 배포하고, **`web/app.js`** 의 **`DEFAULT_WORKER_BASE_URL`** 을 맞춥니다(GitHub Secrets로 Pages에 주입할 필요 없음).
 3. `web/index.html` 의 `data-github-repo` 를 본인 `owner/repo` 로 바꾸면 수동 실행 링크가 맞춰집니다.
 
 ### Phase 5 — 트리거 레이어 하드닝 ✅
@@ -189,12 +202,26 @@ Worker의 `/analyze`·토큰 권한·환경 변수는 **`workers/trigger/README.
 3. `WEBHOOK_SECRET` 을 양쪽에 맞추고, Worker `ALLOWED_ORIGINS` 에 GitHub Pages URL을 지정.
 4. **Analyze** / **Run custom scenarios** 를 한 번씩 실행해 `dispatch-meta.json` 이 `jobs/<id>/` 에 생기는지 확인.
 
-### Phase 6 — LLM 연동(선택)
+### Phase 6 — LLM 연동(선택) ✅ (1차)
 
-- [ ] 크롤 요약 + DOM 스냅샷(민감 정보 마스킹)을 입력으로 시나리오 보강
-- [ ] 실패 케이스 피드백 루프는 후순위
+- [x] 크롤·페이지 요약(제목 PII 마스킹) + 기존 시나리오 메타를 OpenAI 호환 Chat Completions에 넘겨 **추가 시나리오 JSON** 병합 (`packages/core/src/llm-enrich.mjs`)
+- [x] 파이프라인: `LLM_SCENARIOS=1` 또는 `ENABLE_LLM_SCENARIOS=1` 일 때만 호출 · 산출 `llm-enrich-log.json`
+- [x] Actions: **Analyze site and run tests** 입력 `llm_scenarios=true` + Secret `OPENAI_API_KEY`(또는 `LLM_API_KEY`) 선택
+- [ ] 실패 케이스 피드백 루프·DOM 풀 스냅샷 입력은 후순위
 
-**완료 기준:** 초안 품질 개선, 비용·토큰 한도 문서화.
+**환경 변수 (로컬 / CI):**
+
+| 변수 | 설명 |
+|------|------|
+| `LLM_SCENARIOS` / `ENABLE_LLM_SCENARIOS` | `1` 또는 `true` 이면 보강 실행 |
+| `OPENAI_API_KEY` 또는 `LLM_API_KEY` | API 키 |
+| `LLM_BASE_URL` | 기본 `https://api.openai.com/v1` (Azure 등 교체 시) |
+| `LLM_MODEL` | 기본 `gpt-4o-mini` |
+| `STRICT_SCENARIO_VALIDATE` | `1` 이면 스키마 검증 실패 시 파이프라인/재실행 즉시 종료 |
+
+**클릭 스텝 옵션 (수동 JSON):** `opensNewTab` / `target: "_blank"`(크롤 메타와 동일), `keepPopupOpen`(기본은 새 탭을 닫음), `detectPopupMs`(예: `800`)으로 `target` 없이 늦게 뜨는 `window.open` 을 짧게 기다릴 수 있음. 토스트·인라인 알림은 `waitForSelector` + 필요 시 `optional: true` 로 보완.
+
+**완료 기준:** 키가 있으면 초안에 검증 통과하는 `llm-*` 시나리오가 추가되고, 로그로 병합 건수를 확인할 수 있다. 비용은 모델·토큰에 따르므로 상한은 운영에서 설정한다.
 
 ---
 

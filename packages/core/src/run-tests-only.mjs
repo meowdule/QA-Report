@@ -8,6 +8,7 @@ import { chromium } from "playwright";
 import { runScenarios } from "./runner.mjs";
 import { buildReportHtml } from "./report-html.mjs";
 import { CRITERIA, CRITERION_IDS, STEP_TYPES, validateScenarioSteps } from "./schema.mjs";
+import { copyWebIconToOutput } from "./copy-web-icon.mjs";
 import { createDispatchMeta } from "./dispatch-sign.mjs";
 
 const inputDir = path.join(process.cwd(), "input");
@@ -44,6 +45,10 @@ const issues = validateScenarioSteps(scenariosDoc);
 if (issues.length) {
   console.warn("Scenario validation:", JSON.stringify(issues, null, 2));
 }
+if (process.env.STRICT_SCENARIO_VALIDATE === "1" && issues.length) {
+  console.error("STRICT_SCENARIO_VALIDATE: failing due to invalid scenarios.");
+  process.exit(1);
+}
 
 fs.mkdirSync(outDir, { recursive: true });
 fs.copyFileSync(structurePath, path.join(outDir, "structure.json"));
@@ -68,6 +73,8 @@ fs.writeFileSync(
   ),
   "utf8",
 );
+
+copyWebIconToOutput(outDir);
 
 console.log(`Run-tests-only job ${JOB_ID} · trace=${TRACE_MODE}`);
 

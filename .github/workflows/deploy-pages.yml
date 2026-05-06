@@ -23,41 +23,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 저장소 Secrets 한 번만 넣으면 배포본 index.html 에 주입됩니다. 사용자는 설정할 필요 없음.
-      - name: Inject Worker URL and webhook secret into index.html
-        env:
-          WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
-          QA_WEBHOOK_SECRET: ${{ secrets.QA_WEBHOOK_SECRET }}
-        run: |
-          python3 << 'PY'
-          import html
-          import os
-          import pathlib
-          import re
-
-          p = pathlib.Path("web/index.html")
-          t = p.read_text(encoding="utf-8")
-          u = (os.environ.get("WORKER_BASE_URL") or "").strip()
-          s = (os.environ.get("QA_WEBHOOK_SECRET") or "").strip()
-          u_esc = html.escape(u, quote=True)
-          s_esc = html.escape(s, quote=True)
-          t, n1 = re.subn(
-              r'data-worker-base-url="[^"]*"',
-              f'data-worker-base-url="{u_esc}"',
-              t,
-              count=1,
-          )
-          t, n2 = re.subn(
-              r'data-qa-webhook-secret="[^"]*"',
-              f'data-qa-webhook-secret="{s_esc}"',
-              t,
-              count=1,
-          )
-          if n1 != 1 or n2 != 1:
-              raise SystemExit("Could not patch data-worker-base-url / data-qa-webhook-secret in web/index.html")
-          p.write_text(t, encoding="utf-8")
-          PY
-
       - name: Deploy web/ to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

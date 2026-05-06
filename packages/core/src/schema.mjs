@@ -3,7 +3,7 @@
  * scenarios.draft.json 의 criteria 배열 값과 일치해야 합니다.
  */
 
-/** @typedef {'navigate' | 'click' | 'fill' | 'assertVisible' | 'assertNoConsoleError' | 'waitForResponse'} StepType */
+/** @typedef {'navigate' | 'click' | 'fill' | 'selectOption' | 'check' | 'assertVisible' | 'assertNoConsoleError' | 'waitForResponse' | 'waitForSelector'} StepType */
 
 /** @typedef {'page_rendering' | 'core_action' | 'input_data' | 'console_errors' | 'primary_flow'} CriterionId */
 
@@ -12,9 +12,12 @@ export const STEP_TYPES = /** @type {const} */ ([
   "navigate",
   "click",
   "fill",
+  "selectOption",
+  "check",
   "assertVisible",
   "assertNoConsoleError",
   "waitForResponse",
+  "waitForSelector",
 ]);
 
 /** 기준 정의: 검증에 사용되는 스텝·메트릭 */
@@ -28,13 +31,13 @@ export const CRITERIA = /** @type {Record<CriterionId, { labelKo: string; descri
   core_action: {
     labelKo: "핵심 액션",
     description: "클릭 등 주요 인터랙션이 오류 없이 수행되는지",
-    primarySteps: ["click", "navigate", "assertVisible"],
-    metrics: ["clickResolved", "navigation"],
+    primarySteps: ["click", "navigate", "assertVisible", "waitForSelector"],
+    metrics: ["clickResolved", "navigation", "dialogs", "popupOrNewTab"],
   },
   input_data: {
     labelKo: "입력 데이터",
     description: "폼 필드에 값이 입력되는지(저장·서버 검증은 별도)",
-    primarySteps: ["fill", "assertVisible"],
+    primarySteps: ["fill", "selectOption", "check", "assertVisible"],
     metrics: ["fieldFilled"],
   },
   console_errors: {
