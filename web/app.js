@@ -26,8 +26,35 @@ function githubRepo() {
   return document.documentElement.dataset.githubRepo || "meowdule/QA-Report";
 }
 
+/** Cloudflare Worker 루트 (슬래시 없음). `data-worker-base-url` */
+function workerBaseUrl() {
+  const u = document.documentElement.dataset.workerBaseUrl?.trim();
+  if (!u) return "";
+  return u.replace(/\/+$/, "");
+}
+
+function analyzeWorkerEndpoint() {
+  const b = workerBaseUrl();
+  return b ? `${b}/analyze` : "";
+}
+
+/** Worker `POST /` 재실행 엔드포인트 */
+function workerRerunEndpoint() {
+  const b = workerBaseUrl();
+  return b ? `${b}/` : "";
+}
+
+/** `data-qa-webhook-secret` → `X-QA-Secret` (Worker WEBHOOK_SECRET 과 동일) */
+function qaWebhookSecret() {
+  return document.documentElement.dataset.qaWebhookSecret?.trim() || "";
+}
+
 const qs = new URLSearchParams(window.location.search);
 const initialJob = (qs.get("job") || qs.get("jobId") || "").trim();
+
+if (window.location.protocol === "file:") {
+  document.getElementById("file-protocol-banner")?.classList.remove("hidden");
+}
 
 /** @type {{ jobId: string; structure: any; scenariosDoc: any; results: any | null; dispatchMeta: any | null }} */
 const state = {
@@ -39,6 +66,13 @@ const state = {
 };
 
 const el = {
+  analyzeForm: document.getElementById("analyze-form"),
+  analyzeTargetUrl: document.getElementById("analyze-target-url"),
+  analyzeMaxPages: document.getElementById("analyze-max-pages"),
+  analyzeMaxDepth: document.getElementById("analyze-max-depth"),
+  analyzeTraceMode: document.getElementById("analyze-trace-mode"),
+  analyzeStatus: document.getElementById("analyze-status"),
+  linkActionsAnalyze: document.getElementById("link-actions-analyze"),
   form: document.getElementById("job-form"),
   input: document.getElementById("job-input"),
   pollToggle: document.getElementById("poll-toggle"),
@@ -56,8 +90,6 @@ const el = {
   btnJsonToForm: document.getElementById("btn-json-to-form"),
   btnFormToJson: document.getElementById("btn-form-to-json"),
   btnValidateJson: document.getElementById("btn-validate-json"),
-  triggerUrl: document.getElementById("trigger-url"),
-  triggerSecret: document.getElementById("trigger-secret"),
   btnPostRerun: document.getElementById("btn-post-rerun"),
   dispatchHint: document.getElementById("dispatch-hint"),
   linkActionsManual: document.getElementById("link-actions-manual"),
@@ -81,6 +113,98 @@ function setStatus(text, kind = "") {
   el.status.dataset.kind = kind;
 }
 
+function setAnalyzeStatus(text, kind = "") {
+  if (!el.analyzeStatus) return;
+  el.analyzeStatus.textContent = text;
+  el.analyzeStatus.dataset.kind = kind;
+}
+
+/** @param {boolean} on */
+function setAnalyzeBusy(on) {
+  const panel = document.getElementById("analyze-panel");
+  const form = el.analyzeForm;
+  if (!form) return;
+  for (const node of form.querySelectorAll("input, select, button")) {
+    if (node instanceof HTMLButtonElement && node.type === "submit") {
+      if (!node.dataset.idleLabel) node.dataset.idleLabel = node.textContent || "분석 시작";
+      node.disabled = on;
+      node.textContent = on ? "처리 중…" : node.dataset.idleLabel;
+      continue;
+    }
+    if (node instanceof HTMLInputElement || node instanceof HTMLSelectElement || node instanceof HTMLButtonElement) {
+      node.disabled = on;
+    }
+  }
+  panel?.classList.toggle("is-loading", on);
+}
+
+/**
+ * 이전 실행과 구분: `prevFinishedAt`이 있으면 다른 값일 때만, 없으면 `sinceIso` 이후 완료된 것만 신규로 봅니다.
+ * @param {string} finishedAt
+ * @param {string | null | undefined} prevFinishedAt
+ * @param {string | undefined} sinceIso
+ */
+function isFreshResultsFinishedAt(finishedAt, prevFinishedAt, sinceIso) {
+  if (!finishedAt) return false;
+  if (prevFinishedAt != null) return finishedAt !== prevFinishedAt;
+  if (sinceIso) return finishedAt > sinceIso;
+  return true;
+}
+
+/**
+ * @param {string} jobId
+ * @param {string} file
+ * @param {string | null | undefined} prevFinishedAt
+ * @param {string} sinceIso
+ * @param {AbortSignal} signal
+ */
+async function pollResultsUntilFresh(jobId, file, prevFinishedAt, sinceIso, signal) {
+  const maxAttempts = 72;
+  const intervalMs = 5000;
+  for (let i = 0; i < maxAttempts; i++) {
+    if (signal.aborted) throw new DOMException("aborted", "AbortError");
+    if (i > 0) await sleep(intervalMs);
+    if (signal.aborted) throw new DOMException("aborted", "AbortError");
+    try {
+      const results = await fetchJson(jobFileUrl(jobId, file), { signal, cacheBust: true });
+      const t = results?.finishedAt;
+      if (isFreshResultsFinishedAt(t, prevFinishedAt, sinceIso)) return results;
+    } catch {
+      /* still deploying */
+    }
+    setStatus(`테스트 결과 대기 중… (${i + 1}/${maxAttempts})`, "wait");
+  }
+  throw new Error("results.json 갱신 대기 시간 초과");
+}
+
+/**
+ * @param {string} url
+ * @param {AbortSignal} signal
+ * @param {(n: number) => void} [onWait]
+ */
+async function fetchJsonWithRetries(url, signal, onWait, attempts = 30, intervalMs = 2000) {
+  let lastErr = /** @type {Error | null} */ (null);
+  for (let i = 0; i < attempts; i++) {
+    if (signal.aborted) throw new DOMException("aborted", "AbortError");
+    try {
+      return await fetchJson(url, { signal });
+    } catch (e) {
+      lastErr = /** @type {Error} */ (e);
+    }
+    if (i < attempts - 1) {
+      onWait?.(i + 1);
+      await sleep(intervalMs);
+    }
+  }
+  throw lastErr || new Error("fetch failed");
+}
+
+function scrollToWorkbench() {
+  requestAnimationFrame(() => {
+    document.getElementById("edit-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 function show(elm, on) {
   if (!elm) return;
   elm.classList.toggle("hidden", !on);
@@ -96,10 +220,16 @@ function esc(s) {
 
 /**
  * @param {string} url
- * @param {{ signal?: AbortSignal }} [opts]
+ * @param {{ signal?: AbortSignal; cacheBust?: boolean }} [opts]
  */
 async function fetchJson(url, opts = {}) {
-  const r = await fetch(url, { cache: "no-store", signal: opts.signal });
+  let u = url;
+  if (opts.cacheBust) {
+    const parsed = new URL(url, window.location.href);
+    parsed.searchParams.set("_", String(Date.now()));
+    u = parsed.href;
+  }
+  const r = await fetch(u, { cache: "no-store", signal: opts.signal });
   if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
   return r.json();
 }
@@ -322,6 +452,9 @@ function wireReport(jobId) {
 function wireManualActionsLink() {
   const repo = githubRepo();
   el.linkActionsManual.href = `https://github.com/${repo}/actions/workflows/run-custom-scenarios.yml`;
+  if (el.linkActionsAnalyze) {
+    el.linkActionsAnalyze.href = `https://github.com/${repo}/actions/workflows/analyze-and-test.yml`;
+  }
 }
 
 function hideAllPanels() {
@@ -336,8 +469,9 @@ function hideAllPanels() {
 
 /**
  * @param {string} jobId
+ * @param {{ longPoll?: boolean; scrollToWorkbench?: boolean }} [opts]
  */
-async function loadJob(jobId) {
+async function loadJob(jobId, opts = {}) {
   pollAbort?.abort();
   pollAbort = new AbortController();
   const signal = pollAbort.signal;
@@ -350,12 +484,17 @@ async function loadJob(jobId) {
   setStatus("structure.json 불러오는 중…", "load");
 
   const usePoll = el.pollToggle?.checked ?? true;
+  const longPoll = opts.longPoll === true;
+  const pollCfg = longPoll
+    ? { intervalMs: 4000, maxAttempts: 100 }
+    : { intervalMs: 3000, maxAttempts: 40 };
+
   let structure;
   try {
     if (usePoll) {
       structure = await pollUntilOk(structureUrl, {
-        intervalMs: 3000,
-        maxAttempts: 40,
+        intervalMs: pollCfg.intervalMs,
+        maxAttempts: pollCfg.maxAttempts,
         signal,
       });
     } else {
@@ -373,7 +512,12 @@ async function loadJob(jobId) {
     return;
   }
 
-  setStatus("연관 파일 로드 중…", "load");
+  setStatus("시나리오·결과 파일 로드 중…", "load");
+
+  const scenRetries = longPoll ? 60 : 30;
+  const scenInterval = longPoll ? 3000 : 2000;
+  const resultRetries = longPoll ? 60 : 30;
+  const resultInterval = longPoll ? 3000 : 2000;
 
   let scenarios = null;
   let results = null;
@@ -381,12 +525,32 @@ async function loadJob(jobId) {
   try {
     scenarios = await fetchJson(scenariosUrl, { signal });
   } catch {
-    warnings.push("scenarios.draft.json 없음");
+    try {
+      scenarios = await fetchJsonWithRetries(
+        scenariosUrl,
+        signal,
+        (n) => setStatus(`시나리오 초안 대기 중… (${n}/${scenRetries})`, "wait"),
+        scenRetries,
+        scenInterval,
+      );
+    } catch {
+      warnings.push("scenarios.draft.json 없음");
+    }
   }
   try {
     results = await fetchJson(resultsUrl, { signal });
   } catch {
-    /* optional */
+    try {
+      results = await fetchJsonWithRetries(
+        resultsUrl,
+        signal,
+        (n) => setStatus(`테스트 결과(results.json) 대기 중… (${n}/${resultRetries})`, "wait"),
+        resultRetries,
+        resultInterval,
+      );
+    } catch {
+      /* optional */
+    }
   }
 
   state.jobId = jobId;
@@ -446,7 +610,92 @@ async function loadJob(jobId) {
   } else {
     setStatus(`완료 · ${tail}`, "ok");
   }
+
+  if (opts.scrollToWorkbench && scenarios) {
+    scrollToWorkbench();
+  }
 }
+
+el.analyzeForm?.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const workerUrl = analyzeWorkerEndpoint();
+  const targetUrl = el.analyzeTargetUrl?.value?.trim();
+  if (!workerUrl) {
+    setAnalyzeStatus(
+      "이 사이트에 Worker 주소가 아직 설정되지 않았습니다. 관리자에게 문의하거나 아래 Actions에서 분석을 실행하세요.",
+      "err",
+    );
+    return;
+  }
+  if (!targetUrl) {
+    setAnalyzeStatus("분석할 URL을 입력하세요.", "err");
+    return;
+  }
+  const secret = qaWebhookSecret();
+  const payload = {
+    target_url: targetUrl,
+    max_pages: String(el.analyzeMaxPages?.value ?? "20"),
+    max_depth: String(el.analyzeMaxDepth?.value ?? "2"),
+    trace_mode: el.analyzeTraceMode?.value || "failure",
+  };
+
+  setAnalyzeBusy(true);
+  setAnalyzeStatus("워크플로에 분석을 요청하는 중…", "load");
+  try {
+    const r = await fetch(workerUrl, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        ...(secret ? { "X-QA-Secret": secret } : {}),
+      },
+      body: JSON.stringify(payload),
+    });
+    const text = await r.text();
+    let data = null;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      /* ignore */
+    }
+    if (!r.ok) {
+      setAnalyzeStatus(`오류 ${r.status}: ${text.slice(0, 500)}`, "err");
+      return;
+    }
+    if (data?.run_id != null) {
+      const rid = String(data.run_id);
+      if (window.location.protocol !== "file:") {
+        const u = new URL(window.location.href);
+        u.searchParams.set("job", rid);
+        window.history.replaceState({}, "", u);
+      }
+      el.input.value = rid;
+      setAnalyzeStatus(
+        `Job ${rid} — GitHub Actions가 크롤·테스트를 끝내고 Pages에 올릴 때까지 기다립니다…`,
+        "load",
+      );
+      await loadJob(rid, { longPoll: true, scrollToWorkbench: true });
+      setAnalyzeStatus(
+        "불러오기가 끝났습니다. 요약·시나리오를 확인하고, 필요하면 수정한 뒤 「테스트 수행」을 누르세요.",
+        "ok",
+      );
+      return;
+    }
+    if (data?.queued) {
+      setAnalyzeStatus(
+        data.message ||
+          "워크플로는 시작됐지만 run_id를 받지 못했습니다. Actions에서 run_id를 확인한 뒤 Job ID로 불러오세요.",
+        "warn",
+      );
+      return;
+    }
+    setAnalyzeStatus(`응답: ${text.slice(0, 400)}`, "warn");
+  } catch (e) {
+    setAnalyzeStatus(`네트워크 오류: ${/** @type {Error} */ (e).message}`, "err");
+  } finally {
+    setAnalyzeBusy(false);
+  }
+});
 
 el.form?.addEventListener("submit", (ev) => {
   ev.preventDefault();
@@ -503,8 +752,8 @@ el.btnValidateJson?.addEventListener("click", () => {
 });
 
 el.btnPostRerun?.addEventListener("click", async () => {
-  const url = el.triggerUrl?.value?.trim();
-  const secret = el.triggerSecret?.value?.trim();
+  const url = workerRerunEndpoint();
+  const secret = qaWebhookSecret();
   if (!state.jobId) {
     setStatus("Job ID가 없습니다. 먼저 불러오기를 실행하세요.", "err");
     return;
@@ -518,10 +767,14 @@ el.btnPostRerun?.addEventListener("click", async () => {
     return;
   }
   if (!url) {
-    setStatus("Trigger Worker URL을 입력하세요. (또는 아래 Actions 링크)", "warn");
+    setStatus("Worker 주소가 설정되지 않았습니다. 관리자에게 문의하거나 아래 Actions 링크를 사용하세요.", "warn");
     return;
   }
-  setStatus("Worker에 POST 중…", "load");
+
+  const prevFinished = state.results?.finishedAt ?? null;
+  const postStartedAt = new Date().toISOString();
+
+  setStatus("테스트 수행을 요청하는 중…", "load");
   const payload = { job_id: state.jobId, scenarios };
   if (state.dispatchMeta?.sig != null && state.dispatchMeta?.exp != null) {
     payload.dispatch_sig = state.dispatchMeta.sig;
@@ -543,25 +796,40 @@ el.btnPostRerun?.addEventListener("click", async () => {
       setStatus(`Worker 오류 ${r.status}: ${text.slice(0, 400)}`, "err");
       return;
     }
-    setStatus("요청 접수됨(202). Actions에서 워크플로가 시작되면 같은 Job 폴더가 갱신됩니다.", "ok");
+
+    setStatus("워크플로가 돌고 있습니다. 새 results.json이 올라올 때까지 기다립니다…", "load");
+    pollAbort?.abort();
+    pollAbort = new AbortController();
+    const signal = pollAbort.signal;
+    el.btnStop.hidden = false;
+    try {
+      await pollResultsUntilFresh(state.jobId, "results.json", prevFinished, postStartedAt, signal);
+      await loadJob(state.jobId);
+      setStatus(`테스트 반영 완료 · ${new Date().toLocaleString()}`, "ok");
+    } catch (e) {
+      const err = /** @type {Error & { name?: string }} */ (e);
+      if (err.name === "AbortError") {
+        setStatus("대기를 중지했습니다.", "warn");
+        return;
+      }
+      setStatus(
+        err.message ||
+          "결과를 기다리지 못했습니다. 잠시 후 「불러오기」로 다시 시도하거나 Actions 로그를 확인하세요.",
+        "err",
+      );
+    } finally {
+      el.btnStop.hidden = true;
+    }
   } catch (e) {
     setStatus(`네트워크 오류: ${/** @type {Error} */ (e).message}`, "err");
   }
 });
 
-el.triggerUrl?.addEventListener("change", () => {
-  const v = el.triggerUrl.value.trim();
-  if (v) localStorage.setItem("qa_trigger_url", v);
-});
-
 wireManualActionsLink();
-if (el.triggerUrl) {
-  el.triggerUrl.value = localStorage.getItem("qa_trigger_url") || "";
-}
 
 if (initialJob) {
   el.input.value = initialJob;
   loadJob(initialJob);
 } else {
-  setStatus("Job ID를 입력한 뒤 불러오기를 누르세요.", "");
+  setStatus("Job ID를 입력한 뒤 불러오기를 누르거나, 위에서 URL로 새 분석을 시작하세요.", "");
 }

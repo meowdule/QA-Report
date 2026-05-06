@@ -61,11 +61,13 @@ try {
   const runResults = await runScenarios(browser, scenariosDoc, { outDir, traceMode: TRACE_MODE });
   fs.writeFileSync(path.join(outDir, "results.json"), JSON.stringify(runResults, null, 2), "utf8");
 
+  const reportGeneratedAt = new Date().toISOString();
   const html = buildReportHtml({
     structure,
     scenariosDoc,
     runResults,
     jobId: JOB_ID,
+    reportGeneratedAt,
   });
   fs.writeFileSync(path.join(outDir, "report.html"), html, "utf8");
 

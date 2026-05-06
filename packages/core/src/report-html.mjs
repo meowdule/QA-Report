@@ -9,10 +9,11 @@ function esc(s) {
 }
 
 /**
- * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string }} p
+ * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string; reportGeneratedAt?: string }} p
  */
 export function buildReportHtml(p) {
   const { structure, scenariosDoc, runResults, jobId } = p;
+  const reportGeneratedAt = p.reportGeneratedAt ?? runResults.finishedAt ?? new Date().toISOString();
   const passed = runResults.scenarios.filter((s) => s.passed).length;
   const total = runResults.scenarios.length;
   const pages = structure.pages?.length ?? 0;
@@ -22,6 +23,8 @@ export function buildReportHtml(p) {
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
   const scenarioRows = runResults.scenarios.map((s) => buildScenarioRow(s)).join("");
 
+  const passPct = total ? Math.round((passed / total) * 100) : 0;
+
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,55 +32,235 @@ export function buildReportHtml(p) {
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="noindex, nofollow"/>
   <title>QA 리포트 · Job ${esc(jobId)}</title>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <style>
-    :root { font-family: system-ui, sans-serif; line-height: 1.45; color: #0f1419; background: #f6f8fb; }
-    main { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
-    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; }
-    h2 { font-size: 1.05rem; margin: 0 0 0.5rem; }
-    .card { background: #fff; border: 1px solid #d8dee6; border-radius: 10px; padding: 1rem 1.1rem; margin: 1rem 0; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; }
-    .stat { padding: 0.75rem; background: #f0f4fa; border-radius: 8px; }
-    .stat strong { display: block; font-size: 1.25rem; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { border-bottom: 1px solid #e3e8ef; padding: 0.5rem 0.35rem; vertical-align: top; }
-    th { text-align: left; font-size: 0.78rem; color: #5c6570; }
-    .badge { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 6px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
-    .badge.pass { background: #def7e6; color: #0b6b32; }
-    .badge.fail { background: #fde8e8; color: #9b1c1c; }
-    .pill { display: inline-block; margin: 0.15rem 0.25rem 0 0; padding: 0.1rem 0.35rem; border-radius: 999px; background: #eef2f7; font-size: 0.72rem; }
-    .muted { color: #5c6570; font-size: 0.82rem; }
-    .steps { margin: 0.25rem 0 0 1rem; padding: 0; }
-    .steps li.ok { color: #0b6b32; }
-    .steps li.bad { color: #9b1c1c; }
-    .steps li.skip { color: #6e7781; }
-    pre.sub { font-size: 0.72rem; background: #0f1419; color: #e7ecf3; padding: 0.5rem; border-radius: 6px; overflow: auto; max-height: 220px; }
-    code { font-family: ui-monospace, monospace; font-size: 0.85em; }
-    a { color: #0969da; }
-    .crit-ok { color: #0b6b32; font-weight: 600; }
-    .crit-bad { color: #9b1c1c; font-weight: 600; }
-    .artifact { font-size: 0.82rem; margin: 0.2rem 0; }
+    :root {
+      --font: "Pretendard", -apple-system, system-ui, sans-serif;
+      --bg: #e8ecf4;
+      --bg2: #f4f6fb;
+      --card: #fff;
+      --text: #1a1d24;
+      --muted: #5c6473;
+      --accent: #00c471;
+      --accent2: #00a85f;
+      --accent-soft: rgba(0, 196, 113, 0.12);
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --bad: #e11d48;
+      --ok: #00a85f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      line-height: 1.55;
+      color: var(--text);
+      background: linear-gradient(165deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    .hero {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 0.65rem;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--accent2);
+      background: var(--accent-soft);
+      border-radius: 999px;
+    }
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.5rem, 3.5vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+    }
+    .meta {
+      margin: 0 auto;
+      max-width: 42rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .meta code { font-size: 0.9em; }
+    .meta-grid {
+      display: grid;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      text-align: left;
+    }
+    .meta-grid div { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; align-items: baseline; }
+    .meta-grid strong { min-width: 5.5rem; color: var(--text); font-size: 0.8rem; }
+    .callout {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: rgba(0, 196, 113, 0.08);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--accent-soft);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      margin: 1rem 0;
+      box-shadow: var(--shadow);
+    }
+    .card h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .card > p.muted { margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.85rem;
+    }
+    .stat {
+      padding: 1rem;
+      background: var(--bg2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .stat span.lbl {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    .stat.pass strong { color: var(--ok); }
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    table.data th, table.data td {
+      border-bottom: 1px solid var(--border);
+      padding: 0.55rem 0.45rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    table.data th {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    table.data tr:last-child td { border-bottom: none; }
+    .scroll { overflow: auto; -webkit-overflow-scrolling: touch; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge.pass { background: #d1fae5; color: #047857; }
+    .badge.fail { background: #ffe4e6; color: #be123c; }
+    .pill {
+      display: inline-block;
+      margin: 0.15rem 0.35rem 0 0;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .muted { color: var(--muted); font-size: 0.86rem; }
+    .steps { margin: 0.35rem 0 0 1rem; padding: 0; }
+    .steps li { margin: 0.15rem 0; }
+    .steps li.ok { color: #047857; }
+    .steps li.bad { color: var(--bad); }
+    .steps li.skip { color: var(--muted); }
+    pre.sub {
+      font-size: 0.72rem;
+      background: #12151c;
+      color: #e8ecf4;
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      overflow: auto;
+      max-height: 220px;
+      margin: 0.35rem 0 0;
+    }
+    code { font-family: ui-monospace, monospace; font-size: 0.88em; }
+    a { color: var(--accent2); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .crit-ok { color: #047857; font-weight: 700; }
+    .crit-bad { color: var(--bad); font-weight: 700; }
+    .artifact { font-size: 0.82rem; margin: 0.25rem 0; }
+    .links {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-<main>
-  <h1>테스트 대시보드 (Phase 2)</h1>
-  <p class="muted">Job <code>${esc(jobId)}</code> · ${esc(runResults.finishedAt)} · scenarios v${esc(
-    scenariosDoc.version,
-  )} · trace: <code>${esc(traceMode)}</code></p>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">실행 리포트</p>
+    <h1>테스트 결과 대시보드</h1>
+    <p class="meta">
+      GitHub Actions <strong>run_id</strong>마다 <code>jobs/&lt;Job ID&gt;/</code> 폴더가 따로 생깁니다.
+      사용자·실행 시각이 다르면 Job ID가 달라지므로 리포트도 각각 보관됩니다.
+    </p>
+    <div class="meta-grid">
+      <div><strong>Job ID</strong> <code>${esc(jobId)}</code></div>
+      <div><strong>테스트 완료</strong> <span>${esc(runResults.finishedAt)}</span></div>
+      <div><strong>리포트 생성</strong> <span>${esc(reportGeneratedAt)}</span></div>
+      <div><strong>시나리오 스키마</strong> <span>v${esc(scenariosDoc.version)}</span> · trace <code>${esc(traceMode)}</code></div>
+      <div><strong>대상 URL</strong> <code style="word-break:break-all">${esc(structure.targetUrl)}</code></div>
+    </div>
+    <p class="callout">이 페이지는 배포된 정적 HTML입니다. 같은 Job에서 시나리오를 수정해 다시 테스트하면 이 파일이 갱신됩니다.</p>
+  </header>
+
   <div class="card">
     <div class="grid">
-      <div class="stat"><strong>${esc(pages)}</strong> 크롤 페이지</div>
-      <div class="stat"><strong>${esc(total ? Math.round((passed / total) * 100) : 0)}%</strong> 시나리오 통과</div>
-      <div class="stat"><strong>${esc(passed)}/${esc(total)}</strong> 시나리오</div>
-      <div class="stat"><strong>대상</strong> <span style="word-break:break-all">${esc(structure.targetUrl)}</span></div>
+      <div class="stat"><strong>${esc(pages)}</strong><span class="lbl">크롤 페이지</span></div>
+      <div class="stat pass"><strong>${esc(passPct)}%</strong><span class="lbl">시나리오 통과율</span></div>
+      <div class="stat"><strong>${esc(passed)} / ${esc(total)}</strong><span class="lbl">통과 / 전체</span></div>
+      <div class="stat"><strong>${esc(total)}</strong><span class="lbl">실행 시나리오 수</span></div>
     </div>
   </div>
 
   <div class="card">
-    <h2>5가지 기준별 통과 요약</h2>
-    <p class="muted">각 기준 태그가 붙은 시나리오 건수 기준입니다. 한 시나리오가 여러 기준을 포함할 수 있습니다.</p>
-    <div style="overflow:auto;">
-      <table>
+    <h2>기준별 통과 요약</h2>
+    <p class="muted">기준 태그가 붙은 시나리오 건수 기준입니다. 한 시나리오가 여러 기준을 가질 수 있습니다.</p>
+    <div class="scroll">
+      <table class="data">
         <thead>
           <tr>
             <th>기준</th>
@@ -94,33 +277,38 @@ export function buildReportHtml(p) {
   </div>
 
   <div class="card">
-    <h2>콘솔·페이지 오류 (실패한 시나리오)</h2>
+    <h2>콘솔·페이지 오류 (실패 시나리오)</h2>
     ${failedConsoleBlock}
   </div>
 
-  <div class="card" style="overflow:auto;">
+  <div class="card">
     <h2>시나리오 상세</h2>
-    <p class="muted">Trace: 실패 시(또는 trace 모드 <code>all</code>) <code>traces/*.zip</code> · 로컬에서
+    <p class="muted">Trace는 실패 시 또는 모드가 <code>all</code>일 때 <code>traces/*.zip</code> ·
       <code>npx playwright show-trace traces/&lt;파일&gt;.zip</code></p>
-    <table>
-      <thead>
-        <tr>
-          <th>결과</th>
-          <th>시나리오 / 기준</th>
-          <th>시간</th>
-          <th>아티팩트</th>
-          <th>스텝 / 콘솔</th>
-        </tr>
-      </thead>
-      <tbody>${scenarioRows}</tbody>
-    </table>
+    <div class="scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>결과</th>
+            <th>시나리오 / 기준</th>
+            <th>시간</th>
+            <th>아티팩트</th>
+            <th>스텝 / 콘솔</th>
+          </tr>
+        </thead>
+        <tbody>${scenarioRows}</tbody>
+      </table>
+    </div>
   </div>
 
-  <p class="muted">원본: <a href="./structure.json">structure.json</a> ·
+  <p class="links">
+    원본 JSON ·
+    <a href="./structure.json">structure.json</a> ·
     <a href="./scenarios.draft.json">scenarios.draft.json</a> ·
     <a href="./results.json">results.json</a> ·
-    <a href="./schema.json">schema.json</a></p>
-</main>
+    <a href="./schema.json">schema.json</a>
+  </p>
+</div>
 </body>
 </html>`;
 }

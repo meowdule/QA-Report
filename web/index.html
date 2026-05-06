@@ -1,26 +1,96 @@
 <!DOCTYPE html>
-<html lang="ko" data-github-repo="meowdule/QA-Report">
+<!--
+  배포 시 <html> 에 설정:
+  - data-worker-base-url: Cloudflare Worker 루트 (예: https://qa-trigger.xxx.workers.dev 슬래시 없이)
+  - data-qa-webhook-secret: Worker WEBHOOK_SECRET 과 동일 값 (미사용이면 빈 문자열)
+-->
+<html
+  lang="ko"
+  data-github-repo="meowdule/QA-Report"
+  data-worker-base-url=""
+  data-qa-webhook-secret=""
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Site Analyzer &amp; Scenario Tester</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div id="file-protocol-banner" class="file-banner hidden" role="alert">
+      지금은 <strong>로컬 파일(file://)</strong>로 열려 있어 Worker·Job 데이터를 불러올 수 없습니다.
+      <a href="https://meowdule.github.io/QA-Report/" target="_blank" rel="noopener">GitHub Pages</a>에서 이용해 주세요.
+    </div>
     <main class="shell">
       <header class="hero">
-        <p class="eyebrow">Phase 5 · GitHub Pages</p>
-        <h1>Site Analyzer &amp; Scenario Tester</h1>
+        <p class="eyebrow">QA 리포트</p>
+        <h1>사이트 분석 · 시나리오 테스트</h1>
         <p class="lede">
-          <strong>Job ID</strong>로 결과를 불러오고, 시나리오 JSON을 수정한 뒤
-          <strong>Trigger Worker</strong>에 POST 하거나 Actions에서 수동 재실행할 수 있습니다.
-          URL에 <code>?job=ID</code> 가 있으면 자동으로 불러옵니다.
+          이 주소 한 곳에서 <strong>분석 시작 → 결과·시나리오 확인 → 수정 → 테스트 수행</strong>까지 진행할 수 있습니다.
+          분석을 새로 돌릴 때마다 GitHub Actions <strong>run_id</strong>가 바뀌고, 리포트는 <code>jobs/&lt;ID&gt;/</code>에
+          따로 쌓여 서로 섞이지 않습니다.
         </p>
       </header>
 
+      <section class="panel" id="analyze-panel" aria-labelledby="analyze-heading">
+        <h2 id="analyze-heading"><span class="panel-step" aria-hidden="true">1</span> 새 사이트 분석</h2>
+        <p class="panel-intro">HTTPS 페이지 URL을 입력한 뒤 분석을 시작하세요.</p>
+        <form id="analyze-form" class="job-form">
+          <label class="field">
+            <span>분석할 URL</span>
+            <input
+              id="analyze-target-url"
+              type="url"
+              required
+              autocomplete="url"
+              placeholder="https://example.com/"
+            />
+          </label>
+          <div class="row-2">
+            <label class="field">
+              <span>최대 페이지</span>
+              <input id="analyze-max-pages" type="number" min="1" max="100" value="20" />
+            </label>
+            <label class="field">
+              <span>링크 깊이</span>
+              <input id="analyze-max-depth" type="number" min="0" max="10" value="2" />
+            </label>
+          </div>
+          <div class="field">
+            <span>Playwright 트레이스</span>
+            <p class="field-help">
+              테스트 실행 과정을 기록(trace)해 두고, 실패 시 원인 파악에 씁니다.
+              <strong>실패만</strong>이 기본(빠르고 용량 적음), <strong>전체</strong>는 모든 시나리오를 기록하고,
+              <strong>끔</strong>은 trace 파일을 만들지 않습니다.
+            </p>
+            <select id="analyze-trace-mode" aria-describedby="analyze-heading">
+              <option value="failure" selected>실패한 테스트만 기록 (권장)</option>
+              <option value="all">모든 테스트 기록</option>
+              <option value="off">기록 안 함</option>
+            </select>
+          </div>
+          <div class="job-actions">
+            <button type="submit" class="btn primary">분석 시작</button>
+          </div>
+        </form>
+        <p id="analyze-status" class="status" role="status"></p>
+        <p class="hint">
+          Worker가 연결되지 않은 경우
+          <a id="link-actions-analyze" href="#" target="_blank" rel="noopener">Actions — Analyze site and run tests</a>
+          에서 실행한 뒤 <code>run_id</code>를 아래에 입력해 주세요.
+        </p>
+      </section>
+
       <section class="panel" aria-labelledby="job-heading">
-        <h2 id="job-heading">Job 결과 조회</h2>
+        <h2 id="job-heading"><span class="panel-step" aria-hidden="true">2</span> Job 결과 조회</h2>
+        <p class="panel-intro">워크플로 run_id와 동일한 숫자 Job ID로 저장소에 올라온 결과를 불러옵니다.</p>
         <form id="job-form" class="job-form">
           <label class="field">
             <span>Job ID</span>
@@ -45,8 +115,7 @@
         </form>
         <p id="job-status" class="status" role="status"></p>
         <p class="hint">
-          재실행 후에는 같은 Job 폴더의 <code>report.html</code> 등이 덮어씌워집니다. 필요하면 Actions에서
-          <code>run_id</code> 별 폴더를 따로 보관하세요.
+          재실행 후에는 같은 Job 폴더의 <code>report.html</code> 등이 덮어씌워집니다.
         </p>
       </section>
 
@@ -65,7 +134,7 @@
       </section>
 
       <section id="edit-section" class="panel hidden" aria-labelledby="edit-heading">
-        <h2 id="edit-heading">시나리오 편집 · 재실행</h2>
+        <h2 id="edit-heading"><span class="panel-step" aria-hidden="true">3</span> 시나리오 편집 · 재실행</h2>
         <p class="hint">
           아래 JSON은 <code>scenarios.draft.json</code> 전체 문서입니다. 폼으로 빠르게 고친 뒤
           <strong>폼 → JSON</strong>으로 반영하거나, JSON만 직접 수정해도 됩니다.
@@ -80,28 +149,18 @@
         <h3 class="subh">폼 (시나리오별)</h3>
         <div id="scenario-form-rows" class="scenario-forms"></div>
 
-        <h3 class="subh">원클릭 재실행 (Worker)</h3>
-        <label class="field">
-          <span>Trigger Worker URL</span>
-          <input
-            id="trigger-url"
-            type="url"
-            autocomplete="off"
-            placeholder="https://your-worker.workers.dev/"
-          />
-        </label>
-        <label class="field">
-          <span>X-QA-Secret (Worker에 설정한 경우)</span>
-          <input id="trigger-secret" type="password" autocomplete="off" placeholder="선택" />
-        </label>
+        <h3 class="subh">테스트 수행</h3>
+        <p class="panel-intro">
+          아래 버튼으로 수정한 시나리오를 같은 Job에 반영해 다시 테스트합니다. 완료될 때까지 이 페이지에서 결과를 기다립니다.
+        </p>
         <div class="job-actions">
-          <button type="button" class="btn primary" id="btn-post-rerun">POST로 재실행 요청</button>
+          <button type="button" class="btn primary" id="btn-post-rerun">테스트 수행</button>
         </div>
         <p id="dispatch-hint" class="hint" role="status"></p>
         <p class="hint">
-          Worker 미배포 시:
+          Worker 미연결 시
           <a id="link-actions-manual" href="#" target="_blank" rel="noopener">GitHub Actions — Run custom scenarios</a>
-          에서 동일 Job ID와 JSON을 붙여 넣어 실행하세요.
+          에서 Job ID와 JSON을 넣어 실행할 수 있습니다.
         </p>
       </section>
 
@@ -127,7 +186,7 @@
         <h2>HTML 대시보드</h2>
         <p class="hint">
           <a id="report-link" href="#" target="_blank" rel="noopener">새 탭에서 report.html 열기</a>
-          · 재실행 완료 후 <strong>새로고침</strong> 또는 다시 불러오기로 iframe을 갱신하세요.
+          · 재실행 후 이 페이지를 새로고침하거나 다시 불러오면 iframe이 갱신됩니다.
         </p>
         <div class="iframe-wrap">
           <iframe id="report-frame" title="QA report" sandbox="allow-same-origin allow-scripts"></iframe>
@@ -135,7 +194,8 @@
       </section>
 
       <footer class="footer">
-        Worker 예제: <code>workers/trigger/</code> · README의 Phase 5·Worker 문서를 참고하세요.
+        관리자: <code>web/index.html</code> 상단 <code>data-worker-base-url</code> 등 · 예시 Worker는
+        <code>workers/trigger/</code>
       </footer>
     </main>
     <script type="module" src="./app.js"></script>

@@ -149,9 +149,12 @@ npx playwright show-trace traces/<시나리오-id>.zip
 
 #### Phase 3 사용법
 
-1. Actions에서 **Analyze site and run tests** 실행 후 **Job ID**(워크플로 `run_id`)를 확인합니다.
-2. Pages 사이트에서 `https://<owner>.github.io/<repo>/?job=<run_id>` 로 열거나, 화면에 ID를 입력해 **불러오기**를 누릅니다.
-3. 배포 직후 `jobs/<id>/` 가 아직 없으면 **폴링**이 켜져 있으면 자동으로 재시도합니다.
+1. **권장:** 배포 시 `web/index.html` 의 `<html>` 에 **`data-worker-base-url`**(Worker 루트, 슬래시 없음)과 필요 시 **`data-qa-webhook-secret`** 을 넣습니다. Pages에서 대상 URL만 입력하고 **분석 시작**을 누르면 Worker가 `analyze-and-test.yml` 을 dispatch하고 `run_id` 를 받으면 같은 화면에서 Job을 폴링합니다.
+2. Worker를 쓰지 않을 때: Actions에서 **Analyze site and run tests** 실행 후 **Job ID**(워크플로 `run_id`)를 확인합니다.
+3. Pages에서 `https://<owner>.github.io/<repo>/?job=<run_id>` 로 열거나, Job ID를 입력해 **불러오기**를 누릅니다.
+4. 배포 직후 `jobs/<id>/` 가 아직 없으면 **폴링**이 켜져 있으면 자동으로 재시도합니다.
+
+Worker의 `/analyze`·토큰 권한·환경 변수는 **`workers/trigger/README.md`** 를 참고합니다.
 
 ### Phase 4 — 도메인에서 시나리오 편집 + 실행 ✅
 
@@ -165,7 +168,7 @@ npx playwright show-trace traces/<시나리오-id>.zip
 #### Phase 4 설정 요약
 
 1. **저장소** `Settings → Secrets and variables` 에서 Worker용 PAT는 **Worker 시크릿에만** 저장합니다.
-2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포하고, Pages의 **Trigger Worker URL** 필드에 붙여 넣습니다(브라우저 `localStorage`에 저장됨).
+2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포하고, `web/index.html` 의 **`data-worker-base-url`** / **`data-qa-webhook-secret`** 을 동일 Worker에 맞게 설정합니다.
 3. `web/index.html` 의 `data-github-repo` 를 본인 `owner/repo` 로 바꾸면 수동 실행 링크가 맞춰집니다.
 
 ### Phase 5 — 트리거 레이어 하드닝 ✅
