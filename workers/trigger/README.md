@@ -20,8 +20,10 @@ npx wrangler secret put WEBHOOK_SECRET   # 선택, SPA에서 동일 값을 헤�
 
 ## GitHub 토큰 권한
 
-- **Classic PAT:** `repo` (또는 공개 저장소만이면 `public_repo` + dispatch 가능 여부 확인).
-- **Fine-grained:** 저장소 접근 + **Contents** 읽기, **Metadata** 읽기, 워크플로 디스패치에 필요한 권한(정책에 따라 `Actions` 읽기만으로는 부족할 수 있음 — 실패 시 classic `repo` 권장).
+`POST /repos/{owner}/{repo}/dispatches` 는 저장소에 대한 쓰기 권한이 필요합니다. 권한이 부족하면 **204** 가 아닌 **403/404** 가 납니다.
+
+- **Classic PAT:** `repo` 권한(공개 저장소만일 때도 `repository_dispatch` 가 거절되면 `repo` 로 재발급).
+- **Fine-grained:** 해당 저장소에 대한 권한 중 **Metadata** 및 워크플로/콘텐츠 관련 정책이 허용되는 조합을 시도하고, 안 되면 classic `repo` PAT 사용을 권장합니다.
 
 ## SPA에서 호출
 
