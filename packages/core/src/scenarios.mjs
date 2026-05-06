@@ -1,6 +1,8 @@
+import { CRITERION_IDS, STEP_TYPES } from "./schema.mjs";
+
 /**
  * 크롤 결과로부터 초안 시나리오를 생성합니다.
- * criteria: page_rendering | core_action | input_data | console_errors | primary_flow
+ * criteria: schema.mjs 의 CriterionId 와 일치
  * @param {any} structure crawlSite 결과
  */
 export function buildDraftScenarios(structure) {
@@ -33,6 +35,7 @@ export function buildDraftScenarios(structure) {
         { type: "navigate", url: home.url },
         { type: "assertVisible", selector: "body" },
         { type: "click", href: first, fallbackSelector: "a[href]" },
+        { type: "waitForResponse", urlPattern: "", optional: true, timeout: 6000 },
         { type: "assertVisible", selector: "body" },
         { type: "assertNoConsoleError" },
       ],
@@ -56,6 +59,7 @@ export function buildDraftScenarios(structure) {
             selector: `${form.selector} input`,
             value: dummyValueForType(textInput),
           },
+          { type: "waitForResponse", urlPattern: "", optional: true, timeout: 5000 },
           { type: "assertNoConsoleError" },
         ],
       });
@@ -70,6 +74,7 @@ export function buildDraftScenarios(structure) {
       steps.push({ type: "navigate", url });
       steps.push({ type: "assertVisible", selector: "body" });
     }
+    steps.push({ type: "waitForResponse", urlPattern: "", optional: true, timeout: 4000 });
     steps.push({ type: "assertNoConsoleError" });
     scenarios.push({
       id: "primary-flow-linear",
@@ -80,9 +85,13 @@ export function buildDraftScenarios(structure) {
   }
 
   return {
-    version: 1,
+    version: 2,
     generatedAt: new Date().toISOString(),
     targetUrl: structure.targetUrl,
+    schema: {
+      stepTypes: [...STEP_TYPES],
+      criterionIds: [...CRITERION_IDS],
+    },
     scenarios,
   };
 }

@@ -28,7 +28,7 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 /
 ├── README.md                 # 본 문서
 ├── .github/workflows/        # Pages 배포, Analyze & Test
-├── packages/core/            # 크롤·시나리오 생성·실행·리포트 (Playwright)
+├── packages/core/            # 크롤·시나리오 생성·실행·리포트 (Playwright, schema.mjs)
 ├── scripts/                  # gh-pages에 jobs/ 게시 스크립트
 ├── web/                      # Pages용 정적 앱
 └── docs/trigger/             # (선택) 트리거 예제 — 미추가
@@ -113,18 +113,28 @@ $env:TARGET_URL="https://example.com"
 $env:MAX_PAGES="10"
 $env:MAX_DEPTH="2"
 $env:JOB_ID="local"
+$env:TRACE_MODE="failure"   # failure | all | off
 node src/pipeline.mjs
 ```
 
-결과는 `packages/core/output/` 에 생성됩니다(`gitignore` 됨).
+결과는 `packages/core/output/` 에 생성됩니다(`gitignore` 됨). Trace·스크린샷은 `output/traces/`, `output/screenshots/` 에 있습니다.
 
-### Phase 2 — 시나리오 스키마·리포트 품질
+### Phase 2 — 시나리오 스키마·리포트 품질 ✅
 
-- [ ] 스텝 타입 정의: `navigate`, `click`, `fill`, `assertVisible`, `assertNoConsoleError`, `waitForResponse` 등
-- [ ] 5가지 기준과 스텝·메트릭 매핑 표준화
-- [ ] 대시보드: 기준별 통과/실패, 스크린샷·trace 링크, 콘솔 에러 목록
+- [x] 스텝 타입: `navigate`, `click`, `fill`, `assertVisible`, `assertNoConsoleError`, `waitForResponse` (`packages/core/src/schema.mjs` · `schema.json` 산출)
+- [x] 5가지 기준(`page_rendering`, `core_action`, `input_data`, `console_errors`, `primary_flow`)과 주요 스텝·메트릭 매핑 표준화
+- [x] 대시보드: 기준별 통과/실패 표, 실패 시 **스크린샷**(`screenshots/`)·**Trace**(`traces/*.zip`, 기본은 실패 시만 저장), 실패 시나리오 **콘솔·페이지 오류** 블록
+- [x] `TRACE_MODE` 환경 변수 / Actions 입력 `trace_mode`: `failure` | `all` | `off`
 
-**완료 기준:** 실패 시 원인을 HTML만으로 대부분 추적 가능.
+**완료 기준:** 실패 시 HTML에서 스텝 상세·스크린샷·trace·콘솔 로그로 원인 추적이 가능합니다.
+
+#### Trace 보기
+
+로컬에서 job 폴더를 받은 뒤:
+
+```bash
+npx playwright show-trace traces/<시나리오-id>.zip
+```
 
 ### Phase 3 — Pages SPA (읽기 전용 먼저)
 

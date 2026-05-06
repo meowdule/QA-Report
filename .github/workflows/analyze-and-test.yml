@@ -17,6 +17,15 @@ on:
         required: false
         default: "2"
         type: string
+      trace_mode:
+        description: "Playwright trace: failure(실패만 저장) | all(전체) | off"
+        required: false
+        default: "failure"
+        type: choice
+        options:
+          - failure
+          - all
+          - off
 
 permissions:
   contents: write
@@ -57,6 +66,7 @@ jobs:
           TARGET_URL: ${{ github.event.inputs.target_url }}
           MAX_PAGES: ${{ github.event.inputs.max_pages }}
           MAX_DEPTH: ${{ github.event.inputs.max_depth }}
+          TRACE_MODE: ${{ github.event.inputs.trace_mode }}
           JOB_ID: ${{ github.run_id }}
         run: node src/pipeline.mjs
 

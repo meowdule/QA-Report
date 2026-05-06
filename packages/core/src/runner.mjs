@@ -1,23 +1,33 @@
+import fs from "fs";
+import path from "path";
+import { summarizeCriteria } from "./schema.mjs";
+
 /**
  * @param {import('playwright').Browser} browser
  * @param {any} scenariosDoc
+ * @param {{ outDir: string; traceMode?: "failure" | "all" | "off" }} [opts]
  */
-export async function runScenarios(browser, scenariosDoc) {
+export async function runScenarios(browser, scenariosDoc, opts = {}) {
+  const { outDir, traceMode = "failure" } = opts;
+  if (!outDir) throw new Error("runScenarios: outDir is required");
+
   const startedAt = new Date().toISOString();
   /** @type {any[]} */
   const scenarioResults = [];
 
   for (const sc of scenariosDoc.scenarios) {
-    const result = await runOneScenario(browser, sc);
+    const result = await runOneScenario(browser, sc, { outDir, traceMode });
     scenarioResults.push(result);
   }
 
   return {
-    version: 1,
+    version: 2,
     jobId: process.env.JOB_ID || "local",
     targetUrl: scenariosDoc.targetUrl,
+    traceMode,
     startedAt,
     finishedAt: new Date().toISOString(),
+    criteriaSummary: summarizeCriteria(scenarioResults),
     scenarios: scenarioResults,
   };
 }
@@ -25,12 +35,26 @@ export async function runScenarios(browser, scenariosDoc) {
 /**
  * @param {import('playwright').Browser} browser
  * @param {any} sc
+ * @param {{ outDir: string; traceMode: "failure" | "all" | "off" }} opt
  */
-async function runOneScenario(browser, sc) {
+async function runOneScenario(browser, sc, opt) {
+  const { outDir, traceMode } = opt;
+  const traceDir = path.join(outDir, "traces");
+  const shotDir = path.join(outDir, "screenshots");
+  const idSafe = safeFileId(sc.id);
+  const tracePath = path.join(traceDir, `${idSafe}.zip`);
+
   const context = await browser.newContext({
     userAgent:
       "Mozilla/5.0 (compatible; QA-Site-Core/1.0) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
   });
+
+  const shouldTrace = traceMode !== "off";
+
+  if (shouldTrace) {
+    await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
+  }
+
   const page = await context.newPage();
   const consoleErrors = [];
   const pageErrors = [];
@@ -52,6 +76,9 @@ async function runOneScenario(browser, sc) {
   const stepResults = [];
   let scenarioFailed = false;
 
+  /** @type {{ trace?: string; screenshot?: string }} */
+  const artifacts = {};
+
   try {
     for (const step of sc.steps) {
       const sr = await runStep(page, step, { consoleErrors, pageErrors });
@@ -71,6 +98,33 @@ async function runOneScenario(browser, sc) {
   } finally {
     page.off("console", onConsole);
     page.off("pageerror", onPageError);
+
+    if (scenarioFailed) {
+      try {
+        await fs.promises.mkdir(shotDir, { recursive: true });
+        const rel = `screenshots/${idSafe}.png`;
+        const abs = path.join(outDir, rel);
+        await page.screenshot({ path: abs, fullPage: true });
+        artifacts.screenshot = rel;
+      } catch {
+        /* ignore screenshot errors */
+      }
+    }
+
+    try {
+      if (shouldTrace) {
+        await fs.promises.mkdir(traceDir, { recursive: true });
+        if (traceMode === "all" || scenarioFailed) {
+          await context.tracing.stop({ path: tracePath });
+          artifacts.trace = `traces/${idSafe}.zip`;
+        } else {
+          await context.tracing.stop();
+        }
+      }
+    } catch {
+      /* ignore trace stop errors */
+    }
+
     await context.close();
   }
 
@@ -84,6 +138,7 @@ async function runOneScenario(browser, sc) {
     durationMs: Date.now() - t0,
     steps: stepResults,
     consoleErrors: mergedConsole,
+    artifacts,
   };
 }
 
@@ -104,6 +159,7 @@ async function runStep(page, step, buckets) {
         return {
           type: step.type,
           url: step.url,
+          finalUrl: page.url(),
           status: res?.status(),
           ok,
           error: ok ? undefined : `HTTP ${res?.status()}`,
@@ -129,7 +185,7 @@ async function runStep(page, step, buckets) {
         } else {
           return { type: step.type, ok: false, error: "Missing href or selector" };
         }
-        return { type: step.type, href: step.href, selector: step.selector, ok: true };
+        return { type: step.type, href: step.href, selector: step.selector, ok: true, finalUrl: page.url() };
       } catch (e) {
         if (step.fallbackSelector) {
           try {
@@ -139,6 +195,7 @@ async function runStep(page, step, buckets) {
               href: step.href,
               ok: true,
               note: "used fallbackSelector",
+              finalUrl: page.url(),
             };
           } catch (e2) {
             return { type: step.type, ok: false, error: String(e2?.message || e2) };
@@ -157,6 +214,35 @@ async function runStep(page, step, buckets) {
         return { type: step.type, selector: step.selector, ok: false, error: String(e?.message || e) };
       }
     }
+    case "waitForResponse": {
+      const timeout = step.timeout ?? 30_000;
+      const urlPattern = step.urlPattern;
+      const method = step.method ? String(step.method).toUpperCase() : null;
+      try {
+        const response = await page.waitForResponse(
+          (res) => {
+            if (method && res.request().method() !== method) return false;
+            const u = res.url();
+            if (urlPattern == null || urlPattern === "") return true;
+            return u.includes(String(urlPattern));
+          },
+          { timeout },
+        );
+        return {
+          type: step.type,
+          ok: true,
+          status: response.status(),
+          url: response.url(),
+          requestMethod: response.request().method(),
+        };
+      } catch (e) {
+        const err = { type: step.type, ok: false, error: String(e?.message || e) };
+        if (step.optional) {
+          return { ...err, ok: true, skipped: true, note: `optional: ${err.error}` };
+        }
+        return err;
+      }
+    }
     case "assertNoConsoleError": {
       const all = [...buckets.consoleErrors, ...buckets.pageErrors];
       const ok = all.length === 0;
@@ -164,12 +250,18 @@ async function runStep(page, step, buckets) {
         type: step.type,
         ok,
         error: ok ? undefined : `${all.length} console/page errors`,
-        details: ok ? undefined : all.slice(0, 20),
+        details: ok ? undefined : all.slice(0, 40),
+        consoleErrorCount: buckets.consoleErrors.length,
+        pageErrorCount: buckets.pageErrors.length,
       };
     }
     default:
       return { type: step.type, ok: false, error: `Unknown step type: ${step.type}` };
   }
+}
+
+function safeFileId(id) {
+  return String(id).replace(/[^a-z0-9-_]+/gi, "_").slice(0, 120) || "scenario";
 }
 
 /**
