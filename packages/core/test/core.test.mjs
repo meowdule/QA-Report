@@ -120,9 +120,10 @@ test("buildReportHtml includes site lists and lighthouse section", () => {
     },
   });
   assert.match(html, /id="sites"/);
-  assert.match(html, /id="lighthouse"/);
+  assert.match(html, /id="lighthouse-detail"/);
   assert.match(html, /https:\/\/other\.test\/x/);
-  assert.match(html, /Lighthouse 요약/);
+  assert.match(html, /Lighthouse URL별 상세/);
+  assert.match(html, /Lighthouse 스코어 보드/);
   assert.match(html, /lighthouse\/abc\.html/);
 });
 

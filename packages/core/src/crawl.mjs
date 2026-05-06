@@ -20,7 +20,8 @@ export async function crawlSite(browser, startUrl, opts) {
 
   /** @type {Map<string, any>} */
   const pages = new Map();
-  const queue = [{ url: normalizedStart, depth: 0 }];
+  /** @type {{ url: string; depth: number; from: string | null }[]} */
+  const queue = [{ url: normalizedStart, depth: 0, from: null }];
   const seen = new Set([normalizedStart]);
 
   const context = await browser.newContext({
@@ -30,7 +31,9 @@ export async function crawlSite(browser, startUrl, opts) {
 
   try {
     while (queue.length > 0 && pages.size < maxPages) {
-      const { url, depth } = queue.shift();
+      const { url, depth, from } = /** @type {{ url: string; depth: number; from: string | null }} */ (
+        queue.shift()
+      );
       if (pages.has(url)) continue;
 
       const page = await context.newPage();
@@ -52,6 +55,8 @@ export async function crawlSite(browser, startUrl, opts) {
             formControls: [],
             httpStatus: status,
             error: `HTTP ${status}`,
+            crawlDepth: depth,
+            parentUrl: from || undefined,
           });
           continue;
         }
@@ -73,6 +78,8 @@ export async function crawlSite(browser, startUrl, opts) {
           interactables,
           formControls,
           httpStatus: status,
+          crawlDepth: depth,
+          parentUrl: from || undefined,
         });
 
         if (depth >= maxDepth) continue;
@@ -80,7 +87,7 @@ export async function crawlSite(browser, startUrl, opts) {
         for (const link of links) {
           if (seen.has(link) || pages.size >= maxPages) continue;
           seen.add(link);
-          queue.push({ url: link, depth: depth + 1 });
+          queue.push({ url: link, depth: depth + 1, from: url });
         }
       } catch (err) {
         if (!pages.has(url)) {
@@ -95,6 +102,8 @@ export async function crawlSite(browser, startUrl, opts) {
             formControls: [],
             httpStatus: 0,
             error: String(err?.message || err),
+            crawlDepth: depth,
+            parentUrl: from || undefined,
           });
         }
       } finally {

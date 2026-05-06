@@ -1,3 +1,5 @@
+import { iconChartBarHtml } from "./ui-icons.mjs";
+
 /**
  * GitHub Pages 프로젝트 사이트 기준으로 jobs/ 경로를 해석합니다.
  */
@@ -254,20 +256,127 @@ const PASS_GAUGE_ARC = 377;
 function passGaugeSvg(passPct, passed, total) {
   const pct = Math.max(0, Math.min(100, Math.round(Number(passPct) || 0)));
   const dash = Math.round((pct / 100) * PASS_GAUGE_ARC);
-  const sub = total ? `${passed} / ${total} 시나리오` : "실행 결과 없음";
+  const sub = total ? "시나리오 기준 통과율" : "실행 결과 없음";
   return `<svg class="pass-gauge-svg" viewBox="0 0 320 148" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
-    <defs>
-      <linearGradient id="spaPassGaugeGrad" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#fb7185"/>
-        <stop offset="40%" stop-color="#fbbf24"/>
-        <stop offset="100%" stop-color="#34d399"/>
-      </linearGradient>
-    </defs>
     <path class="pass-gauge-track" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke-width="18" stroke-linecap="round"/>
-    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="url(#spaPassGaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
+    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="var(--accent-dim, #0d9488)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
     <text x="160" y="88" text-anchor="middle" class="pass-gauge-pct">${esc(pct)}%</text>
     <text x="160" y="108" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
   </svg>`;
+}
+
+/**
+ * @param {number} pages
+ * @param {number} tot
+ * @param {number} pass
+ * @param {number} failN
+ */
+function statHashtagsSpa(pages, tot, pass, failN) {
+  return `<div class="sd-hash-tags" aria-label="요약 지표">
+    <span class="hash-tag">#크롤 ${esc(pages)}페이지</span>
+    <span class="hash-tag">#실행시나리오 ${esc(tot)}</span>
+    <span class="hash-tag hash-tag--ok">#통과 ${esc(pass)}</span>
+    <span class="hash-tag hash-tag--fail">#실패 ${esc(failN)}</span>
+  </div>`;
+}
+
+/** @param {number | null | undefined} score */
+function lhStrokeColorSpa(score) {
+  if (score == null || Number.isNaN(Number(score))) return "#64748b";
+  const n = Number(score);
+  if (n >= 90) return "#34d399";
+  if (n >= 50) return "#fbbf24";
+  return "#fb923c";
+}
+
+/** @param {number | null | undefined} score */
+function lhBadgeLabelSpa(score) {
+  if (score == null || Number.isNaN(Number(score))) return "측정 없음";
+  return Number(score) >= 90 ? "강점 유지" : "개선 여지";
+}
+
+/**
+ * @param {number | null} score
+ * @param {string} stroke
+ */
+function lhDonutSvgSpa(score, stroke) {
+  const r = 36;
+  const c = 2 * Math.PI * r;
+  const s = score == null || Number.isNaN(Number(score)) ? null : Math.max(0, Math.min(100, Math.round(Number(score))));
+  const dash = s == null ? 0 : Math.round((s / 100) * c);
+  return `<svg class="lh-donut" viewBox="0 0 88 88" aria-hidden="true">
+    <circle cx="44" cy="44" r="${r}" fill="none" stroke="rgba(148,163,184,0.25)" stroke-width="8"/>
+    <circle cx="44" cy="44" r="${r}" fill="none" stroke="${esc(stroke)}" stroke-width="8" stroke-linecap="round"
+      transform="rotate(-90 44 44)" stroke-dasharray="${dash} ${c}"/>
+    <text x="44" y="50" text-anchor="middle" class="lh-donut-num">${s == null ? "—" : esc(String(s))}</text>
+  </svg>`;
+}
+
+const LH_BOARD_CATS_SPA = [
+  { key: "performance", title: "성능", desc: "초기 로드와 상호작용 반응 속도입니다." },
+  { key: "accessibility", title: "접근성", desc: "스크린 리더·대비 등 접근 가능성입니다." },
+  { key: "best-practices", title: "권장", desc: "보안·모던 웹 관행 준수 여부입니다." },
+  { key: "seo", title: "SEO", desc: "검색·메타 정보 등 노출 관련 항목입니다." },
+];
+
+/**
+ * @param {any} summary
+ */
+function lighthouseBoardHtmlSpa(summary) {
+  const items = summary?.items || [];
+  const skipped = summary?.skipped === true;
+  if (skipped) {
+    return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
+      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <p class="lh-board-empty">이번 작업에서는 Lighthouse를 실행하지 않았습니다.</p>
+    </div>`;
+  }
+  if (!items.length) {
+    return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
+      <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+      <p class="lh-board-empty">감사 결과가 없습니다.</p>
+    </div>`;
+  }
+  const keys = /** @type {const} */ (["performance", "accessibility", "best-practices", "seo"]);
+  /** @type {Record<string, number[]>} */
+  const acc = { performance: [], accessibility: [], "best-practices": [], seo: [] };
+  for (const row of items) {
+    const s = row.scores;
+    if (!s) continue;
+    for (const k of keys) {
+      const v = s[k];
+      if (typeof v === "number" && !Number.isNaN(v)) acc[k].push(v);
+    }
+  }
+  /** @type {Record<string, number | null>} */
+  const avgs = {};
+  for (const k of keys) {
+    const a = acc[k];
+    avgs[k] = a.length ? Math.round(a.reduce((x, y) => x + y, 0) / a.length) : null;
+  }
+  const cards = LH_BOARD_CATS_SPA.map((cat) => {
+    const score = avgs[cat.key];
+    const stroke = lhStrokeColorSpa(score);
+    const donut = lhDonutSvgSpa(score, stroke);
+    const foot =
+      score == null ? "0–100 스코어 · 측정 없음" : `0–100 스코어 · 현재 ${esc(score)}점`;
+    return `<div class="lh-mini-card">
+      <div class="lh-mini-head">
+        <span class="lh-mini-title">${esc(cat.title)}</span>
+        <span class="lh-badge">${esc(lhBadgeLabelSpa(score))}</span>
+      </div>
+      <div class="lh-mini-body">
+        <div class="lh-donut-wrap">${donut}</div>
+        <p class="lh-mini-desc">${esc(cat.desc)}</p>
+      </div>
+      <div class="lh-mini-foot">${foot}</div>
+    </div>`;
+  }).join("");
+  return `<div class="lh-board" role="region" aria-label="Lighthouse 스코어 보드">
+    <h3 class="lh-board-title">Lighthouse 스코어 보드</h3>
+    <p class="lh-board-sub">감사 페이지 ${esc(items.length)}개 기준 평균 점수</p>
+    <div class="lh-board-grid">${cards}</div>
+  </div>`;
 }
 
 function svgScenarioFolder() {
@@ -572,7 +681,7 @@ function buildAddStepBar(stepsHost) {
   sel.className = "step-add-select";
   const z = document.createElement("option");
   z.value = "";
-  z.textContent = "➕ 단계 추가…";
+  z.textContent = "+ 단계 추가…";
   sel.appendChild(z);
   for (const typ of STEP_TYPES_ADD) {
     const o = document.createElement("option");
@@ -669,9 +778,8 @@ const el = {
   dispatchHint: document.getElementById("dispatch-hint"),
   resultsSection: document.getElementById("results-section"),
   resultsBody: document.getElementById("results-body"),
-  reportSection: document.getElementById("report-section"),
-  reportLink: document.getElementById("report-link"),
-  reportFrame: document.getElementById("report-frame"),
+  dashNavReport: document.getElementById("dash-nav-report"),
+  dashboardReportHint: document.getElementById("dashboard-report-hint"),
 };
 
 /** @type {AbortController | null} */
@@ -825,45 +933,6 @@ async function pollUntilOk(url, cfg) {
 }
 
 /**
- * @param {any} summary
- */
-function lighthouseAvgChipsHtml(summary) {
-  const items = summary?.items || [];
-  if (!items.length || summary?.skipped) {
-    return `<div class="summary-lh muted" role="region" aria-label="Lighthouse 요약">
-      <span class="kpi-label">Lighthouse</span>
-      <p class="hint">감사 결과가 없거나 건너뛰었습니다. 상세 리포트에서 URL·점수를 확인하세요.</p>
-    </div>`;
-  }
-  const keys = /** @type {const} */ (["performance", "accessibility", "best-practices", "seo"]);
-  const labels = {
-    performance: "성능",
-    accessibility: "접근성",
-    "best-practices": "권장",
-    seo: "SEO",
-  };
-  /** @type {Record<string, number[]>} */
-  const acc = Object.fromEntries(keys.map((k) => [k, []]));
-  for (const row of items) {
-    for (const k of keys) {
-      const v = row.scores?.[k];
-      if (typeof v === "number" && !Number.isNaN(v)) acc[k].push(v);
-    }
-  }
-  const chips = keys
-    .map((k) => {
-      const a = acc[k];
-      const avg = a.length ? Math.round(a.reduce((s, x) => s + x, 0) / a.length) : null;
-      return `<span class="lh-chip">${esc(labels[k])} <strong>${avg == null ? "—" : esc(String(avg))}</strong></span>`;
-    })
-    .join("");
-  return `<div class="summary-lh" role="region" aria-label="Lighthouse 요약">
-    <span class="kpi-label">Lighthouse 평균 (${esc(items.length)}페이지 감사)</span>
-    <div class="lh-chip-row">${chips}</div>
-  </div>`;
-}
-
-/**
  * @param {any} structure
  * @param {any} scenarios
  * @param {any} results
@@ -871,7 +940,6 @@ function lighthouseAvgChipsHtml(summary) {
  */
 function renderSummary(structure, scenarios, results, lighthouseSummary) {
   const pages = structure?.pages?.length ?? 0;
-  const scenariosCount = scenarios?.scenarios?.length ?? 0;
   const target = structure?.targetUrl ?? "";
   const jobId = state.jobId || "—";
 
@@ -900,16 +968,21 @@ function renderSummary(structure, scenarios, results, lighthouseSummary) {
     tot > 0
       ? passGaugeSvg(pctNum, pass, tot)
       : `<div class="sd-gauge-empty"><p class="hint">${esc(resultsHint)}</p></div>`;
-  const lhBlock = lighthouseAvgChipsHtml(lighthouseSummary);
+  const hashTags = statHashtagsSpa(pages, tot, pass, failN);
+  const lhBoard = lighthouseBoardHtmlSpa(lighthouseSummary);
 
   el.summaryBody.innerHTML = `
     <div class="summary-stack">
       <div class="summary-dashboard" role="group" aria-label="작업 요약">
         <div class="sd-target-card">
-          <span class="kpi-label">작업 ID · 분석한 주소</span>
-          <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
-          <div class="summary-target-url">${targetBlock}</div>
-          <p class="sd-target-meta muted">시나리오 초안 ${esc(scenariosCount)}개 · 수집 페이지 ${esc(pages)}개</p>
+          <div class="sd-target-left">
+            <span class="kpi-label">분석한 주소</span>
+            <div class="summary-target-url">${targetBlock}</div>
+          </div>
+          <div class="sd-target-right">
+            <span class="kpi-label">작업 ID</span>
+            <div class="sd-job-inline kpi-value kpi-value--mono">${esc(jobId)}</div>
+          </div>
         </div>
         <div class="sd-gauge-card">
           <div class="sd-card-head">
@@ -917,28 +990,11 @@ function renderSummary(structure, scenarios, results, lighthouseSummary) {
             <p class="sd-card-desc">시나리오 실행 결과</p>
           </div>
           ${gaugeBlock}
+          ${hashTags}
         </div>
-        <div class="sd-metrics">
-          <div class="sd-metric sd-metric--pages">
-            <span class="sd-metric-label">크롤 페이지</span>
-            <span class="sd-metric-value">${esc(pages)}</span>
-          </div>
-          <div class="sd-metric sd-metric--run">
-            <span class="sd-metric-label">실행 시나리오</span>
-            <span class="sd-metric-value">${esc(tot)}</span>
-          </div>
-          <div class="sd-metric sd-metric--ok">
-            <span class="sd-metric-label">통과</span>
-            <span class="sd-metric-value">${esc(pass)}</span>
-          </div>
-          <div class="sd-metric sd-metric--fail">
-            <span class="sd-metric-label">실패</span>
-            <span class="sd-metric-value">${esc(failN)}</span>
-          </div>
-        </div>
+        <div class="sd-lh-col">${lhBoard}</div>
       </div>
       ${tot > 0 ? `<p class="summary-mini-hint muted">${esc(resultsHint)}</p>` : ""}
-      ${lhBlock}
     </div>
   `;
 }
@@ -968,7 +1024,7 @@ function renderResults(results) {
         </tr>`;
       })
       .join("");
-    table = `<h3 class="subh subh--ico"><span class="subh-ico" aria-hidden="true">📊</span> 기준별 요약</h3>
+    table = `<h3 class="subh subh--ico">${iconChartBarHtml()} 기준별 요약</h3>
       <div class="table-scroll"><table class="data data--criteria"><thead><tr><th>점검 항목</th><th>통과 비율</th><th>통과</th><th>실패</th></tr></thead><tbody>${
         rows || "<tr><td colspan=4>집계할 항목이 없습니다.</td></tr>"
       }</tbody></table></div>`;
@@ -1083,8 +1139,10 @@ function readScenarioFormsIntoDoc(baseDoc) {
 
 function wireReport(jobRel) {
   const reportUrl = jobFileUrl(jobRel, "report.html");
-  el.reportLink.href = reportUrl;
-  el.reportFrame.src = reportUrl;
+  if (el.dashNavReport instanceof HTMLAnchorElement) {
+    el.dashNavReport.href = reportUrl;
+    el.dashNavReport.classList.remove("hidden");
+  }
 }
 
 function hideAllPanels() {
@@ -1092,8 +1150,11 @@ function hideAllPanels() {
   show(el.summarySection, false);
   show(el.editSection, false);
   show(el.resultsSection, false);
-  show(el.reportSection, false);
-  el.reportFrame.removeAttribute("src");
+  show(el.dashboardReportHint, false);
+  if (el.dashNavReport instanceof HTMLAnchorElement) {
+    el.dashNavReport.classList.add("hidden");
+    el.dashNavReport.href = "#";
+  }
 }
 
 /**
@@ -1110,7 +1171,8 @@ function syncDashboardNavLinks() {
   setDashboardNavLinkVisible("#section-summary", !el.summarySection?.classList.contains("hidden"));
   setDashboardNavLinkVisible("#section-results", !el.resultsSection?.classList.contains("hidden"));
   setDashboardNavLinkVisible("#section-edit", !el.editSection?.classList.contains("hidden"));
-  setDashboardNavLinkVisible("#section-report", !el.reportSection?.classList.contains("hidden"));
+  const jobOpen = Boolean(state.jobStoragePath && !el.summarySection?.classList.contains("hidden"));
+  if (el.dashNavReport) el.dashNavReport.classList.toggle("hidden", !jobOpen);
 }
 
 /**
@@ -1277,8 +1339,8 @@ async function loadJob(jobId, opts = {}) {
 
   show(el.summarySection, true);
   show(el.dashboardNav, true);
+  show(el.dashboardReportHint, true);
   wireReport(jobRel);
-  show(el.reportSection, true);
   syncDashboardNavLinks();
 
   const u = new URL(window.location.href);
