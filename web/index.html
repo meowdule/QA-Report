@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-  배포 시 <html> 에 설정:
-  - data-worker-base-url: Cloudflare Worker 루트 (예: https://qa-trigger.xxx.workers.dev 슬래시 없이)
-  - data-qa-webhook-secret: Worker WEBHOOK_SECRET 과 동일 값 (미사용이면 빈 문자열)
+  로컬 소스: 빈 값 유지.
+  GitHub Actions「Deploy GitHub Pages」가 저장소 Secrets(WORKER_BASE_URL, QA_WEBHOOK_SECRET)를 여기에 주입합니다.
 -->
 <html
   lang="ko"
@@ -33,9 +32,8 @@
         <p class="eyebrow">QA 리포트</p>
         <h1>사이트 분석 · 시나리오 테스트</h1>
         <p class="lede">
-          이 주소 한 곳에서 <strong>분석 시작 → 결과·시나리오 확인 → 수정 → 테스트 수행</strong>까지 진행할 수 있습니다.
-          분석을 새로 돌릴 때마다 GitHub Actions <strong>run_id</strong>가 바뀌고, 리포트는 <code>jobs/&lt;ID&gt;/</code>에
-          따로 쌓여 서로 섞이지 않습니다.
+          이 페이지에서만 <strong>분석 시작 → 결과 확인 → 시나리오 수정 → 테스트 수행</strong>까지 하면 됩니다.
+          분석을 새로 할 때마다 작업 번호가 새로 생겨 결과가 서로 섞이지 않습니다.
         </p>
       </header>
 
@@ -81,43 +79,41 @@
           </div>
         </form>
         <p id="analyze-status" class="status" role="status"></p>
-        <p class="hint">
-          Worker가 연결되지 않은 경우
-          <a id="link-actions-analyze" href="#" target="_blank" rel="noopener">Actions — Analyze site and run tests</a>
-          에서 실행한 뒤 <code>run_id</code>를 아래에 입력해 주세요.
+        <p class="hint subtle">
+          분석에는 수 분 걸릴 수 있습니다. 진행 중에는 이 탭을 닫지 마세요.
         </p>
       </section>
 
-      <section class="panel" aria-labelledby="job-heading">
-        <h2 id="job-heading"><span class="panel-step" aria-hidden="true">2</span> Job 결과 조회</h2>
-        <p class="panel-intro">워크플로 run_id와 동일한 숫자 Job ID로 저장소에 올라온 결과를 불러옵니다.</p>
+      <details class="panel job-id-details" id="job-id-panel" aria-label="예전 작업 번호로 결과 열기">
+        <summary class="job-id-summary">
+          <span class="panel-step" aria-hidden="true">2</span> 예전에 받은 작업 번호로 열기 (선택)
+        </summary>
+        <p class="panel-intro">
+          링크로 들어온 경우 자동으로 열립니다. 직접 번호만 있을 때만 여기 입력하세요.
+        </p>
         <form id="job-form" class="job-form">
           <label class="field">
-            <span>Job ID</span>
+            <span>작업 번호</span>
             <input
               id="job-input"
               name="job"
               type="text"
               inputmode="numeric"
               autocomplete="off"
-              placeholder="예: 9876543210"
-              required
+              placeholder="숫자만"
             />
           </label>
           <label class="check">
             <input id="poll-toggle" type="checkbox" checked />
-            <span>아직 없으면 3초마다 재시도(최대 2분)</span>
+            <span>아직 없으면 잠깐마다 다시 시도</span>
           </label>
           <div class="job-actions">
             <button type="submit" class="btn primary">불러오기</button>
-            <button type="button" class="btn ghost" id="btn-stop" hidden>폴링 중지</button>
+            <button type="button" class="btn ghost" id="btn-stop" hidden>대기 중지</button>
           </div>
         </form>
         <p id="job-status" class="status" role="status"></p>
-        <p class="hint">
-          재실행 후에는 같은 Job 폴더의 <code>report.html</code> 등이 덮어씌워집니다.
-        </p>
-      </section>
+      </details>
 
       <section id="summary-section" class="panel hidden" aria-live="polite">
         <h2>요약</h2>
@@ -157,11 +153,6 @@
           <button type="button" class="btn primary" id="btn-post-rerun">테스트 수행</button>
         </div>
         <p id="dispatch-hint" class="hint" role="status"></p>
-        <p class="hint">
-          Worker 미연결 시
-          <a id="link-actions-manual" href="#" target="_blank" rel="noopener">GitHub Actions — Run custom scenarios</a>
-          에서 Job ID와 JSON을 넣어 실행할 수 있습니다.
-        </p>
       </section>
 
       <section id="structure-section" class="panel hidden">
@@ -193,10 +184,7 @@
         </div>
       </section>
 
-      <footer class="footer">
-        관리자: <code>web/index.html</code> 상단 <code>data-worker-base-url</code> 등 · 예시 Worker는
-        <code>workers/trigger/</code>
-      </footer>
+      <footer class="footer">QA 리포트</footer>
     </main>
     <script type="module" src="./app.js"></script>
   </body>

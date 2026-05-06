@@ -13,9 +13,87 @@ function pagesBase() {
   return origin + (p.startsWith("/") ? p : `/${p}`);
 }
 
-function jobFileUrl(jobId, file) {
-  const id = encodeURIComponent(String(jobId).trim());
-  return new URL(`jobs/${id}/${file}`, pagesBase()).href;
+/**
+ * @param {string} jobRel `run_id` 또는 `YYYY-MM-DD/HHmmss_runid` (jobs/ 이하 상대 경로)
+ * @param {string} file
+ */
+function jobFileUrl(jobRel, file) {
+  const u = new URL(pagesBase());
+  const prefix = u.pathname.endsWith("/") ? u.pathname : `${u.pathname}/`;
+  const rest = ["jobs", ...String(jobRel).split("/").filter(Boolean), String(file)]
+    .map((s) => encodeURIComponent(s))
+    .join("/");
+  u.pathname = `${prefix}${rest}`;
+  return u.href;
+}
+
+/** @type {Map<string, string>} */
+const jobPathCache = new Map();
+
+/**
+ * `jobs/_byRunId/<run_id>.json` → 실제 저장 경로. 없으면 구 flat `jobs/<id>/` 가정.
+ * @param {string} jobId
+ */
+async function resolveJobStoragePath(jobId) {
+  const id = String(jobId).trim();
+  if (!id) throw new Error("작업 번호가 비어 있습니다.");
+  const cached = jobPathCache.get(id);
+  if (cached) return cached;
+  const metaUrl = new URL(`jobs/_byRunId/${encodeURIComponent(id)}.json`, pagesBase());
+  try {
+    const r = await fetch(metaUrl, { cache: "no-store" });
+    if (r.ok) {
+      const j = await r.json();
+      if (j && typeof j.path === "string") {
+        const p = j.path.replace(/^\/+|\/+$/g, "");
+        if (p) {
+          jobPathCache.set(id, p);
+          return p;
+        }
+      }
+    }
+  } catch {
+    /* legacy */
+  }
+  jobPathCache.set(id, id);
+  return id;
+}
+
+/**
+ * 신규 배포: `_byRunId` 메타가 먼저 생기거나, 구 저장소는 flat `jobs/<id>/structure.json` 만 있음.
+ * @param {string} jobId
+ * @param {AbortSignal} signal
+ * @param {{ intervalMs: number; maxAttempts: number }} pollCfg
+ */
+async function waitForJobStorageReady(jobId, signal, pollCfg) {
+  const id = String(jobId).trim();
+  const metaUrl = new URL(`jobs/_byRunId/${encodeURIComponent(id)}.json`, pagesBase());
+  const flatStructureUrl = jobFileUrl(id, "structure.json");
+
+  for (let i = 0; i < pollCfg.maxAttempts; i++) {
+    if (signal.aborted) throw new DOMException("aborted", "AbortError");
+    if (i > 0) await sleep(pollCfg.intervalMs);
+
+    try {
+      const rm = await fetch(metaUrl, { cache: "no-store", signal });
+      if (rm.ok) {
+        jobPathCache.delete(id);
+        return;
+      }
+    } catch {
+      /* */
+    }
+
+    try {
+      const rs = await fetch(flatStructureUrl, { cache: "no-store", signal });
+      if (rs.ok) return;
+    } catch {
+      /* */
+    }
+
+    setStatus(`결과 업로드 대기 중… (${i + 1}/${pollCfg.maxAttempts})`, "wait");
+  }
+  throw new Error("작업 결과가 제한 시간 안에 나타나지 않았습니다.");
 }
 
 function sleep(ms) {
@@ -56,9 +134,10 @@ if (window.location.protocol === "file:") {
   document.getElementById("file-protocol-banner")?.classList.remove("hidden");
 }
 
-/** @type {{ jobId: string; structure: any; scenariosDoc: any; results: any | null; dispatchMeta: any | null }} */
+/** @type {{ jobId: string; jobStoragePath: string; structure: any; scenariosDoc: any; results: any | null; dispatchMeta: any | null }} */
 const state = {
   jobId: "",
+  jobStoragePath: "",
   structure: null,
   scenariosDoc: null,
   results: null,
@@ -72,7 +151,6 @@ const el = {
   analyzeMaxDepth: document.getElementById("analyze-max-depth"),
   analyzeTraceMode: document.getElementById("analyze-trace-mode"),
   analyzeStatus: document.getElementById("analyze-status"),
-  linkActionsAnalyze: document.getElementById("link-actions-analyze"),
   form: document.getElementById("job-form"),
   input: document.getElementById("job-input"),
   pollToggle: document.getElementById("poll-toggle"),
@@ -92,7 +170,6 @@ const el = {
   btnValidateJson: document.getElementById("btn-validate-json"),
   btnPostRerun: document.getElementById("btn-post-rerun"),
   dispatchHint: document.getElementById("dispatch-hint"),
-  linkActionsManual: document.getElementById("link-actions-manual"),
   structureSection: document.getElementById("structure-section"),
   structureBody: document.getElementById("structure-body"),
   structureRaw: document.getElementById("structure-raw"),
@@ -152,13 +229,13 @@ function isFreshResultsFinishedAt(finishedAt, prevFinishedAt, sinceIso) {
 }
 
 /**
- * @param {string} jobId
+ * @param {string} jobRel resolveJobStoragePath 결과
  * @param {string} file
  * @param {string | null | undefined} prevFinishedAt
  * @param {string} sinceIso
  * @param {AbortSignal} signal
  */
-async function pollResultsUntilFresh(jobId, file, prevFinishedAt, sinceIso, signal) {
+async function pollResultsUntilFresh(jobRel, file, prevFinishedAt, sinceIso, signal) {
   const maxAttempts = 72;
   const intervalMs = 5000;
   for (let i = 0; i < maxAttempts; i++) {
@@ -166,7 +243,7 @@ async function pollResultsUntilFresh(jobId, file, prevFinishedAt, sinceIso, sign
     if (i > 0) await sleep(intervalMs);
     if (signal.aborted) throw new DOMException("aborted", "AbortError");
     try {
-      const results = await fetchJson(jobFileUrl(jobId, file), { signal, cacheBust: true });
+      const results = await fetchJson(jobFileUrl(jobRel, file), { signal, cacheBust: true });
       const t = results?.finishedAt;
       if (isFreshResultsFinishedAt(t, prevFinishedAt, sinceIso)) return results;
     } catch {
@@ -443,18 +520,10 @@ function parseJsonEditor() {
   return JSON.parse(raw);
 }
 
-function wireReport(jobId) {
-  const reportUrl = jobFileUrl(jobId, "report.html");
+function wireReport(jobRel) {
+  const reportUrl = jobFileUrl(jobRel, "report.html");
   el.reportLink.href = reportUrl;
   el.reportFrame.src = reportUrl;
-}
-
-function wireManualActionsLink() {
-  const repo = githubRepo();
-  el.linkActionsManual.href = `https://github.com/${repo}/actions/workflows/run-custom-scenarios.yml`;
-  if (el.linkActionsAnalyze) {
-    el.linkActionsAnalyze.href = `https://github.com/${repo}/actions/workflows/analyze-and-test.yml`;
-  }
 }
 
 function hideAllPanels() {
@@ -476,18 +545,47 @@ async function loadJob(jobId, opts = {}) {
   pollAbort = new AbortController();
   const signal = pollAbort.signal;
 
-  const structureUrl = jobFileUrl(jobId, "structure.json");
-  const scenariosUrl = jobFileUrl(jobId, "scenarios.draft.json");
-  const resultsUrl = jobFileUrl(jobId, "results.json");
-
   el.btnStop.hidden = false;
-  setStatus("structure.json 불러오는 중…", "load");
 
   const usePoll = el.pollToggle?.checked ?? true;
   const longPoll = opts.longPoll === true;
   const pollCfg = longPoll
     ? { intervalMs: 4000, maxAttempts: 100 }
     : { intervalMs: 3000, maxAttempts: 40 };
+
+  try {
+    if (longPoll) {
+      setStatus("배포된 작업 정보를 기다리는 중…", "load");
+      await waitForJobStorageReady(jobId, signal, pollCfg);
+    }
+  } catch (e) {
+    el.btnStop.hidden = true;
+    const err = /** @type {Error & { name?: string }} */ (e);
+    if (err.name === "AbortError") {
+      setStatus("요청이 중지되었습니다.", "warn");
+      return;
+    }
+    setStatus(err.message || "대기 실패", "err");
+    hideAllPanels();
+    return;
+  }
+
+  setStatus("작업 저장 위치 확인 중…", "load");
+  let jobRel;
+  try {
+    jobRel = await resolveJobStoragePath(jobId);
+  } catch (e) {
+    el.btnStop.hidden = true;
+    setStatus(/** @type {Error} */ (e).message, "err");
+    hideAllPanels();
+    return;
+  }
+
+  const structureUrl = jobFileUrl(jobRel, "structure.json");
+  const scenariosUrl = jobFileUrl(jobRel, "scenarios.draft.json");
+  const resultsUrl = jobFileUrl(jobRel, "results.json");
+
+  setStatus("structure.json 불러오는 중…", "load");
 
   let structure;
   try {
@@ -554,13 +652,14 @@ async function loadJob(jobId, opts = {}) {
   }
 
   state.jobId = jobId;
+  state.jobStoragePath = jobRel;
   state.structure = structure;
   state.scenariosDoc = scenarios;
   state.results = results;
   state.dispatchMeta = null;
 
   try {
-    state.dispatchMeta = await fetchJson(jobFileUrl(jobId, "dispatch-meta.json"), { signal });
+    state.dispatchMeta = await fetchJson(jobFileUrl(jobRel, "dispatch-meta.json"), { signal });
   } catch {
     state.dispatchMeta = null;
   }
@@ -596,7 +695,7 @@ async function loadJob(jobId, opts = {}) {
 
   show(el.summarySection, true);
   show(el.structureSection, true);
-  wireReport(jobId);
+  wireReport(jobRel);
   show(el.reportSection, true);
 
   const u = new URL(window.location.href);
@@ -621,10 +720,7 @@ el.analyzeForm?.addEventListener("submit", async (ev) => {
   const workerUrl = analyzeWorkerEndpoint();
   const targetUrl = el.analyzeTargetUrl?.value?.trim();
   if (!workerUrl) {
-    setAnalyzeStatus(
-      "이 사이트에 Worker 주소가 아직 설정되지 않았습니다. 관리자에게 문의하거나 아래 Actions에서 분석을 실행하세요.",
-      "err",
-    );
+    setAnalyzeStatus("지금은 분석을 시작할 수 없습니다. 잠시 후 다시 시도해 주세요.", "err");
     return;
   }
   if (!targetUrl) {
@@ -670,10 +766,7 @@ el.analyzeForm?.addEventListener("submit", async (ev) => {
         window.history.replaceState({}, "", u);
       }
       el.input.value = rid;
-      setAnalyzeStatus(
-        `Job ${rid} — GitHub Actions가 크롤·테스트를 끝내고 Pages에 올릴 때까지 기다립니다…`,
-        "load",
-      );
+      setAnalyzeStatus(`작업 ${rid} — 분석이 끝나 결과가 올라올 때까지 기다립니다…`, "load");
       await loadJob(rid, { longPoll: true, scrollToWorkbench: true });
       setAnalyzeStatus(
         "불러오기가 끝났습니다. 요약·시나리오를 확인하고, 필요하면 수정한 뒤 「테스트 수행」을 누르세요.",
@@ -684,7 +777,7 @@ el.analyzeForm?.addEventListener("submit", async (ev) => {
     if (data?.queued) {
       setAnalyzeStatus(
         data.message ||
-          "워크플로는 시작됐지만 run_id를 받지 못했습니다. Actions에서 run_id를 확인한 뒤 Job ID로 불러오세요.",
+          "분석은 시작됐지만 작업 번호를 아직 받지 못했습니다. 잠시 뒤 아래에서 작업 번호로 불러오기를 시도해 보세요.",
         "warn",
       );
       return;
@@ -767,7 +860,7 @@ el.btnPostRerun?.addEventListener("click", async () => {
     return;
   }
   if (!url) {
-    setStatus("Worker 주소가 설정되지 않았습니다. 관리자에게 문의하거나 아래 Actions 링크를 사용하세요.", "warn");
+    setStatus("지금은 테스트를 실행할 수 없습니다. 잠시 후 다시 시도해 주세요.", "warn");
     return;
   }
 
@@ -803,7 +896,7 @@ el.btnPostRerun?.addEventListener("click", async () => {
     const signal = pollAbort.signal;
     el.btnStop.hidden = false;
     try {
-      await pollResultsUntilFresh(state.jobId, "results.json", prevFinished, postStartedAt, signal);
+      await pollResultsUntilFresh(state.jobStoragePath, "results.json", prevFinished, postStartedAt, signal);
       await loadJob(state.jobId);
       setStatus(`테스트 반영 완료 · ${new Date().toLocaleString()}`, "ok");
     } catch (e) {
@@ -825,11 +918,10 @@ el.btnPostRerun?.addEventListener("click", async () => {
   }
 });
 
-wireManualActionsLink();
-
 if (initialJob) {
+  document.getElementById("job-id-panel")?.setAttribute("open", "");
   el.input.value = initialJob;
   loadJob(initialJob);
 } else {
-  setStatus("Job ID를 입력한 뒤 불러오기를 누르거나, 위에서 URL로 새 분석을 시작하세요.", "");
+  setStatus("위에서 사이트 주소를 넣고 분석을 시작하세요.", "");
 }

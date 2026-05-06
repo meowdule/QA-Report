@@ -536,3 +536,34 @@ code.break {
 .hint a:hover {
   text-decoration: underline;
 }
+
+.hint.subtle {
+  font-size: 0.82rem;
+  opacity: 0.92;
+}
+
+.job-id-details {
+  margin-top: 1.35rem;
+}
+
+.job-id-details > summary.job-id-summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.job-id-details > summary.job-id-summary::-webkit-details-marker {
+  display: none;
+}
+
+.job-id-details[open] > summary.job-id-summary {
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--card-border);
+}

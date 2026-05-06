@@ -82,14 +82,30 @@ jobs:
             fs.writeFileSync('packages/core/input/scenarios.final.json', scenariosStr);
             core.setOutput('job_id', jobId);
 
-      - name: 기존 structure / 초안 복사
+      - name: 작업 저장 경로 해석 (jobs/날짜/시간_runid 또는 구 flat)
+        id: jobpath
         run: |
           set -euo pipefail
           JOB_ID="${{ steps.prep.outputs.job_id }}"
+          META="gh-pages/jobs/_byRunId/${JOB_ID}.json"
+          if [ -f "$META" ]; then
+            REL="$(python3 -c "import json,sys; print(json.load(open(sys.argv[1],encoding='utf-8'))['path'])" "$META")"
+          elif [ -f "gh-pages/jobs/${JOB_ID}/structure.json" ]; then
+            REL="$JOB_ID"
+          else
+            echo "jobs 폴더를 찾을 수 없습니다: $JOB_ID"
+            exit 1
+          fi
+          echo "rel=$REL" >> "$GITHUB_OUTPUT"
+
+      - name: 기존 structure / 초안 복사
+        run: |
+          set -euo pipefail
+          REL="${{ steps.jobpath.outputs.rel }}"
           mkdir -p packages/core/input
-          cp "gh-pages/jobs/${JOB_ID}/structure.json" packages/core/input/structure.json
-          if [ -f "gh-pages/jobs/${JOB_ID}/scenarios.draft.json" ]; then
-            cp "gh-pages/jobs/${JOB_ID}/scenarios.draft.json" packages/core/input/scenarios.draft.json
+          cp "gh-pages/jobs/${REL}/structure.json" packages/core/input/structure.json
+          if [ -f "gh-pages/jobs/${REL}/scenarios.draft.json" ]; then
+            cp "gh-pages/jobs/${REL}/scenarios.draft.json" packages/core/input/scenarios.draft.json
           fi
 
       - name: Setup Node
@@ -119,6 +135,7 @@ jobs:
         if: always()
         env:
           JOB_ID: ${{ steps.prep.outputs.job_id }}
+          JOB_REL: ${{ steps.jobpath.outputs.rel }}
         run: bash scripts/publish-job-to-gh-pages.sh
 
       - name: Summary
@@ -126,4 +143,4 @@ jobs:
         run: |
           echo "## Re-test job ${{ steps.prep.outputs.job_id }}" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "갱신된 리포트: \`jobs/${{ steps.prep.outputs.job_id }}/report.html\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "갱신된 리포트: \`jobs/${{ steps.jobpath.outputs.rel }}/report.html\`" >> "$GITHUB_STEP_SUMMARY"

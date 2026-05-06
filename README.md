@@ -18,7 +18,7 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 | **GitHub Pages** | SPA(`index.html` + 정적 자산). URL 입력, 시나리오 편집, 진행 표시, 대시보드 라우팅. |
 | **트리거 레이어 (선택이 아니라 실사용 시 권장)** | `workflow_dispatch` 호출, 남용 방지(Rate limit 등). PAT/앱 토큰은 **여기만** 보관. |
 | **GitHub Actions** | 크롤·분석·시나리오 생성·Playwright 실행·리포트 HTML 생성. |
-| **결과물 저장** | `gh-pages` 브랜치의 `jobs/{jobId}/` 아래 JSON·HTML 커밋 → SPA와 **same-origin**으로 `fetch` 가능. |
+| **결과물 저장** | `gh-pages` 의 `jobs/날짜/시간_runid/`(한국 시간)·`jobs/_byRunId/<run_id>.json` 메타 → SPA는 작업 번호만으로 경로 조회. |
 
 > GitHub Pages는 정적 호스팅만 제공합니다. 임의 도메인 크롤과 헤드리스 브라우저 테스트는 반드시 Actions(또는 별도 서버)에서 수행합니다.
 
@@ -59,7 +59,8 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 
 ### `jobs/` 디렉터리
 
-- 분석·테스트 결과물은 Phase 1부터 **`gh-pages` 브랜치**의 `jobs/<jobId>/` 에 커밋됩니다.
+- 분석·테스트 결과물은 **`gh-pages`** 에 `jobs/<YYYY-MM-DD>/<HHMMSS>_<run_id>/` 형태로 커밋됩니다(Asia/Seoul). 재실행은 **같은 폴더**를 덮어씁니다.
+- `jobs/_byRunId/<run_id>.json` 에 `{ "path": "날짜/시간_runid" }` 가 있어 Pages SPA가 `?job=<run_id>` 만으로 실제 경로를 찾습니다. 구 저장소의 flat `jobs/<run_id>/` 도 동작합니다.
 - **Deploy GitHub Pages** 워크플로는 `clean: false` 로 설정되어 있어, `web/` 재배포 시 기존 `jobs/` 가 삭제되지 않습니다.(`web/` 에서 제거한 파일은 `gh-pages` 에 남을 수 있어, 필요 시 수동 정리)
 
 ## 선행 조건
@@ -91,7 +92,7 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 - [x] 산출물: `structure.json`, 링크 그래프 `graph`
 - [x] 휴리스틱 시나리오 초안 → `scenarios.draft.json`(스텝: `navigate`, `assertVisible`, `click`, `fill`, `assertNoConsoleError`)
 - [x] 초안 기준 Playwright 스모크 실행 → `results.json`
-- [x] `report.html` 및 JSON을 **`gh-pages`의 `jobs/{jobId}/`** 에 커밋 푸시 (`jobId` = GitHub `run_id`)
+- [x] `report.html` 및 JSON을 **`gh-pages`의 날짜/시간 폴더**에 커밋 푸시 (`run_id`별 메타 동반)
 
 **완료 기준:** Actions 한 번으로 해당 job 폴더에 JSON + HTML이 생기고, Pages URL에서 열어볼 수 있다.
 
@@ -100,7 +101,7 @@ GitHub Pages에서 URL을 입력하고, 크롤·구조 분석 결과와 자동 �
 1. GitHub 저장소 **Actions** 탭 → **Analyze site and run tests** 워크플로 선택 → **Run workflow**.
 2. `target_url` 에 분석할 URL 입력 후 실행합니다.
 3. 성공 후 **기존에 `gh-pages` 가 없으면** 스크립트가 `web/` 내용으로 브랜치를 한 번 생성합니다. Pages 설정이 되어 있으면 다음 주소 형태로 리포트를 열 수 있습니다.  
-   `https://<owner>.github.io/<repo>/jobs/<run_id>/report.html`  
+   `https://<owner>.github.io/<repo>/jobs/<날짜>/<시간>_<run_id>/report.html`  
    (`run_id` 는 해당 워크플로 실행 상세 페이지 상단의 숫자 ID 와 동일합니다.)
 4. 일부 시나리오가 실패하면 워크플로는 **경고(노란색)** 로 끝날 수 있으나, 산출물은 `continue-on-error` 및 `if: always()` 로 **`jobs/` 에 게시**됩니다.
 
@@ -149,7 +150,7 @@ npx playwright show-trace traces/<시나리오-id>.zip
 
 #### Phase 3 사용법
 
-1. **권장:** 배포 시 `web/index.html` 의 `<html>` 에 **`data-worker-base-url`**(Worker 루트, 슬래시 없음)과 필요 시 **`data-qa-webhook-secret`** 을 넣습니다. Pages에서 대상 URL만 입력하고 **분석 시작**을 누르면 Worker가 `analyze-and-test.yml` 을 dispatch하고 `run_id` 를 받으면 같은 화면에서 Job을 폴링합니다.
+1. **권장:** 저장소 **Settings → Secrets and variables → Actions** 에 **`WORKER_BASE_URL`**(Cloudflare Worker 루트 URL, 슬래시 없음)과 필요 시 **`QA_WEBHOOK_SECRET`**(Worker `WEBHOOK_SECRET` 과 동일)을 추가합니다. **`Deploy GitHub Pages`** 워크플로가 `web/index.html` 에 자동 주입하므로, Pages 이용자는 별도 설정 없이 **분석 시작**만 누르면 됩니다. 시크릿을 넣은 뒤 Actions에서 **Deploy GitHub Pages** 를 한 번 실행하거나 `web/` 변경을 푸시하세요.
 2. Worker를 쓰지 않을 때: Actions에서 **Analyze site and run tests** 실행 후 **Job ID**(워크플로 `run_id`)를 확인합니다.
 3. Pages에서 `https://<owner>.github.io/<repo>/?job=<run_id>` 로 열거나, Job ID를 입력해 **불러오기**를 누릅니다.
 4. 배포 직후 `jobs/<id>/` 가 아직 없으면 **폴링**이 켜져 있으면 자동으로 재시도합니다.
@@ -168,7 +169,7 @@ Worker의 `/analyze`·토큰 권한·환경 변수는 **`workers/trigger/README.
 #### Phase 4 설정 요약
 
 1. **저장소** `Settings → Secrets and variables` 에서 Worker용 PAT는 **Worker 시크릿에만** 저장합니다.
-2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포하고, `web/index.html` 의 **`data-worker-base-url`** / **`data-qa-webhook-secret`** 을 동일 Worker에 맞게 설정합니다.
+2. **`workers/trigger/README.md`** 를 참고해 Cloudflare Worker를 배포한 뒤, 위 **`WORKER_BASE_URL`** 등 시크릿만 맞추면 됩니다(소스의 `data-*` 는 비워 둔 채 유지).
 3. `web/index.html` 의 `data-github-repo` 를 본인 `owner/repo` 로 바꾸면 수동 실행 링크가 맞춰집니다.
 
 ### Phase 5 — 트리거 레이어 하드닝 ✅

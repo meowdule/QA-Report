@@ -234,8 +234,9 @@ export function buildReportHtml(p) {
     <p class="eyebrow">실행 리포트</p>
     <h1>테스트 결과 대시보드</h1>
     <p class="meta">
-      GitHub Actions <strong>run_id</strong>마다 <code>jobs/&lt;Job ID&gt;/</code> 폴더가 따로 생깁니다.
-      사용자·실행 시각이 다르면 Job ID가 달라지므로 리포트도 각각 보관됩니다.
+      크롤을 새로 돌릴 때마다 작업 번호(run_id)가 새로 생기고, 한국 시간 기준
+      <code>jobs/년-월-일/시분초_작업번호/</code> 아래에 리포트가 따로 저장됩니다.
+      같은 작업에서 시나리오만 다시 돌리면 그 폴더가 갱신됩니다.
     </p>
     <div class="meta-grid">
       <div><strong>Job ID</strong> <code>${esc(jobId)}</code></div>

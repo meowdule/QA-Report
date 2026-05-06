@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# gh-pages 에 작업 산출물을 올립니다.
+# - 신규(분석): JOB_REL 미지정 시 한국 시간(Asia/Seoul) 기준
+#   jobs/YYYYMMDD/HHmmss_<JOB_ID>/  (예: jobs/20260105/143052_12345678901/)
+# - 재실행: 환경변수 JOB_REL 에 기존 상대 경로를 넣으면 그 폴더를 덮어씀
+# - jobs/_byRunId/<JOB_ID>.json 에 { "path": "..." } 저장 → Pages SPA 가 run_id 로 실제 경로 조회
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEFAULT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 ROOT="${REPO_ROOT:-$DEFAULT_ROOT}"
@@ -36,18 +42,35 @@ else
   git push -u origin gh-pages
 fi
 
-mkdir -p "jobs/${JOB_ID}"
-cp -r "${STASH}/." "jobs/${JOB_ID}/"
+if [[ -n "${JOB_REL:-}" ]]; then
+  TARGET_REL="$JOB_REL"
+else
+  # 한국 시간(Asia/Seoul) · jobs/년-월-일/시분초_runid/
+  DATE_PART="$(TZ=Asia/Seoul date +%Y-%m-%d)"
+  TIME_PART="$(TZ=Asia/Seoul date +%H%M%S)"
+  TARGET_REL="${DATE_PART}/${TIME_PART}_${JOB_ID}"
+fi
 
-git add "jobs/${JOB_ID}"
+TARGET_DIR="jobs/${TARGET_REL}"
+mkdir -p "$TARGET_DIR"
+cp -r "${STASH}/." "$TARGET_DIR/"
+
+mkdir -p "jobs/_byRunId"
+META_FILE="jobs/_byRunId/${JOB_ID}.json"
+export TARGET_REL
+export META_FILE
+python3 -c "import json, os; p=os.environ['META_FILE']; open(p,'w',encoding='utf-8').write(json.dumps({'path':os.environ['TARGET_REL']},ensure_ascii=False))"
+
+git add "$TARGET_DIR"
+git add "$META_FILE"
 
 if git diff --staged --quiet; then
-  echo "Nothing to commit under jobs/${JOB_ID}"
+  echo "Nothing to commit under ${TARGET_DIR}"
 else
-  git commit -m "Job ${JOB_ID}: crawl, scenarios, and test report"
+  git commit -m "Job ${JOB_ID}: ${TARGET_REL}"
 fi
 
 git push origin gh-pages
 
 rm -rf "$STASH"
-echo "Published to gh-pages jobs/${JOB_ID}/"
+echo "Published to gh-pages ${TARGET_DIR}/"
