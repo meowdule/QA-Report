@@ -40,6 +40,16 @@ try {
   });
   fs.writeFileSync(path.join(outDir, "structure.json"), JSON.stringify(structure, null, 2), "utf8");
 
+  let lighthouseSummary;
+  if (process.env.SKIP_LIGHTHOUSE === "1") {
+    lighthouseSummary = lighthouseSummaryFromStructureOnly(structure);
+    console.log("SKIP_LIGHTHOUSE=1 — lighthouse-summary.json 은 URL 목록만 포함합니다.");
+  } else {
+    console.log("Lighthouse 실행 중… (건너뛰려면 SKIP_LIGHTHOUSE=1, 최대 개수는 LIGHTHOUSE_MAX)");
+    lighthouseSummary = await runLighthouseBatch({ structure, outDir });
+  }
+  fs.writeFileSync(path.join(outDir, "lighthouse-summary.json"), JSON.stringify(lighthouseSummary, null, 2), "utf8");
+
   let scenariosDoc = buildDraftScenarios(structure);
 
   const llmOn =
