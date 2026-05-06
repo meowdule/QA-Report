@@ -46,12 +46,10 @@
             aria-label="결과 화면 바로가기"
           >
             <span class="dashboard-nav-label">바로가기</span>
-            <a href="#section-summary">요약</a>
-            <a href="#section-results">테스트 결과</a>
-            <a href="#section-scenarios">시나리오 목록</a>
-            <a href="#section-edit">수정 · 재실행</a>
-            <a href="#section-structure">수집한 페이지</a>
-            <a href="#section-report">리포트</a>
+            <a href="#section-summary"><span aria-hidden="true">📌</span> 요약</a>
+            <a href="#section-results"><span aria-hidden="true">📊</span> 테스트 결과</a>
+            <a href="#section-edit"><span aria-hidden="true">🧩</span> 수정 · 재실행</a>
+            <a href="#section-report"><span aria-hidden="true">🖥️</span> 리포트</a>
           </nav>
 
           <section class="panel" id="analyze-panel" aria-labelledby="analyze-heading">
@@ -143,16 +141,8 @@
             <div class="dash-cell dash-cell--results">
               <section id="results-section" class="panel hidden">
                 <h2 id="section-results">테스트 결과</h2>
-                <p class="panel-intro">기준별 집계와 시나리오별 흐름을 확인합니다.</p>
+                <p class="panel-intro">기준별 집계를 확인합니다.</p>
                 <div id="results-body"></div>
-              </section>
-            </div>
-
-            <div class="dash-cell dash-cell--scenarios">
-              <section id="scenarios-section" class="panel hidden">
-                <h2 id="section-scenarios">시나리오 목록</h2>
-                <p class="panel-intro">자동으로 만든 점검 묶음입니다. 아래 「수정」에서 순서와 내용을 바꿀 수 있습니다.</p>
-                <div id="scenarios-body"></div>
               </section>
             </div>
 
@@ -177,14 +167,6 @@
                   <button type="button" class="btn primary" id="btn-post-rerun">테스트 수행</button>
                 </div>
                 <p id="dispatch-hint" class="hint hint--subtle" role="status"></p>
-              </section>
-            </div>
-
-            <div class="dash-cell dash-cell--structure">
-              <section id="structure-section" class="panel hidden">
-                <h2 id="section-structure">수집한 페이지</h2>
-                <p class="panel-intro">분석 과정에서 방문·기록한 페이지 목록입니다.</p>
-                <div id="structure-body"></div>
               </section>
             </div>
 

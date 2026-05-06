@@ -645,9 +645,9 @@ code.break {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       "summary summary"
-      "results scenarios"
+      "results results"
       "edit edit"
-      "structure report";
+      "report report";
     gap: 1rem 1.15rem;
   }
 
@@ -659,16 +659,8 @@ code.break {
     grid-area: results;
   }
 
-  .dash-cell--scenarios {
-    grid-area: scenarios;
-  }
-
   .dash-cell--edit {
     grid-area: edit;
-  }
-
-  .dash-cell--structure {
-    grid-area: structure;
   }
 
   .dash-cell--report {
@@ -692,9 +684,7 @@ code.break {
   background: var(--card);
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0.5rem;
-  z-index: 30;
+  position: static;
 }
 
 .dashboard-nav-label {
@@ -735,13 +725,22 @@ code.break {
 
 .dash-aside .dashboard-nav a {
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
 .summary-kpi {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.85rem;
   margin-bottom: 1.1rem;
+}
+@media (max-width: 900px) {
+  .summary-kpi {
+    grid-template-columns: 1fr;
+  }
 }
 
 .kpi-tile {
@@ -794,6 +793,13 @@ code.break {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+.kpi-tile--target .summary-target-url {
+  margin-top: 0.5rem;
+  font-size: 0.86rem;
+}
+.kpi-tile--result {
+  order: 3;
 }
 
 .kpi-tile--viz .donut-block {
@@ -860,21 +866,6 @@ code.break {
 .data--pages .cell-status {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-}
-
-.scenarios-meta {
-  margin: 0 0 0.75rem;
-}
-
-.ver-pill {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: var(--bg-page-2);
-  color: var(--muted);
-  border: 1px solid var(--card-border);
 }
 
 .cell-scen-name .scen-name {
@@ -1330,8 +1321,22 @@ code.break {
 }
 
 .scenario-editor-body {
-  padding: 0 1rem 1rem;
+  padding: 0.5rem 1rem 0.9rem;
   border-top: 1px solid var(--card-border);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem 0.8rem;
+}
+@media (max-width: 840px) {
+  .scenario-editor-body {
+    grid-template-columns: 1fr;
+  }
+}
+.scenario-editor-body .field:first-child,
+.scenario-editor-body .criteria-field,
+.scenario-editor-body .step-blocks,
+.scenario-editor-body .step-add-bar {
+  grid-column: 1 / -1;
 }
 
 .criteria-field > span:first-child {
@@ -1386,8 +1391,11 @@ code.break {
 .step-block {
   border: 1px dashed var(--card-border);
   border-radius: var(--radius-sm);
-  padding: 0.65rem 0.75rem;
+  padding: 0.5rem 0.65rem;
   background: var(--bg-page-2);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.45rem 0.65rem;
 }
 
 .step-block-head {
@@ -1413,7 +1421,19 @@ code.break {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
+  align-self: start;
+}
+.step-block-fields {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem 0.6rem;
+}
+@media (max-width: 760px) {
+  .step-block-fields {
+    grid-template-columns: 1fr;
+  }
 }
 
 .btn-tiny {

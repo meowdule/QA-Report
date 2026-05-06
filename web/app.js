@@ -618,36 +618,6 @@ function validateScenariosDoc(doc) {
   return "";
 }
 
-/**
- * @param {string} u
- */
-function shortUrlSpa(u) {
-  try {
-    const x = new URL(u);
-    return (x.hostname + x.pathname).slice(0, 52) + (String(u).length > 52 ? "…" : "");
-  } catch {
-    return String(u).slice(0, 52);
-  }
-}
-
-/**
- * @param {any} st
- */
-function formatStepLineKo(st) {
-  const parts = [];
-  if (st.url) parts.push(`주소 ${esc(shortUrlSpa(st.url))}`);
-  if (st.finalUrl && st.finalUrl !== st.url) parts.push(`이동 후 ${esc(shortUrlSpa(st.finalUrl))}`);
-  if (st.status != null) parts.push(`응답 ${esc(st.status)}`);
-  if (st.selector) parts.push("지정한 영역");
-  if (st.href) parts.push(`링크 ${esc(shortUrlSpa(st.href))}`);
-  if (st.accessibleName) parts.push(`이름 「${esc(String(st.accessibleName).slice(0, 36))}」`);
-  if (st.value != null && String(st.value) !== "") parts.push(`입력값 ${esc(String(st.value).slice(0, 36))}`);
-  if (st.label != null && String(st.label) !== "") parts.push(`선택 ${esc(String(st.label).slice(0, 36))}`);
-  if (st.error) parts.push(`원인 ${esc(String(st.error).slice(0, 120))}`);
-  if (!parts.length) return "";
-  return ` — ${parts.join(" · ")}`;
-}
-
 const qs = new URLSearchParams(window.location.search);
 const initialJob = (qs.get("job") || qs.get("jobId") || "").trim();
 
@@ -680,15 +650,11 @@ const el = {
   status: document.getElementById("job-status"),
   summarySection: document.getElementById("summary-section"),
   summaryBody: document.getElementById("summary-body"),
-  scenariosSection: document.getElementById("scenarios-section"),
-  scenariosBody: document.getElementById("scenarios-body"),
   editSection: document.getElementById("edit-section"),
   scenarioFormRows: document.getElementById("scenario-form-rows"),
   editHint: document.getElementById("edit-hint"),
   btnPostRerun: document.getElementById("btn-post-rerun"),
   dispatchHint: document.getElementById("dispatch-hint"),
-  structureSection: document.getElementById("structure-section"),
-  structureBody: document.getElementById("structure-body"),
   resultsSection: document.getElementById("results-section"),
   resultsBody: document.getElementById("results-body"),
   reportSection: document.getElementById("report-section"),
@@ -810,27 +776,6 @@ function esc(s) {
     .replace(/"/g, "&quot;");
 }
 
-/** @param {number | null | undefined} ms */
-function formatDuration(ms) {
-  const n = Number(ms);
-  if (!Number.isFinite(n) || n < 0) return "—";
-  if (n < 1000) return `${Math.round(n)}ms`;
-  return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}초`;
-}
-
-/** @param {string[]} criterionIds */
-function chipsHtmlCriteria(criterionIds) {
-  const list = (criterionIds || []).filter(Boolean);
-  if (!list.length) return `<span class="chip chip--muted">—</span>`;
-  return list
-    .map((id) => {
-      const d = CRITERIA_DEF[id];
-      const t = d ? `${d.label}` : criterionLabel(id);
-      return `<span class="chip" title="${esc(d?.desc || "")}">${esc(t)}</span>`;
-    })
-    .join("");
-}
-
 /**
  * @param {string} url
  * @param {{ signal?: AbortSignal; cacheBust?: boolean }} [opts]
@@ -897,78 +842,21 @@ function renderSummary(structure, scenarios, results) {
 
   el.summaryBody.innerHTML = `
     <div class="summary-kpi" role="group" aria-label="작업 요약">
-      <div class="kpi-tile kpi-tile--accent">
-        <span class="kpi-label">작업 ID</span>
+      <div class="kpi-tile kpi-tile--accent kpi-tile--target">
+        <span class="kpi-label">작업 ID · 분석한 주소</span>
         <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
-        <span class="kpi-hint">이 번호로 나중에 다시 이 결과를 열 수 있습니다.</span>
+        <div class="summary-target-url">${targetBlock}</div>
       </div>
-      <div class="kpi-tile kpi-tile--viz">
+      <div class="kpi-tile">
+        <span class="kpi-label">시나리오</span>
+        <span class="kpi-value">${esc(scenariosCount)}개</span>
+        <span class="kpi-hint">수집 페이지 ${esc(pages)}개</span>
+      </div>
+      <div class="kpi-tile kpi-tile--viz kpi-tile--result">
         ${donutMini || `<span class="kpi-label">통과율</span><span class="kpi-value">—</span><span class="kpi-hint">${esc(resultsHint)}</span>`}
         ${donutMini ? `<span class="kpi-hint kpi-hint--below">${esc(resultsHint)}</span>` : ""}
       </div>
-      <div class="kpi-tile">
-        <span class="kpi-label">수집한 페이지</span>
-        <span class="kpi-value">${esc(pages)}</span>
-        <span class="kpi-hint">시나리오 ${esc(scenariosCount)}개</span>
-      </div>
     </div>
-    <div class="summary-target-card">
-      <span class="summary-target-label">분석한 주소</span>
-      <div class="summary-target-url">${targetBlock}</div>
-    </div>
-  `;
-}
-
-/**
- * @param {any} structure
- */
-function renderStructure(structure) {
-  const pages = structure?.pages || [];
-  const rows = pages
-    .slice(0, 50)
-    .map(
-      (p) =>
-        `<tr><td class="cell-title">${esc(p.title || "제목 없음")}</td><td class="cell-url"><a href="${esc(
-          p.url,
-        )}" target="_blank" rel="noopener noreferrer" class="table-link">${esc(p.url)}</a></td><td class="cell-status">${esc(
-          p.httpStatus ?? p.error ?? "—",
-        )}</td></tr>`,
-    )
-    .join("");
-  const more =
-    pages.length > 50
-      ? `<p class="hint">목록이 길어 처음 50개만 보여 드립니다.</p>`
-      : "";
-  el.structureBody.innerHTML = `
-    <p class="structure-lead">총 <strong>${pages.length}</strong>개 페이지를 살펴보았습니다.</p>
-    <div class="table-scroll"><table class="data data--pages"><thead><tr><th>페이지 이름</th><th>주소</th><th>응답</th></tr></thead>
-    <tbody>${rows || "<tr><td colspan=3>페이지 없음</td></tr>"}</tbody></table></div>${more}
-  `;
-}
-
-/**
- * @param {any} doc
- */
-function renderScenarios(doc) {
-  const list = doc?.scenarios || [];
-  const ver = doc?.version ?? "?";
-  const rows = list
-    .map(
-      (s, idx) =>
-        `<tr>
-          <td class="cell-scen-name">
-            <span class="scen-ico" aria-hidden="true">${svgScenarioFolder()}</span>
-            <span class="scen-name">${esc(s.name || "이름 없음")}</span>
-            <span class="scen-sub">묶음 ${idx + 1} · 단계 ${esc(s.steps?.length ?? 0)}개</span>
-          </td>
-          <td class="cell-chips">${chipsHtmlCriteria(s.criteria || [])}</td>
-        </tr>`,
-    )
-    .join("");
-  el.scenariosBody.innerHTML = `
-    <p class="scenarios-meta"><span class="ver-pill">목록 버전 ${esc(ver)}</span></p>
-    <div class="table-scroll"><table class="data data--scenarios"><thead><tr><th>시나리오</th><th>점검 기준</th></tr></thead>
-    <tbody>${rows || "<tr><td colspan=2>시나리오가 없습니다.</td></tr>"}</tbody></table></div>
   `;
 }
 
@@ -976,11 +864,6 @@ function renderScenarios(doc) {
  * @param {any} results
  */
 function renderResults(results) {
-  const list = results?.scenarios || [];
-  const passN = list.filter((s) => s.passed).length;
-  const failN = list.length - passN;
-  const donut = list.length ? donutChartHtml(passN, failN) : "";
-
   const summary = results?.criteriaSummary;
   let table = "";
   if (summary && Object.keys(summary).length) {
@@ -1006,36 +889,8 @@ function renderResults(results) {
       }</tbody></table></div>`;
   }
 
-  const scen = list
-    .map((s) => {
-      const steps = (s.steps || [])
-        .map((st) => {
-          const cls = st.skipped ? "step-li--skip" : st.ok === false ? "step-li--bad" : "step-li--ok";
-          const lab = STEP_LABEL_KO[st.type] || st.type;
-          const line = formatStepLineKo(st);
-          const mark =
-            st.skipped ? "◦" : st.ok === false ? "✕" : "✓";
-          return `<li class="step-li ${cls}"><span class="step-li-glyph" aria-hidden="true">${stepGlyphSvg(st.type)}</span><span class="step-li-mark">${mark}</span><span class="step-li-txt"><strong>${esc(lab)}</strong>${line}</span></li>`;
-        })
-        .join("");
-      const crits = chipsHtmlCriteria(s.criteria || []);
-      return `<article class="result-scen-detail ${s.passed ? "is-pass" : "is-fail"}">
-        <header class="result-scen-detail__head">
-          <span class="badge ${s.passed ? "badge--ok" : "badge--bad"}">${s.passed ? "통과" : "실패"}</span>
-          <h4 class="result-scen-detail__title">${esc(s.name || "이름 없음")}</h4>
-          <p class="result-scen-detail__meta">⏱ ${esc(formatDuration(s.durationMs))} · 점검 ${crits}</p>
-        </header>
-        <ol class="step-ol">${steps || '<li class="step-li step-li--skip">단계 없음</li>'}</ol>
-      </article>`;
-    })
-    .join("");
-
   el.resultsBody.innerHTML = `
-    <div class="results-viz-row">${donut ? `<div class="results-donut-slot">${donut}</div>` : ""}
-    <p class="results-viz-caption">${list.length ? `총 ${esc(list.length)}개 묶음 중 ${esc(passN)}개 통과` : "아직 결과가 없습니다."}</p></div>
-    ${table}
-    <h3 class="subh subh--ico"><span class="subh-ico" aria-hidden="true">📋</span> 시나리오별 상세</h3>
-    <div class="result-scen-stack">${scen || '<p class="hint">시나리오 결과가 없습니다.</p>'}</div>
+    ${table || '<p class="hint">표시할 기준 요약이 없습니다.</p>'}
   `;
 }
 
@@ -1049,7 +904,7 @@ function renderScenarioForms(doc) {
   list.forEach((s, i) => {
     const det = document.createElement("details");
     det.className = "scenario-editor";
-    det.open = i === 0;
+    det.open = false;
 
     const sum = document.createElement("summary");
     sum.className = "scenario-editor-summary";
@@ -1155,9 +1010,7 @@ function wireReport(jobRel) {
 function hideAllPanels() {
   show(el.dashboardNav, false);
   show(el.summarySection, false);
-  show(el.scenariosSection, false);
   show(el.editSection, false);
-  show(el.structureSection, false);
   show(el.resultsSection, false);
   show(el.reportSection, false);
   el.reportFrame.removeAttribute("src");
@@ -1176,9 +1029,7 @@ function syncDashboardNavLinks() {
   if (!el.dashboardNav) return;
   setDashboardNavLinkVisible("#section-summary", !el.summarySection?.classList.contains("hidden"));
   setDashboardNavLinkVisible("#section-results", !el.resultsSection?.classList.contains("hidden"));
-  setDashboardNavLinkVisible("#section-scenarios", !el.scenariosSection?.classList.contains("hidden"));
   setDashboardNavLinkVisible("#section-edit", !el.editSection?.classList.contains("hidden"));
-  setDashboardNavLinkVisible("#section-structure", !el.structureSection?.classList.contains("hidden"));
   setDashboardNavLinkVisible("#section-report", !el.reportSection?.classList.contains("hidden"));
 }
 
@@ -1318,10 +1169,7 @@ async function loadJob(jobId, opts = {}) {
   }
 
   renderSummary(structure, scenarios, results);
-  renderStructure(structure);
   if (scenarios) {
-    renderScenarios(scenarios);
-    show(el.scenariosSection, true);
     renderScenarioForms(scenarios);
     show(el.editSection, true);
     if (el.editHint) {
@@ -1329,7 +1177,6 @@ async function loadJob(jobId, opts = {}) {
       el.editHint.dataset.kind = "";
     }
   } else {
-    show(el.scenariosSection, false);
     show(el.editSection, false);
   }
   if (results) {
@@ -1340,7 +1187,6 @@ async function loadJob(jobId, opts = {}) {
   }
 
   show(el.summarySection, true);
-  show(el.structureSection, true);
   show(el.dashboardNav, true);
   wireReport(jobRel);
   show(el.reportSection, true);

@@ -37,27 +37,6 @@ function stepIconSvg(kind) {
 }
 
 /**
- * @param {number} pass
- * @param {number} fail
- */
-function buildDonutHtml(pass, fail) {
-  const p = Math.max(0, pass);
-  const f = Math.max(0, fail);
-  const t = p + f || 1;
-  const pct = Math.round((p / t) * 100);
-  const c = 2 * Math.PI * 18;
-  const dash = (p / t) * c;
-  return `<div class="donut-row" role="img" aria-label="통과 ${p}, 실패 ${f}">
-    <svg class="donut-chart" viewBox="0 0 44 44" aria-hidden="true">
-      <circle cx="22" cy="22" r="18" fill="none" stroke="#e2e8f0" stroke-width="7"/>
-      <circle cx="22" cy="22" r="18" fill="none" stroke="#0d9488" stroke-width="7" stroke-linecap="round"
-        stroke-dasharray="${dash} ${c}" transform="rotate(-90 22 22)"/>
-    </svg>
-    <div><strong>${esc(String(pct))}%</strong> 통과 · <span style="color:var(--muted)">${esc(p)}/${esc(p + f)} 시나리오</span></div>
-  </div>`;
-}
-
-/**
  * @param {{ structure: any; scenariosDoc: any; runResults: any; jobId: string; reportGeneratedAt?: string }} p
  */
 export function buildReportHtml(p) {
@@ -70,18 +49,11 @@ export function buildReportHtml(p) {
 
   const criteriaRows = buildCriteriaTable(runResults.criteriaSummary);
   const failedConsoleBlock = buildFailedConsoleSection(runResults.scenarios);
-  const scenarioCards = runResults.scenarios.map((s) => buildScenarioCard(s)).join("");
+  const scenarioRows = runResults.scenarios.map((s) => buildScenarioTableRow(s)).join("");
   const crawlInsightHtml = buildCrawlInsightSection(structure);
-  const donutHtml = total > 0 ? buildDonutHtml(passed, total - passed) : "";
 
   const passPct = total ? Math.round((passed / total) * 100) : 0;
   const targetUrl = structure.targetUrl || "—";
-  let targetHost = "—";
-  try {
-    targetHost = new URL(targetUrl).hostname;
-  } catch {
-    /* */
-  }
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -164,11 +136,19 @@ export function buildReportHtml(p) {
       padding: 1rem 1.15rem;
       margin-bottom: 1rem;
       box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.55rem 1rem;
+      align-items: center;
     }
-    .target-card .lbl { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+    @media (max-width: 760px) {
+      .target-card { grid-template-columns: 1fr; }
+    }
+    .target-card .lbl { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem; grid-column: 1 / -1; }
     .target-card a { color: var(--accent); font-weight: 600; word-break: break-all; text-decoration: none; }
     .target-card a:hover { text-decoration: underline; }
-    .meta-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; font-size: 0.8rem; color: var(--muted); }
+    .meta-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; font-size: 0.8rem; color: var(--muted); justify-content: flex-end; }
+    @media (max-width: 760px) { .meta-chips { justify-content: flex-start; } }
     .meta-chips span { padding: 0.2rem 0.5rem; background: #f1f5f9; border-radius: 6px; }
     .kpi-row {
       display: grid;
@@ -186,19 +166,14 @@ export function buildReportHtml(p) {
     .kpi .num { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
     .kpi .num.ok { color: var(--ok); }
     .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
-    .donut-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.85rem 1rem;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      margin-bottom: 1.25rem;
-      box-shadow: var(--shadow);
-      font-size: 0.92rem;
+    .kpi-bar {
+      margin-top: 0.45rem;
+      height: 0.42rem;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
     }
-    .donut-chart { width: 3.75rem; height: 3.75rem; flex-shrink: 0; }
+    .kpi-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #0d9488, #10b981); }
     .step-ico-svg { width: 1.1rem; height: 1.1rem; vertical-align: -0.2rem; margin-right: 0.35rem; color: var(--muted); }
     .jump {
       display: flex;
@@ -256,38 +231,18 @@ export function buildReportHtml(p) {
       border: 1px solid var(--line);
       border-radius: 10px;
       font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
     }
     .stat-chip strong { color: var(--text); font-weight: 700; }
-    .sc-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1rem 1.1rem;
-      margin-bottom: 0.85rem;
-      background: #fafbfc;
-    }
-    .sc-card:last-child { margin-bottom: 0; }
-    .sc-card.pass { border-left: 4px solid var(--ok); }
-    .sc-card.fail { border-left: 4px solid var(--bad); background: #fffafb; }
-    .sc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.75rem; margin-bottom: 0.5rem; }
-    .sc-badge {
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .sc-badge.pass { background: var(--ok-bg); color: var(--ok); }
-    .sc-badge.fail { background: var(--bad-bg); color: var(--bad); }
-    .sc-title { margin: 0; font-size: 1rem; font-weight: 700; flex: 1 1 100%; }
-    .sc-meta { font-size: 0.82rem; color: var(--muted); width: 100%; }
-    .step-list { margin: 0.5rem 0 0; padding-left: 1.15rem; font-size: 0.88rem; }
-    .step-list li { margin: 0.25rem 0; }
-    .step-list li.ok { color: var(--ok); }
-    .step-list li.bad { color: var(--bad); }
-    .step-list li.skip { color: var(--muted); }
-    .step-type { font-weight: 600; color: var(--text); }
-    .step-detail { color: var(--muted); font-size: 0.86rem; }
+    .stat-ico { font-size: 0.95rem; }
+    .scenario-table td { font-size: 0.86rem; }
+    .scenario-steps { margin: 0; padding-left: 1rem; }
+    .scenario-steps li { margin: 0.18rem 0; }
+    .status-chip { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.74rem; font-weight: 700; }
+    .status-chip.pass { color: var(--ok); background: var(--ok-bg); }
+    .status-chip.fail { color: var(--bad); background: var(--bad-bg); }
     .artifacts { margin-top: 0.65rem; font-size: 0.85rem; }
     .artifacts a { color: var(--accent); font-weight: 600; text-decoration: none; }
     .artifacts a:hover { text-decoration: underline; }
@@ -306,7 +261,7 @@ export function buildReportHtml(p) {
       .no-print { display: none !important; }
       body { background: #fff; }
       .wrap { max-width: none; padding: 0; }
-      .section, .target-card, .kpi, .sc-card { break-inside: avoid; box-shadow: none; }
+      .section, .target-card, .kpi { break-inside: avoid; box-shadow: none; }
     }
   </style>
 </head>
@@ -333,13 +288,11 @@ export function buildReportHtml(p) {
     </div>
   </div>
 
-  ${donutHtml}
-
   <div class="kpi-row" id="summary">
-    <div class="kpi"><div class="num ok">${esc(passPct)}%</div><div class="lbl">전체 통과율</div></div>
-    <div class="kpi"><div class="num">${esc(passed)} / ${esc(total)}</div><div class="lbl">통과한 시나리오</div></div>
-    <div class="kpi"><div class="num">${esc(pages)}</div><div class="lbl">크롤 페이지</div></div>
-    <div class="kpi"><div class="num">${esc(total)}</div><div class="lbl">실행한 시나리오 수</div></div>
+    <div class="kpi"><div class="num">${esc(pages)}</div><div class="lbl">크롤 페이지</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
+    <div class="kpi"><div class="num">${esc(total)}</div><div class="lbl">실행한 시나리오 수</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
+    <div class="kpi"><div class="num">${esc(passed)} / ${esc(total)}</div><div class="lbl">통과한 시나리오</div><div class="kpi-bar"><span style="width:${esc(passPct)}%"></span></div></div>
+    <div class="kpi"><div class="num ok">${esc(passPct)}%</div><div class="lbl">전체 통과율</div><div class="kpi-bar"><span style="width:${esc(passPct)}%"></span></div></div>
   </div>
 
   <nav class="jump no-print" aria-label="섹션 이동">
@@ -375,8 +328,13 @@ export function buildReportHtml(p) {
 
   <section class="section" id="scenarios">
     <h2>시나리오별 상세</h2>
-    <p class="lead">각 줄은 하나의 테스트 묶음입니다. ✓는 성공, 실패 시 빨간 줄과 원인 힌트가 표시됩니다.</p>
-    ${scenarioCards}
+    <p class="lead">이전 형태처럼 표로 각 시나리오의 상태, 소요 시간, 실행 단계를 확인할 수 있습니다.</p>
+    <div class="scroll-x">
+      <table class="data scenario-table">
+        <thead><tr><th>상태</th><th>시나리오</th><th>소요</th><th>점검 기준</th><th>실행 단계</th></tr></thead>
+        <tbody>${scenarioRows}</tbody>
+      </table>
+    </div>
   </section>
 
   ${crawlInsightHtml}
@@ -467,8 +425,25 @@ function buildCrawlInsightSection(structure) {
   if (sumOutboundMail > 0) chips.push({ label: "메일 링크", value: sumOutboundMail });
   if (sumOutboundTel > 0) chips.push({ label: "전화 링크", value: sumOutboundTel });
 
+  const iconMap = /** @type {Record<string, string>} */ ({
+    "정상 응답 페이지": "✅",
+    "건너뛰거나 오류 페이지": "⚠️",
+    "같은 사이트 안 링크(합계)": "🔗",
+    "클릭·버튼 후보(합계)": "🖱️",
+    "클릭 후보가 있는 페이지": "📄",
+    "입력·목록·토글 등 폼 요소": "🧾",
+    "한 개만 고르는 목록": "🔽",
+    "여러 개 고르는 목록": "☑️",
+    "라디오 묶음": "🎯",
+    "체크박스": "✅",
+    "스위치·토글": "🎛️",
+    "새 탭으로 열리는 링크": "🪟",
+    "외부 사이트 링크(참고)": "🌐",
+    "메일 링크": "✉️",
+    "전화 링크": "📞",
+  });
   const chipHtml = chips
-    .map((c) => `<div class="stat-chip"><strong>${esc(c.value)}</strong> ${esc(c.label)}</div>`)
+    .map((c) => `<div class="stat-chip"><span class="stat-ico">${iconMap[c.label] || "✨"}</span><strong>${esc(c.value)}</strong> ${esc(c.label)}</div>`)
     .join("");
 
   return `<section class="section" id="crawl">
@@ -546,58 +521,24 @@ function buildFailedConsoleSection(scenarios) {
 /**
  * @param {any} s
  */
-function buildScenarioCard(s) {
-  const badge = s.passed ? "pass" : "fail";
+function buildScenarioTableRow(s) {
   const badgeText = s.passed ? "통과" : "실패";
+  const badgeCls = s.passed ? "pass" : "fail";
   const crit = (s.criteria || []).map((c) => `<span class="pill">${esc(criterionLabelKo(c))}</span>`).join(" ");
-
-  const arts = [];
-  if (s.artifacts?.trace) {
-    arts.push(`<a href="./${esc(s.artifacts.trace)}">실행 기록(trace) 열기</a>`);
-  }
-  if (s.artifacts?.screenshot) {
-    arts.push(`<a href="./${esc(s.artifacts.screenshot)}">실패 화면 캡처</a>`);
-  }
-  const artBlock =
-    arts.length > 0 ? `<div class="artifacts">${arts.join(" · ")}</div>` : "";
-
   const sec = Math.round((s.durationMs || 0) / 100) / 10;
-
-  const errBlock =
-    s.passed === false && s.consoleErrors?.length
-      ? `<ul class="err-list">${(s.consoleErrors || [])
-          .slice(0, 6)
-          .map((e) => {
-            const t =
-              typeof e === "object" && e != null && "text" in e
-                ? String(e.text)
-                : JSON.stringify(e);
-            return `<li>${esc(t.slice(0, 280))}</li>`;
-          })
-          .join("")}</ul>`
-      : "";
-
   const steps = (s.steps || [])
     .map((st) => {
-      const cls = st.skipped ? "skip" : st.ok ? "ok" : "bad";
       const label = STEP_LABEL_KO[st.type] || st.type;
-      const detail = formatStepDetailHuman(st);
-      const note = st.note ? ` <span class="step-detail">(${esc(st.note)})</span>` : "";
-      const ico = stepIconSvg(st.type);
-      return `<li class="${cls}">${ico}<span class="step-type">${esc(label)}</span>${note}${detail}</li>`;
+      return `<li>${stepIconSvg(st.type)}<strong>${esc(label)}</strong>${formatStepDetailHuman(st)}</li>`;
     })
     .join("");
-
-  return `<article class="sc-card ${badge}">
-    <div class="sc-head">
-      <span class="sc-badge ${badge}">${esc(badgeText)}</span>
-      <h3 class="sc-title">${esc(s.name)}</h3>
-      <div class="sc-meta">약 ${esc(sec)}초 소요 · ${crit || "기준 태그 없음"}</div>
-    </div>
-    <ol class="step-list">${steps || "<li class=\"skip\">스텝 없음</li>"}</ol>
-    ${artBlock}
-    ${errBlock}
-  </article>`;
+  return `<tr>
+    <td><span class="status-chip ${badgeCls}">${esc(badgeText)}</span></td>
+    <td><strong>${esc(s.name)}</strong></td>
+    <td>${esc(sec)}초</td>
+    <td>${crit || "—"}</td>
+    <td><ol class="scenario-steps">${steps || "<li>스텝 없음</li>"}</ol></td>
+  </tr>`;
 }
 
 function criterionLabelKo(id) {
