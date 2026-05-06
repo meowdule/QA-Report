@@ -244,22 +244,30 @@ function defaultStep(type) {
   }
 }
 
-/** 도넛 차트 (통과·실패 비율) */
-function donutChartHtml(pass, fail) {
-  const p = Math.max(0, Number(pass) || 0);
-  const f = Math.max(0, Number(fail) || 0);
-  const t = p + f || 1;
-  const pct = Math.round((p / t) * 100);
-  const c = 2 * Math.PI * 16;
-  const dashOk = (p / t) * c;
-  return `<div class="donut-block" role="img" aria-label="통과 ${p}건, 실패 ${f}건">
-    <svg class="donut-svg" viewBox="0 0 40 40" aria-hidden="true">
-      <circle class="donut-track" cx="20" cy="20" r="16" fill="none" stroke-width="6"/>
-      <circle class="donut-arc" cx="20" cy="20" r="16" fill="none" stroke-width="6"
-        stroke-dasharray="${dashOk} ${c}" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-    </svg>
-    <div class="donut-cap"><strong>${esc(String(pct))}%</strong><span>통과</span><span class="donut-sub">${esc(p)} / ${esc(t)} 묶음</span></div>
-  </div>`;
+const PASS_GAUGE_ARC = 377;
+
+/**
+ * @param {number} passPct
+ * @param {number} passed
+ * @param {number} total
+ */
+function passGaugeSvg(passPct, passed, total) {
+  const pct = Math.max(0, Math.min(100, Math.round(Number(passPct) || 0)));
+  const dash = Math.round((pct / 100) * PASS_GAUGE_ARC);
+  const sub = total ? `${passed} / ${total} 시나리오` : "실행 결과 없음";
+  return `<svg class="pass-gauge-svg" viewBox="0 0 320 148" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
+    <defs>
+      <linearGradient id="spaPassGaugeGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#fb7185"/>
+        <stop offset="40%" stop-color="#fbbf24"/>
+        <stop offset="100%" stop-color="#34d399"/>
+      </linearGradient>
+    </defs>
+    <path class="pass-gauge-track" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke-width="18" stroke-linecap="round"/>
+    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="url(#spaPassGaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
+    <text x="160" y="88" text-anchor="middle" class="pass-gauge-pct">${esc(pct)}%</text>
+    <text x="160" y="108" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
+  </svg>`;
 }
 
 function svgScenarioFolder() {
@@ -887,27 +895,49 @@ function renderSummary(structure, scenarios, results, lighthouseSummary) {
       : `<span class="muted">—</span>`;
 
   const failN = tot > 0 ? tot - pass : 0;
-  const donutMini = tot > 0 ? donutChartHtml(pass, failN) : "";
+  const pctNum = pct != null ? pct : 0;
+  const gaugeBlock =
+    tot > 0
+      ? passGaugeSvg(pctNum, pass, tot)
+      : `<div class="sd-gauge-empty"><p class="hint">${esc(resultsHint)}</p></div>`;
   const lhBlock = lighthouseAvgChipsHtml(lighthouseSummary);
 
   el.summaryBody.innerHTML = `
     <div class="summary-stack">
-      <div class="summary-kpi" role="group" aria-label="작업 요약">
-        <div class="kpi-tile kpi-tile--accent kpi-tile--target">
+      <div class="summary-dashboard" role="group" aria-label="작업 요약">
+        <div class="sd-target-card">
           <span class="kpi-label">작업 ID · 분석한 주소</span>
           <span class="kpi-value kpi-value--mono">${esc(jobId)}</span>
           <div class="summary-target-url">${targetBlock}</div>
+          <p class="sd-target-meta muted">시나리오 초안 ${esc(scenariosCount)}개 · 수집 페이지 ${esc(pages)}개</p>
         </div>
-        <div class="kpi-tile">
-          <span class="kpi-label">시나리오</span>
-          <span class="kpi-value">${esc(scenariosCount)}개</span>
-          <span class="kpi-hint">수집 페이지 ${esc(pages)}개</span>
+        <div class="sd-gauge-card">
+          <div class="sd-card-head">
+            <h3 class="sd-card-title">테스트 통과</h3>
+            <p class="sd-card-desc">시나리오 실행 결과</p>
+          </div>
+          ${gaugeBlock}
         </div>
-        <div class="kpi-tile kpi-tile--viz kpi-tile--result">
-          ${donutMini || `<span class="kpi-label">통과율</span><span class="kpi-value">—</span><span class="kpi-hint">${esc(resultsHint)}</span>`}
-          ${donutMini ? `<span class="kpi-hint kpi-hint--below">${esc(resultsHint)}</span>` : ""}
+        <div class="sd-metrics">
+          <div class="sd-metric sd-metric--pages">
+            <span class="sd-metric-label">크롤 페이지</span>
+            <span class="sd-metric-value">${esc(pages)}</span>
+          </div>
+          <div class="sd-metric sd-metric--run">
+            <span class="sd-metric-label">실행 시나리오</span>
+            <span class="sd-metric-value">${esc(tot)}</span>
+          </div>
+          <div class="sd-metric sd-metric--ok">
+            <span class="sd-metric-label">통과</span>
+            <span class="sd-metric-value">${esc(pass)}</span>
+          </div>
+          <div class="sd-metric sd-metric--fail">
+            <span class="sd-metric-label">실패</span>
+            <span class="sd-metric-value">${esc(failN)}</span>
+          </div>
         </div>
       </div>
+      ${tot > 0 ? `<p class="summary-mini-hint muted">${esc(resultsHint)}</p>` : ""}
       ${lhBlock}
     </div>
   `;
@@ -924,21 +954,23 @@ function renderResults(results) {
       .filter(([, row]) => (row.pass || 0) + (row.fail || 0) > 0)
       .map(([id, row]) => {
         const label = row.labelKo || criterionLabel(id);
-        const total = (row.pass || 0) + (row.fail || 0);
-        const rate = total ? Math.round(((row.pass || 0) / total) * 100) : 0;
+        const rowTot = (row.pass || 0) + (row.fail || 0);
+        const rate = rowTot ? Math.round(((row.pass || 0) / rowTot) * 100) : 0;
+        const bar = `<div class="crit-bar-cell"><div class="crit-bar-track" title="${esc(rate)}%"><span class="crit-bar-fill" style="width:${esc(rate)}%"></span></div><span class="crit-bar-pct">${esc(rate)}%</span></div>`;
         return `<tr>
           <td class="cell-criterion">
             <span class="crit-label">${esc(label)}</span>
             <span class="crit-mini">${esc(CRITERIA_DEF[id]?.desc || "")}</span>
           </td>
-          <td class="cell-num cell-num--ok">${esc(row.pass)} <span class="crit-pct">(${esc(rate)}%)</span></td>
+          <td class="cell-bar">${bar}</td>
+          <td class="cell-num cell-num--ok">${esc(row.pass)}</td>
           <td class="cell-num cell-num--bad">${esc(row.fail)}</td>
         </tr>`;
       })
       .join("");
     table = `<h3 class="subh subh--ico"><span class="subh-ico" aria-hidden="true">📊</span> 기준별 요약</h3>
-      <div class="table-scroll"><table class="data data--criteria"><thead><tr><th>점검 항목</th><th>통과</th><th>실패</th></tr></thead><tbody>${
-        rows || "<tr><td colspan=3>집계할 항목이 없습니다.</td></tr>"
+      <div class="table-scroll"><table class="data data--criteria"><thead><tr><th>점검 항목</th><th>통과 비율</th><th>통과</th><th>실패</th></tr></thead><tbody>${
+        rows || "<tr><td colspan=4>집계할 항목이 없습니다.</td></tr>"
       }</tbody></table></div>`;
   }
 

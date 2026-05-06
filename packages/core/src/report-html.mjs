@@ -9,6 +9,71 @@ function esc(s) {
     .replace(/"/g, "&quot;");
 }
 
+/** 반원 게이지 호(대략 πr, r=120) */
+const PASS_GAUGE_ARC = 377;
+
+/**
+ * @param {number} passPct
+ * @param {number} passed
+ * @param {number} total
+ */
+function buildPassGaugeSvg(passPct, passed, total) {
+  const pct = Math.max(0, Math.min(100, Math.round(Number(passPct) || 0)));
+  const dash = Math.round((pct / 100) * PASS_GAUGE_ARC);
+  const sub = total ? `${passed} / ${total} 시나리오` : "실행 결과 없음";
+  return `<svg class="pass-gauge-svg" viewBox="0 0 320 148" role="img" aria-label="통과율 ${esc(pct)}퍼센트">
+    <defs>
+      <linearGradient id="passGaugeGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#fb7185"/>
+        <stop offset="40%" stop-color="#fbbf24"/>
+        <stop offset="100%" stop-color="#34d399"/>
+      </linearGradient>
+    </defs>
+    <path class="pass-gauge-track" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke-width="18" stroke-linecap="round"/>
+    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="url(#passGaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="${dash} ${PASS_GAUGE_ARC}"/>
+    <text x="160" y="88" text-anchor="middle" class="pass-gauge-pct">${esc(pct)}%</text>
+    <text x="160" y="108" text-anchor="middle" class="pass-gauge-sub">${esc(sub)}</text>
+  </svg>`;
+}
+
+/**
+ * @param {number} pages
+ * @param {number} total
+ * @param {number} passed
+ * @param {number} passPct
+ */
+function buildSummaryDashboardHtml(pages, total, passed, passPct) {
+  const fail = Math.max(0, total - passed);
+  const gauge = buildPassGaugeSvg(passPct, passed, total);
+  return `<div class="summary-dashboard" id="summary">
+    <div class="sd-gauge-card">
+      <div class="sd-card-head">
+        <h3 class="sd-card-title">테스트 통과</h3>
+        <p class="sd-card-desc">시나리오 실행 결과 한눈에 보기</p>
+      </div>
+      ${gauge}
+    </div>
+    <div class="sd-metrics">
+      <div class="sd-metric sd-metric--pages">
+        <span class="sd-metric-label">크롤 페이지</span>
+        <span class="sd-metric-value">${esc(pages)}</span>
+      </div>
+      <div class="sd-metric sd-metric--run">
+        <span class="sd-metric-label">실행 시나리오</span>
+        <span class="sd-metric-value">${esc(total)}</span>
+      </div>
+      <div class="sd-metric sd-metric--ok">
+        <span class="sd-metric-label">통과</span>
+        <span class="sd-metric-value">${esc(passed)}</span>
+      </div>
+      <div class="sd-metric sd-metric--fail">
+        <span class="sd-metric-label">실패</span>
+        <span class="sd-metric-value">${esc(fail)}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
 /** 스텝 타입 → 비개발자용 짧은 설명 */
 const STEP_LABEL_KO = /** @type {Record<string, string>} */ ({
   navigate: "페이지로 이동",
@@ -58,6 +123,7 @@ export function buildReportHtml(p) {
 
   const passPct = total ? Math.round((passed / total) * 100) : 0;
   const targetUrl = structure.targetUrl || "—";
+  const summaryDashboardHtml = buildSummaryDashboardHtml(pages, total, passed, passPct);
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -71,19 +137,22 @@ export function buildReportHtml(p) {
   <style>
     :root {
       --font: "Pretendard", -apple-system, system-ui, sans-serif;
-      --bg: #f5f7fb;
+      --bg: #f4f6fb;
       --surface: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --line: #e2e8f0;
+      --text: #1c1d27;
+      --muted: #8c92a4;
+      --line: #eceef5;
       --accent: #0d9488;
       --accent-hover: #0f766e;
+      --accent-2: #6366f1;
       --ok: #059669;
       --ok-bg: #ecfdf5;
       --bad: #dc2626;
       --bad-bg: #fef2f2;
-      --radius: 14px;
-      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --radius: 18px;
+      --shadow: 0 16px 40px rgba(31, 37, 89, 0.08);
+      --shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.06);
+      --gauge-track: #edf0f7;
     }
     * { box-sizing: border-box; }
     body {
@@ -91,10 +160,10 @@ export function buildReportHtml(p) {
       font-family: var(--font);
       line-height: 1.55;
       color: var(--text);
-      background: var(--bg);
+      background: linear-gradient(180deg, #fafbff 0%, #f0f2f8 100%);
       -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.25rem 2rem; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
     .top-bar {
       display: flex;
       flex-wrap: wrap;
@@ -102,6 +171,12 @@ export function buildReportHtml(p) {
       justify-content: space-between;
       gap: 1rem;
       margin-bottom: 1.25rem;
+    }
+    .brand-wrap { display: flex; align-items: flex-start; gap: 0.85rem; }
+    .brand-badge {
+      width: 2.35rem; height: 2.35rem; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(145deg, #8b5cf6, #0d9488);
+      box-shadow: 0 10px 22px rgba(99, 102, 241, 0.25);
     }
     .brand { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; }
     .sub { margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--muted); max-width: 36rem; }
@@ -126,19 +201,20 @@ export function buildReportHtml(p) {
       font-family: inherit;
       font-size: 0.88rem;
       font-weight: 600;
-      border-radius: 10px;
+      border-radius: 12px;
       border: none;
       cursor: pointer;
-      background: var(--accent);
+      background: linear-gradient(135deg, #0d9488, #0f766e);
       color: #fff;
+      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.22);
     }
-    .btn:hover { background: var(--accent-hover); }
+    .btn:hover { background: linear-gradient(135deg, #0f766e, #0d9488); }
     .target-card {
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(229, 232, 242, 0.95);
       border-radius: var(--radius);
-      padding: 1rem 1.15rem;
-      margin-bottom: 1rem;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1.1rem;
       box-shadow: var(--shadow);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
@@ -153,69 +229,70 @@ export function buildReportHtml(p) {
     .target-card a:hover { text-decoration: underline; }
     .meta-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; font-size: 0.8rem; color: var(--muted); justify-content: flex-end; }
     @media (max-width: 760px) { .meta-chips { justify-content: flex-start; } }
-    .meta-chips span { padding: 0.2rem 0.5rem; background: #f1f5f9; border-radius: 6px; }
-    .kpi-row {
+    .meta-chips span { padding: 0.22rem 0.55rem; background: #f4f6fb; border-radius: 999px; font-weight: 600; color: var(--muted); }
+    .summary-dashboard {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.35rem;
     }
-    .kpi {
+    @media (min-width: 800px) {
+      .summary-dashboard { grid-template-columns: 1.15fr 0.85fr; align-items: stretch; }
+    }
+    .sd-gauge-card {
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(229, 232, 242, 0.95);
       border-radius: var(--radius);
-      padding: 1rem 1.1rem;
+      padding: 1.15rem 1.2rem 0.5rem;
       box-shadow: var(--shadow);
-    }
-    .kpi .num { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
-    .kpi .num.ok { color: var(--ok); }
-    .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.35rem; font-weight: 500; }
-    .kpi--stripe { border-left: 4px solid #cbd5e1; padding-left: 0.85rem; }
-    .kpi--stripe.kpi--accent-line { border-left-color: var(--accent); }
-    .kpi--stripe.kpi--ok-line { border-left-color: var(--ok); }
-    .kpi-pass-visual {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.15rem;
-    }
-    .kpi-dots { display: inline-flex; gap: 0.22rem; align-items: center; }
-    .kpi-dot {
-      width: 0.38rem;
-      height: 0.38rem;
-      border-radius: 50%;
-      background: #e2e8f0;
-    }
-    .kpi-dot.on { background: var(--accent); box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2); }
-    .kpi-ring {
-      --p: 0;
       position: relative;
-      z-index: 0;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background: conic-gradient(var(--ok) calc(var(--p) * 1%), #e2e8f0 0);
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
+      overflow: hidden;
     }
-    .kpi-ring::after {
+    .sd-gauge-card::before {
       content: "";
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      background: var(--surface);
-    }
-    .kpi-ring-cap {
       position: absolute;
-      z-index: 1;
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--ok);
-      line-height: 1;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.07), transparent 55%);
+      pointer-events: none;
     }
-    .kpi-ring-cap small { font-size: 0.62rem; font-weight: 700; opacity: 0.85; }
-    .kpi-ring-wrap { position: relative; display: grid; place-items: center; width: 3rem; height: 3rem; }
+    .sd-card-head { margin-bottom: 0.35rem; position: relative; }
+    .sd-card-title { margin: 0; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; }
+    .sd-card-desc { margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .pass-gauge-svg { width: 100%; max-width: 340px; margin: 0 auto; display: block; }
+    .pass-gauge-track { stroke: var(--gauge-track); }
+    .pass-gauge-pct { font-size: 42px; font-weight: 800; fill: var(--text); letter-spacing: -0.04em; }
+    .pass-gauge-sub { font-size: 13px; fill: var(--muted); }
+    .sd-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .sd-metric {
+      background: var(--surface);
+      border: 1px solid rgba(229, 232, 242, 0.95);
+      border-radius: 16px;
+      padding: 0.85rem 1rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .sd-metric::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .sd-metric--pages::before { background: linear-gradient(180deg, #6366f1, #8b5cf6); }
+    .sd-metric--run::before { background: linear-gradient(180deg, #5c8dff, #6366f1); }
+    .sd-metric--ok::before { background: linear-gradient(180deg, #34d399, #0d9488); }
+    .sd-metric--fail::before { background: linear-gradient(180deg, #fb7185, #f97316); }
+    .sd-metric-label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+    .sd-metric-value { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+    .sd-metric--ok .sd-metric-value { color: var(--ok); }
+    .sd-metric--fail .sd-metric-value { color: var(--bad); }
     .two-col-urls {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -238,12 +315,18 @@ export function buildReportHtml(p) {
       font-weight: 600;
       color: var(--muted);
       text-decoration: none;
-      padding: 0.35rem 0.65rem;
-      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(229, 232, 242, 0.95);
+      box-shadow: var(--shadow-sm);
+      transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
     }
-    .jump a:hover { color: var(--accent); border-color: var(--accent); }
+    .jump a:hover {
+      color: var(--accent-2);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.12);
+    }
     .section {
       background: var(--surface);
       border: 1px solid var(--line);
@@ -271,17 +354,34 @@ export function buildReportHtml(p) {
       margin: 0.12rem 0.25rem 0 0;
       padding: 0.12rem 0.45rem;
       border-radius: 999px;
-      background: #f1f5f9;
+      background: #f4f6fb;
       font-size: 0.72rem;
       color: var(--muted);
     }
+    .crit-bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gauge-track);
+      overflow: hidden;
+      min-width: 72px;
+      max-width: 140px;
+    }
+    .crit-bar-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #34d399, #0d9488);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.2);
+    }
+    .crit-bar-cell { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+    .crit-bar-pct { font-size: 0.78rem; font-weight: 800; color: var(--text); min-width: 2.5rem; }
     .crawl-one { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.85rem; line-height: 1.5; }
     .stat-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .stat-chip {
       padding: 0.45rem 0.65rem;
-      background: #f8fafc;
+      background: #f8f9fe;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 14px;
       font-size: 0.82rem;
       display: inline-flex;
       align-items: center;
@@ -313,16 +413,19 @@ export function buildReportHtml(p) {
       .no-print { display: none !important; }
       body { background: #fff; }
       .wrap { max-width: none; padding: 0; }
-      .section, .target-card, .kpi { break-inside: avoid; box-shadow: none; }
+      .section, .target-card, .summary-dashboard, .sd-gauge-card, .sd-metric { break-inside: avoid; box-shadow: none; }
     }
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top-bar">
-    <div>
-      <h1 class="brand">테스트 결과</h1>
-      <p class="sub">자동으로 실행한 점검 요약입니다. 아래에서 통과 여부와 각 항목 설명을 확인하세요.</p>
+    <div class="brand-wrap">
+      <div class="brand-badge" aria-hidden="true"></div>
+      <div>
+        <h1 class="brand">테스트 결과</h1>
+        <p class="sub">자동으로 실행한 점검 요약입니다. 아래에서 통과 여부와 각 항목 설명을 확인하세요.</p>
+      </div>
     </div>
     <div class="actions-top no-print">
       <span class="job-pill"><span>작업 ID</span> ${esc(jobId)}</span>
@@ -340,32 +443,7 @@ export function buildReportHtml(p) {
     </div>
   </div>
 
-  <div class="kpi-row" id="summary">
-    <div class="kpi kpi--stripe kpi--accent-line">
-      <div class="kpi-pass-visual">
-        <span class="num">${esc(pages)}</span>
-        <span class="kpi-dots" aria-hidden="true"><span class="kpi-dot on"></span><span class="kpi-dot on"></span><span class="kpi-dot on"></span></span>
-      </div>
-      <div class="lbl">크롤 페이지</div>
-    </div>
-    <div class="kpi kpi--stripe">
-      <div class="num">${esc(total)}</div>
-      <div class="lbl">실행한 시나리오 수</div>
-    </div>
-    <div class="kpi kpi--stripe kpi--ok-line">
-      <div class="num">${esc(passed)} / ${esc(total)}</div>
-      <div class="lbl">통과한 시나리오</div>
-    </div>
-    <div class="kpi kpi--stripe kpi--ok-line">
-      <div class="kpi-pass-visual">
-        <div class="kpi-ring-wrap">
-          <div class="kpi-ring" style="--p:${esc(passPct)}"></div>
-          <span class="kpi-ring-cap">${esc(passPct)}<small>%</small></span>
-        </div>
-      </div>
-      <div class="lbl">전체 통과율</div>
-    </div>
-  </div>
+  ${summaryDashboardHtml}
 
   <nav class="jump no-print" aria-label="섹션 이동">
     <a href="#sites">내부·외부 URL</a>
@@ -389,6 +467,7 @@ export function buildReportHtml(p) {
           <tr>
             <th>기준</th>
             <th>설명</th>
+            <th>통과 비율</th>
             <th>통과</th>
             <th>실패</th>
             <th>관련 시나리오</th>
@@ -536,12 +615,12 @@ function buildCrawlInsightSection(structure) {
  */
 function buildCriteriaTable(summary) {
   if (!summary || Object.keys(summary).length === 0) {
-    return `<tr><td colspan="5" style="color:var(--muted)">표시할 요약이 없습니다.</td></tr>`;
+    return `<tr><td colspan="6" style="color:var(--muted)">표시할 요약이 없습니다.</td></tr>`;
   }
 
   const entries = Object.entries(summary).filter(([, row]) => (row.pass || 0) + (row.fail || 0) > 0);
   if (!entries.length) {
-    return `<tr><td colspan="5" style="color:var(--muted)">이번 실행에 태깅된 기준이 없습니다.</td></tr>`;
+    return `<tr><td colspan="6" style="color:var(--muted)">이번 실행에 태깅된 기준이 없습니다.</td></tr>`;
   }
 
   return entries
@@ -557,10 +636,12 @@ function buildCriteriaTable(summary) {
             `<span class="${s.passed ? "crit-ok" : "crit-bad"}">${esc(s.id)}</span>`,
         )
         .join(" ");
+      const bar = `<div class="crit-bar-cell"><div class="crit-bar-track" title="${esc(rate)}%"><span class="crit-bar-fill" style="width:${esc(rate)}%"></span></div><span class="crit-bar-pct">${esc(rate)}%</span></div>`;
       return `<tr>
         <td><strong>${esc(label)}</strong></td>
         <td style="color:var(--muted);font-size:0.88rem">${esc(desc)}</td>
-        <td class="crit-ok">${esc(row.pass)} <span style="color:var(--muted);font-weight:500">(${esc(rate)}%)</span></td>
+        <td>${bar}</td>
+        <td class="crit-ok">${esc(row.pass)}</td>
         <td class="crit-bad">${esc(row.fail)}</td>
         <td style="word-break:break-word;font-size:0.85rem">${scenList || "—"}</td>
       </tr>`;
