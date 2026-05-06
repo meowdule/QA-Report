@@ -8,6 +8,7 @@
   "scripts": {
     "pipeline": "node src/pipeline.mjs",
     "run-tests-only": "node src/run-tests-only.mjs",
+    "refresh-report": "node scripts/refresh-output-report.mjs",
     "test": "node --test ./test/core.test.mjs"
   },
   "dependencies": {
