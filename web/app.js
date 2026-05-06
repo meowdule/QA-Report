@@ -7,7 +7,7 @@
  * 분석 대상 사이트(URL)를 바꿔 가며 쓸 때는 **이 값을 다시 바꿀 필요 없음** — 같은 Worker가 모든 요청을 처리합니다.
  * 비우면 `index.html`의 `data-worker-base-url`만 사용합니다.
  */
-const DEFAULT_WORKER_BASE_URL = "";
+const DEFAULT_WORKER_BASE_URL = "https://seo-qa-report.meowdule73.workers.dev";
 
 /** Worker에 WEBHOOK_SECRET 을 쓰는 경우에만 동일 값. 비우면 헤더 미전송. */
 const DEFAULT_QA_WEBHOOK_SECRET = "";
@@ -735,7 +735,10 @@ el.analyzeForm?.addEventListener("submit", async (ev) => {
   const workerUrl = analyzeWorkerEndpoint();
   const targetUrl = el.analyzeTargetUrl?.value?.trim();
   if (!workerUrl) {
-    setAnalyzeStatus("지금은 분석을 시작할 수 없습니다. 잠시 후 다시 시도해 주세요.", "err");
+    setAnalyzeStatus(
+      "분석 트리거 URL이 없습니다. Cloudflare Worker를 배포한 뒤 web/app.js의 DEFAULT_WORKER_BASE_URL(또는 index.html의 data-worker-base-url)에 Worker 루트 주소를 넣고 다시 배포하세요. Worker 없이 쓰려면 GitHub → Actions →「Analyze site and run tests」로 실행한 뒤, 여기서 작업 번호로 불러오기만 하면 됩니다.",
+      "err",
+    );
     return;
   }
   if (!targetUrl) {
