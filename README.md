@@ -136,13 +136,19 @@ node src/pipeline.mjs
 npx playwright show-trace traces/<시나리오-id>.zip
 ```
 
-### Phase 3 — Pages SPA (읽기 전용 먼저)
+### Phase 3 — Pages SPA (읽기 전용 먼저) ✅
 
-- [ ] `jobId` 쿼리 또는 경로로 `structure.json` / `scenarios.draft.json` fetch·표시
-- [ ] 분석 완료까지 폴링(또는 수동 새로고침 안내)
-- [ ] `report.html` 임베드 또는 새 탭 링크
+- [x] `jobId` 쿼리 `?job=` / `?jobId=` 또는 폼 입력으로 `structure.json`, `scenarios.draft.json`, `results.json` fetch·표시
+- [x] `structure.json` 이 아직 없을 때 3초 간격 폴링(최대 약 2분, 체크로 끄기 가능) 및 중지 버튼
+- [x] `report.html` 을 동일 출처 iframe + 새 탭 링크로 표시
 
-**완료 기준:** 사용자가 GitHub UI 없이 결과·초안을 도메인에서 볼 수 있다.
+**완료 기준:** 사용자가 GitHub UI 없이 Pages 도메인에서 Job 결과·초안·대시보드를 볼 수 있다.
+
+#### Phase 3 사용법
+
+1. Actions에서 **Analyze site and run tests** 실행 후 **Job ID**(워크플로 `run_id`)를 확인합니다.
+2. Pages 사이트에서 `https://<owner>.github.io/<repo>/?job=<run_id>` 로 열거나, 화면에 ID를 입력해 **불러오기**를 누릅니다.
+3. 배포 직후 `jobs/<id>/` 가 아직 없으면 **폴링**이 켜져 있으면 자동으로 재시도합니다.
 
 ### Phase 4 — 도메인에서 시나리오 편집 + 실행
 

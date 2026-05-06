@@ -10,25 +10,90 @@
   <body>
     <main class="shell">
       <header class="hero">
-        <p class="eyebrow">Phase 0 · GitHub Pages</p>
+        <p class="eyebrow">Phase 3 · GitHub Pages</p>
         <h1>Site Analyzer &amp; Scenario Tester</h1>
         <p class="lede">
-          이 페이지는 저장소의 정적 배포 뼈대입니다. Phase 1부터 URL 분석·크롤·시나리오가
-          Actions에서 실행되고, 결과는 <code>jobs/&lt;jobId&gt;/</code> 경로에 게시됩니다.
+          Actions 실행 후 부여된 <strong>Job ID</strong>(<code>run_id</code>)로
+          <code>jobs/&lt;jobId&gt;/</code> 결과를 이 도메인에서 조회합니다. URL에
+          <code>?job=ID</code> 를 붙이면 자동으로 불러옵니다.
         </p>
       </header>
 
-      <section class="panel" aria-labelledby="status-heading">
-        <h2 id="status-heading">배포 상태</h2>
-        <p id="status-line" class="status">클라이언트 로드 완료.</p>
+      <section class="panel" aria-labelledby="job-heading">
+        <h2 id="job-heading">Job 결과 조회</h2>
+        <form id="job-form" class="job-form">
+          <label class="field">
+            <span>Job ID</span>
+            <input
+              id="job-input"
+              name="job"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="예: 9876543210"
+              required
+            />
+          </label>
+          <label class="check">
+            <input id="poll-toggle" type="checkbox" checked />
+            <span>아직 없으면 3초마다 재시도(최대 2분)</span>
+          </label>
+          <div class="job-actions">
+            <button type="submit" class="btn primary">불러오기</button>
+            <button type="button" class="btn ghost" id="btn-stop" hidden>폴링 중지</button>
+          </div>
+        </form>
+        <p id="job-status" class="status" role="status"></p>
         <p class="hint">
-          프로젝트 사이트인 경우 기본 URL은
-          <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code> 형태입니다.
+          GitHub Actions 실행 상세 상단의 숫자 ID와 동일합니다. 프로젝트 페이지 기준 경로는
+          <code>…/jobs/&lt;id&gt;/report.html</code> 입니다.
         </p>
       </section>
 
+      <section id="summary-section" class="panel hidden" aria-live="polite">
+        <h2>요약</h2>
+        <div id="summary-body" class="summary-body"></div>
+      </section>
+
+      <section id="scenarios-section" class="panel hidden">
+        <h2>시나리오 초안</h2>
+        <div id="scenarios-body"></div>
+        <details class="raw-block">
+          <summary>scenarios.draft.json 원문</summary>
+          <pre id="scenarios-raw"></pre>
+        </details>
+      </section>
+
+      <section id="structure-section" class="panel hidden">
+        <h2>크롤 구조</h2>
+        <div id="structure-body"></div>
+        <details class="raw-block">
+          <summary>structure.json 원문</summary>
+          <pre id="structure-raw"></pre>
+        </details>
+      </section>
+
+      <section id="results-section" class="panel hidden">
+        <h2>실행 결과 (results.json)</h2>
+        <div id="results-body"></div>
+        <details class="raw-block">
+          <summary>results.json 원문</summary>
+          <pre id="results-raw"></pre>
+        </details>
+      </section>
+
+      <section id="report-section" class="panel hidden">
+        <h2>HTML 대시보드</h2>
+        <p class="hint">
+          <a id="report-link" href="#" target="_blank" rel="noopener">새 탭에서 report.html 열기</a>
+        </p>
+        <div class="iframe-wrap">
+          <iframe id="report-frame" title="QA report" sandbox="allow-same-origin allow-scripts"></iframe>
+        </div>
+      </section>
+
       <footer class="footer">
-        GitHub 저장소의 README에서 Phase별 진행 상황과 Pages 설정 방법을 확인하세요.
+        GitHub 저장소 README에서 Phase 4(편집·재실행) 이후 단계를 확인하세요.
       </footer>
     </main>
     <script type="module" src="./app.js"></script>
