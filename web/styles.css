@@ -2174,11 +2174,6 @@ code.break {
   gap: 0.25rem;
 }
 
-.scenario-editor-body .step-block {
-  padding: 0.2rem 0.36rem;
-  gap: 0.16rem;
-}
-
 .step-block-toolbar {
   display: flex;
   flex-wrap: wrap;
