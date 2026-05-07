@@ -1,0 +1,221 @@
+{
+  "version": 2,
+  "generatedAt": "2026-05-06T06:16:51.801Z",
+  "targetUrl": "https://www.nipa.kr/home/2-2/16750",
+  "schema": {
+    "stepTypes": [
+      "navigate",
+      "click",
+      "fill",
+      "selectOption",
+      "check",
+      "assertVisible",
+      "assertNoConsoleError",
+      "waitForResponse",
+      "waitForSelector"
+    ],
+    "criterionIds": [
+      "page_rendering",
+      "core_action",
+      "input_data",
+      "console_errors",
+      "primary_flow"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "페이지 렌더링: 상세보기 : 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업 공고 - 사업공고 - 알림마당 - 정보통신산업진흥원",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-1",
+      "name": "링크 이동: /home/2-2/16750 → /home/bsnsAll/0/select",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://www.nipa.kr/home/bsnsAll/0/select",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-2",
+      "name": "링크 이동(3번째): /home/2-2/16750 → /home/bsnsAll/00",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://www.nipa.kr/home/bsnsAll/00",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-3",
+      "name": "핵심 액션: 홈에서 첫 동일 출처 링크 클릭",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://www.nipa.kr/home/index",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "input-smoke",
+      "name": "입력 데이터: 첫 폼에 더미 값 입력 (저장 검증은 후속 단계)",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "fill",
+          "selector": "form#searchForm input",
+          "value": "QA automation sample"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 5000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "form-radio-1",
+      "name": "입력 데이터: 라디오 그룹 (group-single) — score",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "check",
+          "selector": "#c2",
+          "control": "radio",
+          "checked": true
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 6000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    }
+  ]
+}

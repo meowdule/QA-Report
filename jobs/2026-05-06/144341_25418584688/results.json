@@ -1,0 +1,251 @@
+{
+  "version": 2,
+  "jobId": "25418584688",
+  "targetUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+  "traceMode": "failure",
+  "startedAt": "2026-05-06T05:43:08.642Z",
+  "finishedAt": "2026-05-06T05:43:22.177Z",
+  "criteriaSummary": {
+    "page_rendering": {
+      "labelKo": "페이지 렌더링",
+      "pass": 3,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        },
+        {
+          "id": "render-2",
+          "passed": true
+        },
+        {
+          "id": "primary-flow-linear",
+          "passed": true
+        }
+      ]
+    },
+    "core_action": {
+      "labelKo": "핵심 액션",
+      "pass": 1,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "link-nav-1",
+          "passed": true
+        }
+      ]
+    },
+    "input_data": {
+      "labelKo": "입력 데이터",
+      "pass": 0,
+      "fail": 0,
+      "scenarioIds": []
+    },
+    "console_errors": {
+      "labelKo": "UI 콘솔 에러",
+      "pass": 4,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        },
+        {
+          "id": "render-2",
+          "passed": true
+        },
+        {
+          "id": "link-nav-1",
+          "passed": true
+        },
+        {
+          "id": "primary-flow-linear",
+          "passed": true
+        }
+      ]
+    },
+    "primary_flow": {
+      "labelKo": "주요 흐름",
+      "pass": 1,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "primary-flow-linear",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "페이지 렌더링: SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 289,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-2",
+      "name": "페이지 렌더링: SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 308,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-1",
+      "name": "핵심 액션: 홈에서 첫 동일 출처 링크 클릭",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8398,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "primary-flow-linear",
+      "name": "주요 흐름: 상위 페이지 순차 방문",
+      "criteria": [
+        "primary_flow",
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 4414,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 4000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 4000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    }
+  ]
+}

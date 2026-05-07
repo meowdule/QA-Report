@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-06T06:18:54.049Z",
+  "internalUrls": [
+    "https://www.nipa.kr/home/2-2/16750"
+  ],
+  "externalUrls": [
+    "https://www.acrc.go.kr/menu.es?mid=a10202010100",
+    "https://www.redwhistle.org/report/report.asp?organ=7699&RType=1"
+  ],
+  "auditedUrls": [
+    "https://www.nipa.kr/home/2-2/16750"
+  ],
+  "items": [
+    {
+      "url": "https://www.nipa.kr/home/2-2/16750",
+      "kind": "internal",
+      "scores": {
+        "performance": 55,
+        "accessibility": 89,
+        "best-practices": 93,
+        "seo": 92
+      },
+      "reportHtml": "lighthouse/2dbefa2f3c65c72e.html",
+      "reportJson": "lighthouse/2dbefa2f3c65c72e.json",
+      "error": null
+    }
+  ]
+}

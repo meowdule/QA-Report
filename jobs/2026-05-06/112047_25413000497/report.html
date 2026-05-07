@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>QA 리포트 · Job 25413000497</title>
+  <link rel="icon" href="./Icon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <style>
+    :root {
+      --font: "Pretendard", -apple-system, system-ui, sans-serif;
+      --bg: #e8ecf4;
+      --bg2: #f4f6fb;
+      --card: #fff;
+      --text: #1a1d24;
+      --muted: #5c6473;
+      --accent: #00c471;
+      --accent2: #00a85f;
+      --accent-soft: rgba(0, 196, 113, 0.12);
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --bad: #e11d48;
+      --ok: #00a85f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      line-height: 1.55;
+      color: var(--text);
+      background: linear-gradient(165deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    .hero {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 0.65rem;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--accent2);
+      background: var(--accent-soft);
+      border-radius: 999px;
+    }
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.5rem, 3.5vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+    }
+    .meta {
+      margin: 0 auto;
+      max-width: 42rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .meta code { font-size: 0.9em; }
+    .meta-grid {
+      display: grid;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      text-align: left;
+    }
+    .meta-grid div { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; align-items: baseline; }
+    .meta-grid strong { min-width: 5.5rem; color: var(--text); font-size: 0.8rem; }
+    .callout {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: rgba(0, 196, 113, 0.08);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--accent-soft);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      margin: 1rem 0;
+      box-shadow: var(--shadow);
+    }
+    .card h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .card > p.muted { margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.85rem;
+    }
+    .stat {
+      padding: 1rem;
+      background: var(--bg2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .stat span.lbl {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    .stat.pass strong { color: var(--ok); }
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    table.data th, table.data td {
+      border-bottom: 1px solid var(--border);
+      padding: 0.55rem 0.45rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    table.data th {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    table.data tr:last-child td { border-bottom: none; }
+    .scroll { overflow: auto; -webkit-overflow-scrolling: touch; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge.pass { background: #d1fae5; color: #047857; }
+    .badge.fail { background: #ffe4e6; color: #be123c; }
+    .pill {
+      display: inline-block;
+      margin: 0.15rem 0.35rem 0 0;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .muted { color: var(--muted); font-size: 0.86rem; }
+    .steps { margin: 0.35rem 0 0 1rem; padding: 0; }
+    .steps li { margin: 0.15rem 0; }
+    .steps li.ok { color: #047857; }
+    .steps li.bad { color: var(--bad); }
+    .steps li.skip { color: var(--muted); }
+    pre.sub {
+      font-size: 0.72rem;
+      background: #12151c;
+      color: #e8ecf4;
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      overflow: auto;
+      max-height: 220px;
+      margin: 0.35rem 0 0;
+    }
+    code { font-family: ui-monospace, monospace; font-size: 0.88em; }
+    a { color: var(--accent2); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .crit-ok { color: #047857; font-weight: 700; }
+    .crit-bad { color: var(--bad); font-weight: 700; }
+    .artifact { font-size: 0.82rem; margin: 0.25rem 0; }
+    .links {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    table.data tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.025); }
+    .crawl-card { border-left: 4px solid var(--accent); }
+    .crawl-card h2::before { content: "◆ "; color: var(--accent2); font-size: 0.85em; }
+    .hero { position: relative; }
+    .hero::after {
+      content: "";
+      display: block;
+      width: 4rem;
+      height: 4px;
+      margin: 1rem auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    h2 { display: flex; align-items: center; gap: 0.35rem; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">실행 리포트</p>
+    <h1>테스트 결과 대시보드</h1>
+    <p class="meta">
+      크롤을 새로 돌릴 때마다 작업 번호(run_id)가 새로 생기고, 한국 시간 기준
+      <code>jobs/년-월-일/시분초_작업번호/</code> 아래에 리포트가 따로 저장됩니다.
+      같은 작업에서 시나리오만 다시 돌리면 그 폴더가 갱신됩니다.
+    </p>
+    <div class="meta-grid">
+      <div><strong>Job ID</strong> <code>25413000497</code></div>
+      <div><strong>테스트 완료</strong> <span>2026-05-06T02:20:47.148Z</span></div>
+      <div><strong>리포트 생성</strong> <span>2026-05-06T02:20:47.148Z</span></div>
+      <div><strong>시나리오 스키마</strong> <span>v2</span> · trace <code>failure</code></div>
+      <div><strong>대상 URL</strong> <code style="word-break:break-all">https://example.com/</code></div>
+    </div>
+    <p class="callout">이 페이지는 배포된 정적 HTML입니다. 같은 Job에서 시나리오를 수정해 다시 테스트하면 이 파일이 갱신됩니다.</p>
+  </header>
+
+  <div class="card">
+    <div class="grid">
+      <div class="stat"><strong>1</strong><span class="lbl">크롤 페이지</span></div>
+      <div class="stat pass"><strong>100%</strong><span class="lbl">시나리오 통과율</span></div>
+      <div class="stat"><strong>1 / 1</strong><span class="lbl">통과 / 전체</span></div>
+      <div class="stat"><strong>1</strong><span class="lbl">실행 시나리오 수</span></div>
+    </div>
+  </div>
+
+  <div class="card crawl-card">
+    <h2>크롤 · UI 인터랙션 범위</h2>
+    <p class="muted">
+      링크(<code>a</code>, <code>area</code>, <code>data-href</code> 등), 버튼·<code>role=button|link</code>,
+      일부 <code>onclick</code> div, 그리고 폼 컨트롤(<code>&lt;select&gt;</code> 단일/다중,
+      <code>label[for]</code>·래핑 <code>label</code>로 읽은 텍스트, 라디오 그룹, 체크박스,
+      <code>role=switch</code>, <code>aria-checked</code> 토글)을 수집합니다. 각 항목은
+      <code>selectionMode</code>(<code>single</code> / <code>multi</code> / <code>group-single</code> / <code>boolean</code>)로 구분됩니다.
+      동일 출처 링크는 URL별 <code>linkClickMeta</code>(<code>target=_blank</code> 여부)가 붙고,
+      크롤 범위 밖 링크는 <code>outboundNav</code>(외부 웹·mailto·tel·javascript)로만 집계됩니다.
+      <strong>클릭 러너:</strong> <code>alert</code>/<code>confirm</code> 등 브라우저 다이얼로그는 메시지를 기록한 뒤 dismiss합니다.
+      <code>target=_blank</code> 또는 시나리오의 <code>opensNewTab</code> 이면 새 탭을 감지해 URL을 기록하고 기본적으로 탭을 닫습니다.
+      토스트·인라인 메시지는 자동으로 모든 셀렉터를 알 수 없어 <code>waitForSelector</code>(필요 시 <code>optional</code>) 스텝·Phase 6 LLM 초안을 권장합니다.
+      그래도 <strong>모든</strong> SPA·모달·섀도 DOM·커스텀 라우터는 보장되지 않습니다.
+    </p>
+    <div class="grid">
+      <div class="stat"><strong>1</strong><span class="lbl">HTTP 정상 페이지</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">오류·스킵 페이지</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">수집 동일출처 링크(합계)</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">클릭 후보 요소(합계)</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">클릭 후보가 있는 페이지</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">폼 컨트롤(합계)</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl"><code>select</code> 단일</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl"><code>select multiple</code></span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">라디오 그룹</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">체크박스</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">스위치·토글</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl">동일출처 링크 중 새 탭(<code>_blank</code>)</span></div>
+      <div class="stat"><strong>1</strong><span class="lbl">외부 HTTP 링크(수집)</span></div>
+      <div class="stat"><strong>0</strong><span class="lbl"><code>mailto</code></span></div>
+      <div class="stat"><strong>0</strong><span class="lbl"><code>tel</code></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>기준별 통과 요약</h2>
+    <p class="muted">기준 태그가 붙은 시나리오 건수 기준입니다. 한 시나리오가 여러 기준을 가질 수 있습니다.</p>
+    <div class="scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>기준</th>
+            <th>설명</th>
+            <th>주요 스텝</th>
+            <th>통과</th>
+            <th>실패</th>
+            <th>시나리오</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+        <td><strong>페이지 렌더링</strong><div class="muted"><code>page_rendering</code></div></td>
+        <td class="muted">문서 로드 후 핵심 요소가 화면에 보이는지</td>
+        <td><code>navigate, assertVisible</code></td>
+        <td class="crit-ok">1 <span class="muted">(100%)</span></td>
+        <td class="crit-bad">0</td>
+        <td style="word-break:break-word;"><span class="crit-ok">render-1</span></td>
+      </tr><tr>
+        <td><strong>UI 콘솔 에러</strong><div class="muted"><code>console_errors</code></div></td>
+        <td class="muted">콘솔 error 및 페이지 미처리 예외가 없는지</td>
+        <td><code>assertNoConsoleError, navigate</code></td>
+        <td class="crit-ok">1 <span class="muted">(100%)</span></td>
+        <td class="crit-bad">0</td>
+        <td style="word-break:break-word;"><span class="crit-ok">render-1</span></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>콘솔·페이지 오류 (실패 시나리오)</h2>
+    <p class="muted">실패 시나리오에서 수집된 콘솔·페이지 오류가 없거나, 통과만 있습니다.</p>
+  </div>
+
+  <div class="card">
+    <h2>시나리오 상세</h2>
+    <p class="muted">Trace는 실패 시 또는 모드가 <code>all</code>일 때 <code>traces/*.zip</code> ·
+      <code>npx playwright show-trace traces/&lt;파일&gt;.zip</code></p>
+    <div class="scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>결과</th>
+            <th>시나리오 / 기준</th>
+            <th>시간</th>
+            <th>아티팩트</th>
+            <th>스텝 / 콘솔</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+    <td><span class="badge pass">pass</span></td>
+    <td><strong>페이지 렌더링: Example Domain</strong><div class="muted">render-1</div><span class="pill">page_rendering</span> <span class="pill">console_errors</span></td>
+    <td>103 ms</td>
+    <td><span class="muted">—</span></td>
+    <td><ol class="steps"><li class="ok"><code>navigate</code> — <span class="muted">url https://example.com/ · → https://example.com/ · HTTP 200</span></li><li class="ok"><code>assertVisible</code> — <span class="muted">sel body</span></li><li class="ok"><code>assertNoConsoleError</code></li></ol></td>
+  </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="links">
+    원본 JSON ·
+    <a href="./structure.json">structure.json</a> ·
+    <a href="./scenarios.draft.json">scenarios.draft.json</a> ·
+    <a href="./results.json">results.json</a> ·
+    <a href="./schema.json">schema.json</a> ·
+    <a href="./llm-enrich-log.json">llm-enrich-log.json</a> <span class="muted">(Phase 6 사용 시)</span>
+  </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "generatedAt": "2026-05-06T02:39:34.740Z",
+  "targetUrl": "https://example.com/",
+  "schema": {
+    "stepTypes": [
+      "navigate",
+      "click",
+      "fill",
+      "selectOption",
+      "check",
+      "assertVisible",
+      "assertNoConsoleError",
+      "waitForResponse",
+      "waitForSelector"
+    ],
+    "criterionIds": [
+      "page_rendering",
+      "core_action",
+      "input_data",
+      "console_errors",
+      "primary_flow"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "페이지 렌더링: Example Domain",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://example.com/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1138 @@
+{
+  "targetUrl": "https://www.nipa.kr/home/2-2/16750",
+  "origin": "https://www.nipa.kr",
+  "crawledAt": "2026-05-06T06:16:51.799Z",
+  "limits": {
+    "maxPages": 1,
+    "maxDepth": 1
+  },
+  "pages": [
+    {
+      "url": "https://www.nipa.kr/home/2-2/16750",
+      "title": "상세보기 : 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업 공고 - 사업공고 - 알림마당 - 정보통신산업진흥원",
+      "links": [
+        "https://www.nipa.kr/home/2-2/16750",
+        "https://www.nipa.kr/home/index",
+        "https://www.nipa.kr/home/bsnsAll/0/select",
+        "https://www.nipa.kr/home/bsnsAll/00",
+        "https://www.nipa.kr/home/bsnsAll/3",
+        "https://www.nipa.kr/home/bsnsAll/4",
+        "https://www.nipa.kr/home/bsnsAll/6",
+        "https://www.nipa.kr/home/bsnsAll/0",
+        "https://www.nipa.kr/home/bsnsAll/1",
+        "https://www.nipa.kr/home/bsnsAll/2",
+        "https://www.nipa.kr/home/bsnsAll/7",
+        "https://www.nipa.kr/home/bsnsAll/8",
+        "https://www.nipa.kr/home/bsnsAll/9",
+        "https://www.nipa.kr/home/bsnsAll/10",
+        "https://www.nipa.kr/home/2-1",
+        "https://www.nipa.kr/home/2-2",
+        "https://www.nipa.kr/home/2-3",
+        "https://www.nipa.kr/home/2-4",
+        "https://www.nipa.kr/home/2-5-1",
+        "https://www.nipa.kr/home/facilityInfo",
+        "https://www.nipa.kr/home/facilityApp",
+        "https://www.nipa.kr/home/2-7-1-1",
+        "https://www.nipa.kr/home/2-8",
+        "https://www.nipa.kr/home/2-9-1",
+        "https://www.nipa.kr/home/2-9-2",
+        "https://www.nipa.kr/home/2-9-3",
+        "https://www.nipa.kr/home/3-1",
+        "https://www.nipa.kr/home/3-1-1",
+        "https://www.nipa.kr/home/3-1-2",
+        "https://www.nipa.kr/home/3-2",
+        "https://www.nipa.kr/home/3-3-1",
+        "https://www.nipa.kr/home/3-3-2",
+        "https://www.nipa.kr/home/3-3-3",
+        "https://www.nipa.kr/home/3-3-4",
+        "https://www.nipa.kr/home/3-3-5",
+        "https://www.nipa.kr/home/3-4-1",
+        "https://www.nipa.kr/home/3-4-2",
+        "https://www.nipa.kr/home/3-4-3",
+        "https://www.nipa.kr/home/3-5-1",
+        "https://www.nipa.kr/home/3-5-2",
+        "https://www.nipa.kr/home/3-5-3",
+        "https://www.nipa.kr/home/3-6-1",
+        "https://www.nipa.kr/home/3-6-2",
+        "https://www.nipa.kr/home/3-6-3",
+        "https://www.nipa.kr/home/3-6-4",
+        "https://www.nipa.kr/home/3-7-1",
+        "https://www.nipa.kr/home/3-7-2",
+        "https://www.nipa.kr/home/3-8-1",
+        "https://www.nipa.kr/home/3-8-2",
+        "https://www.nipa.kr/home/3-8-3",
+        "https://www.nipa.kr/home/3-8-4",
+        "https://www.nipa.kr/home/3-8-5",
+        "https://www.nipa.kr/home/3-8-6",
+        "https://www.nipa.kr/home/3-8-7",
+        "https://www.nipa.kr/home/3-8-8",
+        "https://www.nipa.kr/home/3-9-1",
+        "https://www.nipa.kr/home/3-9-1-1",
+        "https://www.nipa.kr/home/3-9-2",
+        "https://www.nipa.kr/home/3-9-6",
+        "https://www.nipa.kr/home/befeatPublict",
+        "https://www.nipa.kr/home/3-10-6",
+        "https://www.nipa.kr/home/3-10-7",
+        "https://www.nipa.kr/home/3-10-8",
+        "https://www.nipa.kr/home/4-1-1",
+        "https://www.nipa.kr/home/4-1-2",
+        "https://www.nipa.kr/home/4-2",
+        "https://www.nipa.kr/home/4-3",
+        "https://www.nipa.kr/home/4-4-1",
+        "https://www.nipa.kr/home/4-4-2",
+        "https://www.nipa.kr/home/broflet",
+        "https://www.nipa.kr/home/4-4-4",
+        "https://www.nipa.kr/home/4-4-5",
+        "https://www.nipa.kr/home/orgInfo",
+        "https://www.nipa.kr/home/userSearch",
+        "https://www.nipa.kr/home/4-6-1-1",
+        "https://www.nipa.kr/home/4-7",
+        "https://www.nipa.kr/home/4-8",
+        "https://www.nipa.kr/home/4-9-1",
+        "https://www.nipa.kr/home/4-9-2",
+        "https://www.nipa.kr/home/4-9-3",
+        "https://www.nipa.kr/home/4-9-4",
+        "https://www.nipa.kr/home/4-9-8",
+        "https://www.nipa.kr/home/5-1-1",
+        "https://www.nipa.kr/home/5-1-2",
+        "https://www.nipa.kr/home/5-1-3",
+        "https://www.nipa.kr/home/5-1-4",
+        "https://www.nipa.kr/home/5-1-5",
+        "https://www.nipa.kr/home/5-1-6",
+        "https://www.nipa.kr/home/5-2",
+        "https://www.nipa.kr/home/5-3",
+        "https://www.nipa.kr/home/5-4-1",
+        "https://www.nipa.kr/home/5-4-3",
+        "https://www.nipa.kr/home/5-4-5",
+        "https://www.nipa.kr/home/befeatPublictTop",
+        "https://www.nipa.kr/eng",
+        "https://www.nipa.kr/home/6-6",
+        "https://www.nipa.kr/",
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=2MG8Yt^TPlK8ACWcLwzcCw==&fileTy=ATTACH&fileNo=iu0WQG^ejsRX1v3mN75HiQ==",
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=8bKAAPBMvmCSVlBC3BCDVw==&fileTy=ATTACH&fileNo=57Jgi7UGuwG9POnFX1Ir1Q==",
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=osVc9ggTj8Qqgc4LO58tYQ==&fileTy=ATTACH&fileNo=cUTOcGccEDKRdcjD9xjwDA==",
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=S^YorWSdWdPBxjzLM9IxAw==&fileTy=ATTACH&fileNo=Rh4pzwt*esnwG2fD4E^yJg==",
+        "https://www.nipa.kr/home/6-5",
+        "https://www.nipa.kr/home/6-2",
+        "https://www.nipa.kr/home/6-3"
+      ],
+      "linkClickMeta": {
+        "https://www.nipa.kr/home/2-2/16750": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/index": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/0/select": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/00": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/6": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/0": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/7": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/8": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/9": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/bsnsAll/10": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-5-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/facilityInfo": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/facilityApp": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-7-1-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-8": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-9-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-9-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/2-9-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-1-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-1-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-3-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-3-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-3-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-3-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-3-5": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-4-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-4-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-4-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-5-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-5-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-5-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-6-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-6-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-6-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-6-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-7-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-7-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-5": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-6": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-7": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-8-8": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-9-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-9-1-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-9-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-9-6": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/befeatPublict": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-10-6": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-10-7": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/3-10-8": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-1-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-1-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-4-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-4-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/broflet": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-4-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-4-5": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/orgInfo": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/userSearch": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-6-1-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-7": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-8": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-9-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-9-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-9-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-9-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/4-9-8": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-1-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-1-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-1-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-1-4": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-1-5": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-1-6": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-4-1": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-4-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/5-4-5": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/befeatPublictTop": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/eng": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/6-6": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=2MG8Yt^TPlK8ACWcLwzcCw==&fileTy=ATTACH&fileNo=iu0WQG^ejsRX1v3mN75HiQ==": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=8bKAAPBMvmCSVlBC3BCDVw==&fileTy=ATTACH&fileNo=57Jgi7UGuwG9POnFX1Ir1Q==": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=osVc9ggTj8Qqgc4LO58tYQ==&fileTy=ATTACH&fileNo=cUTOcGccEDKRdcjD9xjwDA==": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=S^YorWSdWdPBxjzLM9IxAw==&fileTy=ATTACH&fileNo=Rh4pzwt*esnwG2fD4E^yJg==": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/6-5": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/6-2": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://www.nipa.kr/home/6-3": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [
+        {
+          "category": "javascript",
+          "url": "javascript:fn_print();",
+          "label": "인쇄하기",
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": "",
+          "download": false
+        },
+        {
+          "category": "javascript",
+          "url": "javascript:clip();",
+          "label": "공유하기",
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": "",
+          "download": false
+        },
+        {
+          "category": "external_http",
+          "url": "https://www.redwhistle.org/report/report.asp?organ=7699&RType=1",
+          "label": "부패·갑질·인권피해 신고",
+          "target": "_blank",
+          "opensNewTab": true,
+          "rel": "",
+          "download": false
+        },
+        {
+          "category": "external_http",
+          "url": "https://www.acrc.go.kr/menu.es?mid=a10202010100",
+          "label": "공익신고·보호",
+          "target": "_blank",
+          "opensNewTab": true,
+          "rel": "",
+          "download": false
+        }
+      ],
+      "forms": [
+        {
+          "selector": "form#searchForm",
+          "types": [
+            "text"
+          ]
+        },
+        {
+          "selector": "form:nth-of-type(2)",
+          "types": []
+        },
+        {
+          "selector": "form#bbsPasswordChkFrm",
+          "types": [
+            "password"
+          ]
+        },
+        {
+          "selector": "form#stsfdgForm",
+          "types": [
+            "radio",
+            "radio",
+            "radio",
+            "radio",
+            "radio"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > header > div:nth-of-type(2) > div > h1 > a",
+          "href": "https://www.nipa.kr/home/index",
+          "getByRole": "link",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > nav > ul > li:nth-of-type(1) > a",
+          "href": "https://www.nipa.kr/home/bsnsAll/0/select",
+          "name": "주요사업",
+          "getByRole": "link",
+          "accessibleName": "주요사업",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > nav > ul > li:nth-of-type(2) > a",
+          "href": "https://www.nipa.kr/home/2-1",
+          "name": "알림마당",
+          "getByRole": "link",
+          "accessibleName": "알림마당",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > nav > ul > li:nth-of-type(3) > a",
+          "href": "https://www.nipa.kr/home/3-1",
+          "name": "ESG 열린경영",
+          "getByRole": "link",
+          "accessibleName": "ESG 열린경영",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > nav > ul > li:nth-of-type(4) > a",
+          "href": "https://www.nipa.kr/home/4-1-1",
+          "name": "NIPA소개",
+          "getByRole": "link",
+          "accessibleName": "NIPA소개",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > nav > ul > li:nth-of-type(5) > a",
+          "href": "https://www.nipa.kr/home/5-1-1",
+          "name": "정보공개",
+          "getByRole": "link",
+          "accessibleName": "정보공개",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "#btn-all-search-pc",
+          "href": "https://www.nipa.kr/home/2-2/16750",
+          "name": "전체검색 열기",
+          "getByRole": "link",
+          "accessibleName": "전체검색 열기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > header > div:nth-of-type(2) > div > div:nth-of-type(2) > a:nth-of-type(2)",
+          "href": "https://www.nipa.kr/eng",
+          "name": "ENG",
+          "getByRole": "link",
+          "accessibleName": "ENG",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > header > div:nth-of-type(2) > div > div:nth-of-type(2) > a:nth-of-type(3)",
+          "href": "https://www.nipa.kr/home/6-6",
+          "name": "전체메뉴",
+          "getByRole": "link",
+          "accessibleName": "전체메뉴",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div:nth-of-type(3) > section:nth-of-type(2) > div > div:nth-of-type(1) > a",
+          "href": "https://www.nipa.kr/home/index",
+          "name": "홈",
+          "getByRole": "link",
+          "accessibleName": "홈",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > table > tbody > tr:nth-of-type(4) > td:nth-of-type(2) > a:nth-of-type(1)",
+          "href": "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=2MG8Yt^TPlK8ACWcLwzcCw==&fileTy=ATTACH&fileNo=iu0WQG^ejsRX1v3mN75HiQ==",
+          "name": "(붙임1) 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업_공고문.hwpx (파일크기: 315 KB )",
+          "getByRole": "link",
+          "accessibleName": "(붙임1) 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업_공고문.hwpx (파일크기: 315 KB )",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > table > tbody > tr:nth-of-type(4) > td:nth-of-type(2) > a:nth-of-type(2)",
+          "href": "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=8bKAAPBMvmCSVlBC3BCDVw==&fileTy=ATTACH&fileNo=57Jgi7UGuwG9POnFX1Ir1Q==",
+          "name": "(붙임2) 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업_공모안내서.hwpx (파일크기: 495 KB )",
+          "getByRole": "link",
+          "accessibleName": "(붙임2) 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업_공모안내서.hwpx (파일크기: 495 KB )",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > table > tbody > tr:nth-of-type(4) > td:nth-of-type(2) > a:nth-of-type(3)",
+          "href": "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=osVc9ggTj8Qqgc4LO58tYQ==&fileTy=ATTACH&fileNo=cUTOcGccEDKRdcjD9xjwDA==",
+          "name": "(붙임3) 지원과제 신청양식.Zip (파일크기: 716 KB )",
+          "getByRole": "link",
+          "accessibleName": "(붙임3) 지원과제 신청양식.Zip (파일크기: 716 KB )",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > table > tbody > tr:nth-of-type(4) > td:nth-of-type(2) > a:nth-of-type(4)",
+          "href": "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=S^YorWSdWdPBxjzLM9IxAw==&fileTy=ATTACH&fileNo=Rh4pzwt*esnwG2fD4E^yJg==",
+          "name": "(붙임4) 관련규정 및 매뉴얼.Zip (파일크기: 1 MB )",
+          "getByRole": "link",
+          "accessibleName": "(붙임4) 관련규정 및 매뉴얼.Zip (파일크기: 1 MB )",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > p > a",
+          "href": "https://www.nipa.kr/home/2-2",
+          "name": "목록",
+          "getByRole": "link",
+          "accessibleName": "목록",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(1) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dt20.png",
+          "name": "2023 혁신도시 활성화 및지역균형발전 우수사례추진기관 선정 표창",
+          "getByRole": "link",
+          "accessibleName": "2023 혁신도시 활성화 및지역균형발전 우수사례추진기관 선정 표창",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(2) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl7.png",
+          "name": "2022 가족친화우수기관표창",
+          "getByRole": "link",
+          "accessibleName": "2022 가족친화우수기관표창",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(3) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl8.png",
+          "name": "2022 지역문제해결플랫폼 표창",
+          "getByRole": "link",
+          "accessibleName": "2022 지역문제해결플랫폼 표창",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(4) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl10.jpg",
+          "name": "2022 대한적십자사포장증",
+          "getByRole": "link",
+          "accessibleName": "2022 대한적십자사포장증",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(5) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl9.png",
+          "name": "2022 K-스마트 교육시범도시 구축표창 (진천군)",
+          "getByRole": "link",
+          "accessibleName": "2022 K-스마트 교육시범도시 구축표창 (진천군)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(6) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl1.png",
+          "name": "2020 혁신도시 10대 협업과제 선정 및 최우수(전국1위) 평가(관계부처합동/국토부)",
+          "getByRole": "link",
+          "accessibleName": "2020 혁신도시 10대 협업과제 선정 및 최우수(전국1위) 평가(관계부처합동/국토부)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(7) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl2.png",
+          "name": "2020 진로교육 유공장관표창(교육부)",
+          "getByRole": "link",
+          "accessibleName": "2020 진로교육 유공장관표창(교육부)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(8) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl3.png",
+          "name": "2020 K-스마트교육시범도시 구축사업군정발전 공로상 (진천군)",
+          "getByRole": "link",
+          "accessibleName": "2020 K-스마트교육시범도시 구축사업군정발전 공로상 (진천군)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(9) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl5.png",
+          "name": "2019 혁신도시 우수사례 장관 표창(국토부)",
+          "getByRole": "link",
+          "accessibleName": "2019 혁신도시 우수사례 장관 표창(국토부)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > div > div > ul > li:nth-of-type(10) > a",
+          "href": "https://www.nipa.kr/humanframe/theme/home/assets/img/popup_slide_dtl6.png",
+          "name": "2019 진천군장애인복지관감사패",
+          "getByRole": "link",
+          "accessibleName": "2019 진천군장애인복지관감사패",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > footer > div:nth-of-type(3) > ul > li:nth-of-type(1) > a",
+          "href": "https://www.nipa.kr/home/6-5",
+          "name": "홈페이지 개선의견",
+          "getByRole": "link",
+          "accessibleName": "홈페이지 개선의견",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > footer > div:nth-of-type(3) > ul > li:nth-of-type(2) > a",
+          "href": "https://www.nipa.kr/home/4-9-1",
+          "name": "찾아오시는길",
+          "getByRole": "link",
+          "accessibleName": "찾아오시는길",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div:nth-of-type(2) > footer > div:nth-of-type(3) > ul > li:nth-of-type(3) > a",
+          "href": "https://www.nipa.kr/home/6-2",
+          "name": "개인정보처리방침",
+          "getByRole": "link",
+          "accessibleName": "개인정보처리방침",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [
+        {
+          "kind": "radioGroup",
+          "selectionMode": "group-single",
+          "name": "score",
+          "options": [
+            {
+              "selector": "#c1",
+              "value": "1",
+              "label": "매우불만족",
+              "checked": false
+            },
+            {
+              "selector": "#c2",
+              "value": "2",
+              "label": "불만족",
+              "checked": false
+            },
+            {
+              "selector": "#c3",
+              "value": "3",
+              "label": "보통",
+              "checked": false
+            },
+            {
+              "selector": "#c4",
+              "value": "4",
+              "label": "만족",
+              "checked": false
+            },
+            {
+              "selector": "#c5",
+              "value": "5",
+              "label": "매우만족",
+              "checked": false
+            }
+          ]
+        }
+      ],
+      "httpStatus": 200,
+      "crawlDepth": 0
+    }
+  ],
+  "graph": {
+    "https://www.nipa.kr/home/2-2/16750": [
+      "https://www.nipa.kr/home/2-2/16750",
+      "https://www.nipa.kr/home/index",
+      "https://www.nipa.kr/home/bsnsAll/0/select",
+      "https://www.nipa.kr/home/bsnsAll/00",
+      "https://www.nipa.kr/home/bsnsAll/3",
+      "https://www.nipa.kr/home/bsnsAll/4",
+      "https://www.nipa.kr/home/bsnsAll/6",
+      "https://www.nipa.kr/home/bsnsAll/0",
+      "https://www.nipa.kr/home/bsnsAll/1",
+      "https://www.nipa.kr/home/bsnsAll/2",
+      "https://www.nipa.kr/home/bsnsAll/7",
+      "https://www.nipa.kr/home/bsnsAll/8",
+      "https://www.nipa.kr/home/bsnsAll/9",
+      "https://www.nipa.kr/home/bsnsAll/10",
+      "https://www.nipa.kr/home/2-1",
+      "https://www.nipa.kr/home/2-2",
+      "https://www.nipa.kr/home/2-3",
+      "https://www.nipa.kr/home/2-4",
+      "https://www.nipa.kr/home/2-5-1",
+      "https://www.nipa.kr/home/facilityInfo",
+      "https://www.nipa.kr/home/facilityApp",
+      "https://www.nipa.kr/home/2-7-1-1",
+      "https://www.nipa.kr/home/2-8",
+      "https://www.nipa.kr/home/2-9-1",
+      "https://www.nipa.kr/home/2-9-2",
+      "https://www.nipa.kr/home/2-9-3",
+      "https://www.nipa.kr/home/3-1",
+      "https://www.nipa.kr/home/3-1-1",
+      "https://www.nipa.kr/home/3-1-2",
+      "https://www.nipa.kr/home/3-2",
+      "https://www.nipa.kr/home/3-3-1",
+      "https://www.nipa.kr/home/3-3-2",
+      "https://www.nipa.kr/home/3-3-3",
+      "https://www.nipa.kr/home/3-3-4",
+      "https://www.nipa.kr/home/3-3-5",
+      "https://www.nipa.kr/home/3-4-1",
+      "https://www.nipa.kr/home/3-4-2",
+      "https://www.nipa.kr/home/3-4-3",
+      "https://www.nipa.kr/home/3-5-1",
+      "https://www.nipa.kr/home/3-5-2",
+      "https://www.nipa.kr/home/3-5-3",
+      "https://www.nipa.kr/home/3-6-1",
+      "https://www.nipa.kr/home/3-6-2",
+      "https://www.nipa.kr/home/3-6-3",
+      "https://www.nipa.kr/home/3-6-4",
+      "https://www.nipa.kr/home/3-7-1",
+      "https://www.nipa.kr/home/3-7-2",
+      "https://www.nipa.kr/home/3-8-1",
+      "https://www.nipa.kr/home/3-8-2",
+      "https://www.nipa.kr/home/3-8-3",
+      "https://www.nipa.kr/home/3-8-4",
+      "https://www.nipa.kr/home/3-8-5",
+      "https://www.nipa.kr/home/3-8-6",
+      "https://www.nipa.kr/home/3-8-7",
+      "https://www.nipa.kr/home/3-8-8",
+      "https://www.nipa.kr/home/3-9-1",
+      "https://www.nipa.kr/home/3-9-1-1",
+      "https://www.nipa.kr/home/3-9-2",
+      "https://www.nipa.kr/home/3-9-6",
+      "https://www.nipa.kr/home/befeatPublict",
+      "https://www.nipa.kr/home/3-10-6",
+      "https://www.nipa.kr/home/3-10-7",
+      "https://www.nipa.kr/home/3-10-8",
+      "https://www.nipa.kr/home/4-1-1",
+      "https://www.nipa.kr/home/4-1-2",
+      "https://www.nipa.kr/home/4-2",
+      "https://www.nipa.kr/home/4-3",
+      "https://www.nipa.kr/home/4-4-1",
+      "https://www.nipa.kr/home/4-4-2",
+      "https://www.nipa.kr/home/broflet",
+      "https://www.nipa.kr/home/4-4-4",
+      "https://www.nipa.kr/home/4-4-5",
+      "https://www.nipa.kr/home/orgInfo",
+      "https://www.nipa.kr/home/userSearch",
+      "https://www.nipa.kr/home/4-6-1-1",
+      "https://www.nipa.kr/home/4-7",
+      "https://www.nipa.kr/home/4-8",
+      "https://www.nipa.kr/home/4-9-1",
+      "https://www.nipa.kr/home/4-9-2",
+      "https://www.nipa.kr/home/4-9-3",
+      "https://www.nipa.kr/home/4-9-4",
+      "https://www.nipa.kr/home/4-9-8",
+      "https://www.nipa.kr/home/5-1-1",
+      "https://www.nipa.kr/home/5-1-2",
+      "https://www.nipa.kr/home/5-1-3",
+      "https://www.nipa.kr/home/5-1-4",
+      "https://www.nipa.kr/home/5-1-5",
+      "https://www.nipa.kr/home/5-1-6",
+      "https://www.nipa.kr/home/5-2",
+      "https://www.nipa.kr/home/5-3",
+      "https://www.nipa.kr/home/5-4-1",
+      "https://www.nipa.kr/home/5-4-3",
+      "https://www.nipa.kr/home/5-4-5",
+      "https://www.nipa.kr/home/befeatPublictTop",
+      "https://www.nipa.kr/eng",
+      "https://www.nipa.kr/home/6-6",
+      "https://www.nipa.kr/",
+      "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=2MG8Yt^TPlK8ACWcLwzcCw==&fileTy=ATTACH&fileNo=iu0WQG^ejsRX1v3mN75HiQ==",
+      "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=8bKAAPBMvmCSVlBC3BCDVw==&fileTy=ATTACH&fileNo=57Jgi7UGuwG9POnFX1Ir1Q==",
+      "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=osVc9ggTj8Qqgc4LO58tYQ==&fileTy=ATTACH&fileNo=cUTOcGccEDKRdcjD9xjwDA==",
+      "https://www.nipa.kr/comm/getFile?srvcId=BBSTY1&upperNo=S^YorWSdWdPBxjzLM9IxAw==&fileTy=ATTACH&fileNo=Rh4pzwt*esnwG2fD4E^yJg==",
+      "https://www.nipa.kr/home/6-5",
+      "https://www.nipa.kr/home/6-2",
+      "https://www.nipa.kr/home/6-3"
+    ]
+  }
+}

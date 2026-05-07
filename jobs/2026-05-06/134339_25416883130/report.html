@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>테스트 결과 · 25416883130</title>
+  <link rel="icon" href="./Icon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <style>
+    :root {
+      --font: "Pretendard", -apple-system, system-ui, sans-serif;
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --text: #1c1d27;
+      --muted: #8c92a4;
+      --line: #eceef5;
+      --accent: #0d9488;
+      --accent-hover: #0f766e;
+      --accent-2: #6366f1;
+      --ok: #059669;
+      --ok-bg: #ecfdf5;
+      --bad: #dc2626;
+      --bad-bg: #fef2f2;
+      --radius: 18px;
+      --shadow: 0 16px 40px rgba(31, 37, 89, 0.08);
+      --shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.06);
+      --gauge-track: #edf0f7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      line-height: 1.55;
+      color: var(--text);
+      background: linear-gradient(180deg, #fafbff 0%, #f0f2f8 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .brand-wrap { display: flex; align-items: flex-start; gap: 0.85rem; }
+    .brand-badge {
+      width: 2.35rem; height: 2.35rem; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(145deg, #8b5cf6, #0d9488);
+      box-shadow: 0 10px 22px rgba(99, 102, 241, 0.25);
+    }
+    .brand { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; }
+    .sub { margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--muted); max-width: 36rem; }
+    .job-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .job-pill span { color: var(--muted); font-weight: 500; }
+    .actions-top { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.22);
+    }
+    .btn:hover { background: linear-gradient(135deg, #0f766e, #0d9488); }
+    .target-card {
+      background: var(--surface);
+      border: 1px solid rgba(229, 232, 242, 0.95);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1.1rem;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.55rem 1rem;
+      align-items: center;
+    }
+    @media (max-width: 760px) {
+      .target-card { grid-template-columns: 1fr; }
+    }
+    .target-card .lbl { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem; grid-column: 1 / -1; }
+    .target-card a { color: var(--accent); font-weight: 600; word-break: break-all; text-decoration: none; }
+    .target-card a:hover { text-decoration: underline; }
+    .meta-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; font-size: 0.8rem; color: var(--muted); justify-content: flex-end; }
+    @media (max-width: 760px) { .meta-chips { justify-content: flex-start; } }
+    .meta-chips span { padding: 0.22rem 0.55rem; background: #f4f6fb; border-radius: 999px; font-weight: 600; color: var(--muted); }
+    .summary-dashboard {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.35rem;
+    }
+    @media (min-width: 800px) {
+      .summary-dashboard { grid-template-columns: 1.15fr 0.85fr; align-items: stretch; }
+    }
+    .sd-gauge-card {
+      background: var(--surface);
+      border: 1px solid rgba(229, 232, 242, 0.95);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.2rem 0.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .sd-gauge-card::before {
+      content: "";
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.07), transparent 55%);
+      pointer-events: none;
+    }
+    .sd-card-head { margin-bottom: 0.35rem; position: relative; }
+    .sd-card-title { margin: 0; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; }
+    .sd-card-desc { margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .pass-gauge-svg { width: 100%; max-width: 340px; margin: 0 auto; display: block; }
+    .pass-gauge-track { stroke: var(--gauge-track); }
+    .pass-gauge-pct { font-size: 42px; font-weight: 800; fill: var(--text); letter-spacing: -0.04em; }
+    .pass-gauge-sub { font-size: 13px; fill: var(--muted); }
+    .sd-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .sd-metric {
+      background: var(--surface);
+      border: 1px solid rgba(229, 232, 242, 0.95);
+      border-radius: 16px;
+      padding: 0.85rem 1rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .sd-metric::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .sd-metric--pages::before { background: linear-gradient(180deg, #6366f1, #8b5cf6); }
+    .sd-metric--run::before { background: linear-gradient(180deg, #5c8dff, #6366f1); }
+    .sd-metric--ok::before { background: linear-gradient(180deg, #34d399, #0d9488); }
+    .sd-metric--fail::before { background: linear-gradient(180deg, #fb7185, #f97316); }
+    .sd-metric-label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+    .sd-metric-value { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+    .sd-metric--ok .sd-metric-value { color: var(--ok); }
+    .sd-metric--fail .sd-metric-value { color: var(--bad); }
+    .two-col-urls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.25rem;
+    }
+    @media (max-width: 720px) { .two-col-urls { grid-template-columns: 1fr; } }
+    .two-col-urls h3 { margin: 0 0 0.45rem; font-size: 0.92rem; font-weight: 800; }
+    .url-list { margin: 0; padding-left: 1.1rem; font-size: 0.84rem; word-break: break-all; }
+    .url-list li { margin: 0.28rem 0; }
+    .url-list .empty { list-style: none; margin-left: -1.1rem; color: var(--muted); }
+    .step-ico-svg { width: 1.1rem; height: 1.1rem; vertical-align: -0.2rem; margin-right: 0.35rem; color: var(--muted); }
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .jump a {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid rgba(229, 232, 242, 0.95);
+      box-shadow: var(--shadow-sm);
+      transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .jump a:hover {
+      color: var(--accent-2);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.12);
+    }
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .section h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .section > p.lead { margin: 0 0 0.85rem; font-size: 0.9rem; color: var(--muted); }
+    .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.data { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    table.data th, table.data td { border-bottom: 1px solid var(--line); padding: 0.65rem 0.5rem; text-align: left; vertical-align: top; }
+    table.data th { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+    table.data tr:last-child td { border-bottom: none; }
+    .crit-ok { color: var(--ok); font-weight: 700; }
+    .crit-bad { color: var(--bad); font-weight: 700; }
+    .pill {
+      display: inline-block;
+      margin: 0.12rem 0.25rem 0 0;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: #f4f6fb;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .crit-bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gauge-track);
+      overflow: hidden;
+      min-width: 72px;
+      max-width: 140px;
+    }
+    .crit-bar-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #34d399, #0d9488);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.2);
+    }
+    .crit-bar-cell { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+    .crit-bar-pct { font-size: 0.78rem; font-weight: 800; color: var(--text); min-width: 2.5rem; }
+    .crawl-one { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.85rem; line-height: 1.5; }
+    .stat-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .stat-chip {
+      padding: 0.45rem 0.65rem;
+      background: #f8f9fe;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .stat-chip strong { color: var(--text); font-weight: 700; }
+    .stat-ico { font-size: 0.95rem; }
+    .scenario-table td { font-size: 0.86rem; }
+    .scenario-steps { margin: 0; padding-left: 1rem; }
+    .scenario-steps li { margin: 0.18rem 0; }
+    .status-chip { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.74rem; font-weight: 700; }
+    .status-chip.pass { color: var(--ok); background: var(--ok-bg); }
+    .status-chip.fail { color: var(--bad); background: var(--bad-bg); }
+    .artifacts { margin-top: 0.65rem; font-size: 0.85rem; }
+    .artifacts a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .artifacts a:hover { text-decoration: underline; }
+    .err-list { margin: 0.5rem 0 0; padding-left: 1.1rem; font-size: 0.84rem; color: var(--bad); }
+    .footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .footer strong { color: var(--text); }
+    .time-foot { margin-top: 0.75rem; font-size: 0.75rem; color: #94a3b8; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; }
+      .wrap { max-width: none; padding: 0; }
+      .section, .target-card, .summary-dashboard, .sd-gauge-card, .sd-metric { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div class="brand-wrap">
+      <div class="brand-badge" aria-hidden="true"></div>
+      <div>
+        <h1 class="brand">테스트 결과</h1>
+        <p class="sub">자동으로 실행한 점검 요약입니다. 아래에서 통과 여부와 각 항목 설명을 확인하세요.</p>
+      </div>
+    </div>
+    <div class="actions-top no-print">
+      <span class="job-pill"><span>작업 ID</span> 25416883130</span>
+      <button type="button" class="btn" onclick="window.print()">PDF로 저장 · 인쇄</button>
+    </div>
+  </div>
+
+  <div class="target-card">
+    <div class="lbl">분석한 사이트</div>
+    <a href="https://example.com/" target="_blank" rel="noopener noreferrer">https://example.com/</a>
+    <div class="meta-chips">
+      <span>페이지 1개 수집</span>
+      <span>시나리오 버전 2</span>
+      <span>기록 모드: 실패 시만</span>
+    </div>
+  </div>
+
+  <div class="summary-dashboard" id="summary">
+    <div class="sd-gauge-card">
+      <div class="sd-card-head">
+        <h3 class="sd-card-title">테스트 통과</h3>
+        <p class="sd-card-desc">시나리오 실행 결과 한눈에 보기</p>
+      </div>
+      <svg class="pass-gauge-svg" viewBox="0 0 320 148" role="img" aria-label="통과율 100퍼센트">
+    <defs>
+      <linearGradient id="passGaugeGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#fb7185"/>
+        <stop offset="40%" stop-color="#fbbf24"/>
+        <stop offset="100%" stop-color="#34d399"/>
+      </linearGradient>
+    </defs>
+    <path class="pass-gauge-track" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke-width="18" stroke-linecap="round"/>
+    <path class="pass-gauge-fill" d="M40 124 A120 120 0 0 1 280 124" fill="none" stroke="url(#passGaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="377 377"/>
+    <text x="160" y="88" text-anchor="middle" class="pass-gauge-pct">100%</text>
+    <text x="160" y="108" text-anchor="middle" class="pass-gauge-sub">1 / 1 시나리오</text>
+  </svg>
+    </div>
+    <div class="sd-metrics">
+      <div class="sd-metric sd-metric--pages">
+        <span class="sd-metric-label">크롤 페이지</span>
+        <span class="sd-metric-value">1</span>
+      </div>
+      <div class="sd-metric sd-metric--run">
+        <span class="sd-metric-label">실행 시나리오</span>
+        <span class="sd-metric-value">1</span>
+      </div>
+      <div class="sd-metric sd-metric--ok">
+        <span class="sd-metric-label">통과</span>
+        <span class="sd-metric-value">1</span>
+      </div>
+      <div class="sd-metric sd-metric--fail">
+        <span class="sd-metric-label">실패</span>
+        <span class="sd-metric-value">0</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="jump no-print" aria-label="섹션 이동">
+    <a href="#sites">내부·외부 URL</a>
+    <a href="#lighthouse">Lighthouse</a>
+    <a href="#criteria">점검 기준 요약</a>
+    <a href="#scenarios">시나리오별 결과</a>
+    <a href="#errors">오류 메시지</a>
+    <a href="#crawl">수집 범위</a>
+  </nav>
+
+  <section class="section" id="sites">
+    <h2>내부·외부 URL</h2>
+    <p class="lead">크롤로 <strong>실제로 방문·수집한 내부 페이지</strong>와, 페이지에서 찾은 <strong>외부 https 링크</strong>입니다.</p>
+    <div class="two-col-urls">
+      <div id="sites-internal">
+        <h3>내부 (방문)</h3>
+        <ul class="url-list"><li><a href="https://example.com/" target="_blank" rel="noopener noreferrer">https://example.com/</a></li></ul>
+      </div>
+      <div id="sites-external">
+        <h3>외부 (링크 수집)</h3>
+        <ul class="url-list"><li><a href="https://iana.org/domains/example" target="_blank" rel="noopener noreferrer">https://iana.org/domains/example</a></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lighthouse">
+    <h2>Lighthouse 요약</h2>
+    <p class="lead">점수는 0–100(또는 실패 시 —)입니다. HTML 리포트에서 세부 감사 항목을 확인할 수 있습니다.</p>
+    <div class="scroll-x">
+      <table class="data">
+        <thead><tr><th>구분</th><th>URL</th><th>성능</th><th>접근성</th><th>권장</th><th>SEO</th><th>리포트</th></tr></thead>
+        <tbody><tr>
+        <td><span class="pill">내부</span></td>
+        <td style="word-break:break-all"><a href="https://example.com/" target="_blank" rel="noopener noreferrer">https://example.com/</a></td>
+        <td>100</td>
+        <td>100</td>
+        <td>93</td>
+        <td>80</td>
+        <td><a href="lighthouse/0f115db062b7c0dd.html" target="_blank" rel="noopener noreferrer">HTML 리포트</a></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="criteria">
+    <h2>점검 기준별 요약</h2>
+    <p class="lead">각 항목이 몇 번 통과·실패했는지 보여 줍니다. 한 시나리오에 여러 기준이 붙을 수 있습니다.</p>
+    <div class="scroll-x">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>기준</th>
+            <th>설명</th>
+            <th>통과 비율</th>
+            <th>통과</th>
+            <th>실패</th>
+            <th>관련 시나리오</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+        <td><strong>페이지 렌더링</strong></td>
+        <td style="color:var(--muted);font-size:0.88rem">문서 로드 후 핵심 요소가 화면에 보이는지</td>
+        <td><div class="crit-bar-cell"><div class="crit-bar-track" title="100%"><span class="crit-bar-fill" style="width:100%"></span></div><span class="crit-bar-pct">100%</span></div></td>
+        <td class="crit-ok">1</td>
+        <td class="crit-bad">0</td>
+        <td style="word-break:break-word;font-size:0.85rem"><span class="crit-ok">render-1</span></td>
+      </tr><tr>
+        <td><strong>UI 콘솔 에러</strong></td>
+        <td style="color:var(--muted);font-size:0.88rem">콘솔 error 및 페이지 미처리 예외가 없는지</td>
+        <td><div class="crit-bar-cell"><div class="crit-bar-track" title="100%"><span class="crit-bar-fill" style="width:100%"></span></div><span class="crit-bar-pct">100%</span></div></td>
+        <td class="crit-ok">1</td>
+        <td class="crit-bad">0</td>
+        <td style="word-break:break-word;font-size:0.85rem"><span class="crit-ok">render-1</span></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="errors">
+    <h2>브라우저 오류 (실패한 항목만)</h2>
+    <p style="color:var(--muted);margin:0">실패한 시나리오에서 잡힌 브라우저 오류가 없거나, 모든 항목이 통과했습니다.</p>
+  </section>
+
+  <section class="section" id="scenarios">
+    <h2>시나리오별 상세</h2>
+    <p class="lead">이전 형태처럼 표로 각 시나리오의 상태, 소요 시간, 실행 단계를 확인할 수 있습니다.</p>
+    <div class="scroll-x">
+      <table class="data scenario-table">
+        <thead><tr><th>상태</th><th>시나리오</th><th>소요</th><th>점검 기준</th><th>실행 단계</th></tr></thead>
+        <tbody><tr>
+    <td><span class="status-chip pass">통과</span></td>
+    <td><strong>페이지 렌더링: Example Domain</strong></td>
+    <td>0.1초</td>
+    <td><span class="pill">페이지 렌더링</span> <span class="pill">UI 콘솔 에러</span></td>
+    <td><ol class="scenario-steps"><li><svg class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/></svg><strong>페이지로 이동</strong> — <span class="step-detail">주소 example.com/ · 응답 200</span></li><li><svg class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg><strong>화면에 보이는지 확인</strong> — <span class="step-detail">대상 요소</span></li><li><svg class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg><strong>오류 메시지 없음 확인</strong></li></ol></td>
+  </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="crawl">
+    <h2>자동 수집 범위</h2>
+    <p class="crawl-one">페이지를 돌며 링크·버튼·입력 요소를 찾아 자동 점검 초안을 만들 때 참고한 규모입니다. 팝업·일부 앱 화면은 포함되지 않을 수 있습니다.</p>
+    <div class="stat-grid"><div class="stat-chip"><span class="stat-ico">✅</span><strong>1</strong> 정상 응답 페이지</div><div class="stat-chip"><span class="stat-ico">⚠️</span><strong>0</strong> 건너뛰거나 오류 페이지</div><div class="stat-chip"><span class="stat-ico">🔗</span><strong>0</strong> 같은 사이트 안 링크(합계)</div><div class="stat-chip"><span class="stat-ico">🖱️</span><strong>0</strong> 클릭·버튼 후보(합계)</div><div class="stat-chip"><span class="stat-ico">📄</span><strong>0</strong> 클릭 후보가 있는 페이지</div><div class="stat-chip"><span class="stat-ico">🌐</span><strong>1</strong> 외부 사이트 링크(참고)</div></div>
+  </section>
+
+  <footer class="footer">
+    <strong>저작권·이용 안내</strong><br/>
+    본 리포트는 QA 자동화 도구로 생성되었습니다. 대상 웹사이트의 이용약관·저작권은 각 사이트 정책을 따릅니다.
+    이 문서의 재배포·상업적 이용 시 관련 법령 및 사이트 정책을 확인하세요.
+    <div class="time-foot">작업 ID 25416883130 · 테스트 완료 2026-05-06T04:43:29.374Z · 리포트 생성 2026-05-06T04:43:36.513Z</div>
+  </footer>
+</div>
+</body>
+</html>

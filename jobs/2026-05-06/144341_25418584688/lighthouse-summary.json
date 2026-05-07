@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-06T05:43:38.226Z",
+  "internalUrls": [
+    "https://meowdule.github.io/SEO-TESTING-HTML/",
+    "https://meowdule.github.io/SEO-TESTING-HTML"
+  ],
+  "externalUrls": [],
+  "auditedUrls": [
+    "https://meowdule.github.io/SEO-TESTING-HTML/",
+    "https://meowdule.github.io/SEO-TESTING-HTML"
+  ],
+  "items": [
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML/",
+      "kind": "internal",
+      "scores": {
+        "performance": 93,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/ea376e33610174dc.html",
+      "reportJson": "lighthouse/ea376e33610174dc.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+      "kind": "internal",
+      "scores": {
+        "performance": 92,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/5e5aa138131d2671.html",
+      "reportJson": "lighthouse/5e5aa138131d2671.json",
+      "error": null
+    }
+  ]
+}

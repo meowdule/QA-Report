@@ -1,0 +1,89 @@
+{
+  "stepTypes": [
+    "navigate",
+    "click",
+    "fill",
+    "selectOption",
+    "check",
+    "assertVisible",
+    "assertNoConsoleError",
+    "waitForResponse",
+    "waitForSelector"
+  ],
+  "criterionIds": [
+    "page_rendering",
+    "core_action",
+    "input_data",
+    "console_errors",
+    "primary_flow"
+  ],
+  "criteria": {
+    "page_rendering": {
+      "labelKo": "페이지 렌더링",
+      "description": "문서 로드 후 핵심 요소가 화면에 보이는지",
+      "primarySteps": [
+        "navigate",
+        "assertVisible"
+      ],
+      "metrics": [
+        "httpStatus",
+        "selectorVisible",
+        "finalUrl"
+      ]
+    },
+    "core_action": {
+      "labelKo": "핵심 액션",
+      "description": "클릭 등 주요 인터랙션이 오류 없이 수행되는지",
+      "primarySteps": [
+        "click",
+        "navigate",
+        "assertVisible",
+        "waitForSelector"
+      ],
+      "metrics": [
+        "clickResolved",
+        "navigation",
+        "dialogs",
+        "popupOrNewTab"
+      ]
+    },
+    "input_data": {
+      "labelKo": "입력 데이터",
+      "description": "폼 필드에 값이 입력되는지(저장·서버 검증은 별도)",
+      "primarySteps": [
+        "fill",
+        "selectOption",
+        "check",
+        "assertVisible"
+      ],
+      "metrics": [
+        "fieldFilled"
+      ]
+    },
+    "console_errors": {
+      "labelKo": "UI 콘솔 에러",
+      "description": "콘솔 error 및 페이지 미처리 예외가 없는지",
+      "primarySteps": [
+        "assertNoConsoleError",
+        "navigate"
+      ],
+      "metrics": [
+        "consoleErrorCount",
+        "pageErrorCount"
+      ]
+    },
+    "primary_flow": {
+      "labelKo": "주요 흐름",
+      "description": "핵심 URL 순서로 이동·표시가 완료되는지",
+      "primarySteps": [
+        "navigate",
+        "assertVisible",
+        "waitForResponse"
+      ],
+      "metrics": [
+        "stepSequenceComplete",
+        "chainLength"
+      ]
+    }
+  }
+}

@@ -1,0 +1,446 @@
+{
+  "version": 2,
+  "jobId": "25419627199",
+  "targetUrl": "https://www.nipa.kr/home/2-2/16750",
+  "traceMode": "failure",
+  "startedAt": "2026-05-06T06:16:51.801Z",
+  "finishedAt": "2026-05-06T06:18:33.451Z",
+  "criteriaSummary": {
+    "page_rendering": {
+      "labelKo": "페이지 렌더링",
+      "pass": 1,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        }
+      ]
+    },
+    "core_action": {
+      "labelKo": "핵심 액션",
+      "pass": 2,
+      "fail": 1,
+      "scenarioIds": [
+        {
+          "id": "link-nav-1",
+          "passed": true
+        },
+        {
+          "id": "link-nav-2",
+          "passed": true
+        },
+        {
+          "id": "link-nav-3",
+          "passed": false
+        }
+      ]
+    },
+    "input_data": {
+      "labelKo": "입력 데이터",
+      "pass": 1,
+      "fail": 1,
+      "scenarioIds": [
+        {
+          "id": "input-smoke",
+          "passed": false
+        },
+        {
+          "id": "form-radio-1",
+          "passed": true
+        }
+      ]
+    },
+    "console_errors": {
+      "labelKo": "UI 콘솔 에러",
+      "pass": 4,
+      "fail": 2,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        },
+        {
+          "id": "link-nav-1",
+          "passed": true
+        },
+        {
+          "id": "link-nav-2",
+          "passed": true
+        },
+        {
+          "id": "link-nav-3",
+          "passed": false
+        },
+        {
+          "id": "input-smoke",
+          "passed": false
+        },
+        {
+          "id": "form-radio-1",
+          "passed": true
+        }
+      ]
+    },
+    "primary_flow": {
+      "labelKo": "주요 흐름",
+      "pass": 0,
+      "fail": 0,
+      "scenarioIds": []
+    }
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "페이지 렌더링: 상세보기 : 2026년 소형 데이터센터 기반 AI산업 성장 지원 사업 공고 - 사업공고 - 알림마당 - 정보통신산업진흥원",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 4476,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-1",
+      "name": "링크 이동: /home/2-2/16750 → /home/bsnsAll/0/select",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 5796,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://www.nipa.kr/home/bsnsAll/0/select",
+          "ok": true,
+          "startUrl": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/bsnsAll/0/select",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "status": 200,
+          "url": "https://www.google-analytics.com/j/collect?v=1&_v=j102&a=418403296&t=pageview&_s=1&dl=https%3A%2F%2Fwww.nipa.kr%2Fhome%2FbsnsAll%2F0%2Fselect&ul=en-us&dt=%EC%82%AC%EC%97%85%EB%A6%AC%EC%8A%A4%ED%8A%B8%20-%20%EC%A0%84%EC%B2%B4%20-%20%EC%A7%80%EC%9B%90%EB%B6%84%EC%95%BC%20-%20%EC%A3%BC%EC%9A%94%EC%82%AC%EC%97%85%20-%20%EC%A0%95%EB%B3%B4%ED%86%B5%EC%8B%A0%EC%82%B0%EC%97%85%EC%A7%84%ED%9D%A5%EC%9B%90&sr=1280x720&vp=1280x720&_u=AACAAEABAAAAACAAI~&jid=&gjid=&cid=1469028949.1778048220&tid=G-H1B63VVXL0&_gid=1607163097.1778048220&_slc=1&z=1238366335",
+          "requestMethod": "POST"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-2",
+      "name": "링크 이동(3번째): /home/2-2/16750 → /home/bsnsAll/00",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 54403,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://www.nipa.kr/home/bsnsAll/00",
+          "ok": true,
+          "note": "used fallbackSelector",
+          "startUrl": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-3",
+      "name": "핵심 액션: 홈에서 첫 동일 출처 링크 클릭",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": false,
+      "durationMs": 8530,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://www.nipa.kr/home/index",
+          "ok": true,
+          "startUrl": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/index",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "status": 200,
+          "url": "https://www.google-analytics.com/j/collect?v=1&_v=j102&a=94787045&t=pageview&_s=1&dl=https%3A%2F%2Fwww.nipa.kr%2Fhome%2Findex&ul=en-us&dt=Home%20%3A%20%EC%A0%95%EB%B3%B4%ED%86%B5%EC%8B%A0%EC%82%B0%EC%97%85%EC%A7%84%ED%9D%A5%EC%9B%90&sr=1280x720&vp=1280x720&_u=AACAAEABAAAAACAAI~&jid=&gjid=&cid=786194532.1778048282&tid=%3C%25%3D%20curSiteVO.googleKey%20%25%3E&_gid=812892746.1778048282&_slc=1&z=38630873",
+          "requestMethod": "POST"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": false,
+          "error": "4 console/page errors",
+          "details": [
+            {
+              "type": "console",
+              "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+              "location": {
+                "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+                "lineNumber": 2,
+                "columnNumber": 0
+              }
+            },
+            {
+              "type": "console",
+              "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+              "location": {
+                "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+                "lineNumber": 2,
+                "columnNumber": 0
+              }
+            },
+            {
+              "type": "console",
+              "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+              "location": {
+                "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+                "lineNumber": 2,
+                "columnNumber": 0
+              }
+            },
+            {
+              "type": "console",
+              "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+              "location": {
+                "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+                "lineNumber": 2,
+                "columnNumber": 0
+              }
+            }
+          ],
+          "consoleErrorCount": 4,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "console",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+          "location": {
+            "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+            "lineNumber": 2,
+            "columnNumber": 0
+          }
+        },
+        {
+          "type": "console",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+          "location": {
+            "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+            "lineNumber": 2,
+            "columnNumber": 0
+          }
+        },
+        {
+          "type": "console",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+          "location": {
+            "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+            "lineNumber": 2,
+            "columnNumber": 0
+          }
+        },
+        {
+          "type": "console",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+          "location": {
+            "url": "https://www.nipa.kr/humanframe/theme/home/assets/vendor/jquery/jquery-2.2.4.min.js",
+            "lineNumber": 2,
+            "columnNumber": 0
+          }
+        }
+      ],
+      "artifacts": {
+        "screenshot": "screenshots/link-nav-3.png",
+        "trace": "traces/link-nav-3.zip"
+      }
+    },
+    {
+      "id": "input-smoke",
+      "name": "입력 데이터: 첫 폼에 더미 값 입력 (저장 검증은 후속 단계)",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "passed": false,
+      "durationMs": 16638,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "fill",
+          "selector": "form#searchForm input",
+          "ok": false,
+          "error": "locator.waitFor: Timeout 12000ms exceeded.\nCall log:\n  - waiting for locator('form#searchForm input').first() to be visible\n    29 × locator resolved to hidden <input value=\"\" type=\"text\" id=\"srchText2\" name=\"srchText\" maxlength=\"255\" class=\"form-control\" placeholder=\"검색어를 입력하세요.\"/>\n"
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {
+        "screenshot": "screenshots/input-smoke.png",
+        "trace": "traces/input-smoke.zip"
+      }
+    },
+    {
+      "id": "form-radio-1",
+      "name": "입력 데이터: 라디오 그룹 (group-single) — score",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 11599,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://www.nipa.kr/home/2-2/16750",
+          "finalUrl": "https://www.nipa.kr/home/2-2/16750",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "check",
+          "selector": "#c2",
+          "control": "radio",
+          "checked": true,
+          "ok": true
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 6000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 6000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    }
+  ]
+}

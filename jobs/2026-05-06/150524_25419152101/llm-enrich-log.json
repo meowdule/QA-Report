@@ -1,0 +1,4 @@
+{
+  "skipped": true,
+  "reason": "Set LLM_SCENARIOS=1 or ENABLE_LLM_SCENARIOS=1 to run Phase 6."
+}

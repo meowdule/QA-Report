@@ -1,0 +1,302 @@
+{
+  "targetUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+  "origin": "https://meowdule.github.io",
+  "crawledAt": "2026-05-06T05:43:08.640Z",
+  "limits": {
+    "maxPages": 20,
+    "maxDepth": 2
+  },
+  "pages": [
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML/",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "플랜",
+          "getByRole": "link",
+          "accessibleName": "플랜",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "문의",
+          "getByRole": "link",
+          "accessibleName": "문의",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "지금 신청하기",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "문의하기",
+          "getByRole": "link",
+          "accessibleName": "문의하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "구매 플랜 조회",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "getByRole": "link",
+          "accessibleName": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 0
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "플랜",
+          "getByRole": "link",
+          "accessibleName": "플랜",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "문의",
+          "getByRole": "link",
+          "accessibleName": "문의",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "지금 신청하기",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "문의하기",
+          "getByRole": "link",
+          "accessibleName": "문의하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "구매 플랜 조회",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "name": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "getByRole": "link",
+          "accessibleName": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML/"
+    }
+  ],
+  "graph": {
+    "https://meowdule.github.io/SEO-TESTING-HTML/": [
+      "https://meowdule.github.io/SEO-TESTING-HTML"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML": [
+      "https://meowdule.github.io/SEO-TESTING-HTML"
+    ]
+  }
+}

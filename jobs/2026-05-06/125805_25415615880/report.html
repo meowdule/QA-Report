@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>테스트 결과 · 25415615880</title>
+  <link rel="icon" href="./Icon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <style>
+    :root {
+      --font: "Pretendard", -apple-system, system-ui, sans-serif;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --accent: #0d9488;
+      --accent-hover: #0f766e;
+      --ok: #059669;
+      --ok-bg: #ecfdf5;
+      --bad: #dc2626;
+      --bad-bg: #fef2f2;
+      --radius: 14px;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.25rem 2rem; }
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .brand { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; }
+    .sub { margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--muted); max-width: 36rem; }
+    .job-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .job-pill span { color: var(--muted); font-weight: 500; }
+    .actions-top { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .target-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.55rem 1rem;
+      align-items: center;
+    }
+    @media (max-width: 760px) {
+      .target-card { grid-template-columns: 1fr; }
+    }
+    .target-card .lbl { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem; grid-column: 1 / -1; }
+    .target-card a { color: var(--accent); font-weight: 600; word-break: break-all; text-decoration: none; }
+    .target-card a:hover { text-decoration: underline; }
+    .meta-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; font-size: 0.8rem; color: var(--muted); justify-content: flex-end; }
+    @media (max-width: 760px) { .meta-chips { justify-content: flex-start; } }
+    .meta-chips span { padding: 0.2rem 0.5rem; background: #f1f5f9; border-radius: 6px; }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+    .kpi .num { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+    .kpi .num.ok { color: var(--ok); }
+    .kpi .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
+    .kpi-bar {
+      margin-top: 0.45rem;
+      height: 0.42rem;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+    .kpi-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #0d9488, #10b981); }
+    .step-ico-svg { width: 1.1rem; height: 1.1rem; vertical-align: -0.2rem; margin-right: 0.35rem; color: var(--muted); }
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .jump a {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .jump a:hover { color: var(--accent); border-color: var(--accent); }
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .section h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .section > p.lead { margin: 0 0 0.85rem; font-size: 0.9rem; color: var(--muted); }
+    .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.data { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    table.data th, table.data td { border-bottom: 1px solid var(--line); padding: 0.65rem 0.5rem; text-align: left; vertical-align: top; }
+    table.data th { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+    table.data tr:last-child td { border-bottom: none; }
+    .crit-ok { color: var(--ok); font-weight: 700; }
+    .crit-bad { color: var(--bad); font-weight: 700; }
+    .pill {
+      display: inline-block;
+      margin: 0.12rem 0.25rem 0 0;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: #f1f5f9;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .crawl-one { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.85rem; line-height: 1.5; }
+    .stat-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .stat-chip {
+      padding: 0.45rem 0.65rem;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .stat-chip strong { color: var(--text); font-weight: 700; }
+    .stat-ico { font-size: 0.95rem; }
+    .scenario-table td { font-size: 0.86rem; }
+    .scenario-steps { margin: 0; padding-left: 1rem; }
+    .scenario-steps li { margin: 0.18rem 0; }
+    .status-chip { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.74rem; font-weight: 700; }
+    .status-chip.pass { color: var(--ok); background: var(--ok-bg); }
+    .status-chip.fail { color: var(--bad); background: var(--bad-bg); }
+    .artifacts { margin-top: 0.65rem; font-size: 0.85rem; }
+    .artifacts a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .artifacts a:hover { text-decoration: underline; }
+    .err-list { margin: 0.5rem 0 0; padding-left: 1.1rem; font-size: 0.84rem; color: var(--bad); }
+    .footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .footer strong { color: var(--text); }
+    .time-foot { margin-top: 0.75rem; font-size: 0.75rem; color: #94a3b8; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; }
+      .wrap { max-width: none; padding: 0; }
+      .section, .target-card, .kpi { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div>
+      <h1 class="brand">테스트 결과</h1>
+      <p class="sub">자동으로 실행한 점검 요약입니다. 아래에서 통과 여부와 각 항목 설명을 확인하세요.</p>
+    </div>
+    <div class="actions-top no-print">
+      <span class="job-pill"><span>작업 ID</span> 25415615880</span>
+      <button type="button" class="btn" onclick="window.print()">PDF로 저장 · 인쇄</button>
+    </div>
+  </div>
+
+  <div class="target-card">
+    <div class="lbl">분석한 사이트</div>
+    <a href="https://example.com/" target="_blank" rel="noopener noreferrer">https://example.com/</a>
+    <div class="meta-chips">
+      <span>페이지 1개 수집</span>
+      <span>시나리오 버전 2</span>
+      <span>기록 모드: 실패 시만</span>
+    </div>
+  </div>
+
+  <div class="kpi-row" id="summary">
+    <div class="kpi"><div class="num">1</div><div class="lbl">크롤 페이지</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
+    <div class="kpi"><div class="num">1</div><div class="lbl">실행한 시나리오 수</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
+    <div class="kpi"><div class="num">1 / 1</div><div class="lbl">통과한 시나리오</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
+    <div class="kpi"><div class="num ok">100%</div><div class="lbl">전체 통과율</div><div class="kpi-bar"><span style="width:100%"></span></div></div>
+  </div>
+
+  <nav class="jump no-print" aria-label="섹션 이동">
+    <a href="#criteria">점검 기준 요약</a>
+    <a href="#scenarios">시나리오별 결과</a>
+    <a href="#errors">오류 메시지</a>
+    <a href="#crawl">수집 범위</a>
+  </nav>
+
+  <section class="section" id="criteria">
+    <h2>점검 기준별 요약</h2>
+    <p class="lead">각 항목이 몇 번 통과·실패했는지 보여 줍니다. 한 시나리오에 여러 기준이 붙을 수 있습니다.</p>
+    <div class="scroll-x">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>기준</th>
+            <th>설명</th>
+            <th>통과</th>
+            <th>실패</th>
+            <th>관련 시나리오</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+        <td><strong>페이지 렌더링</strong></td>
+        <td style="color:var(--muted);font-size:0.88rem">문서 로드 후 핵심 요소가 화면에 보이는지</td>
+        <td class="crit-ok">1 <span style="color:var(--muted);font-weight:500">(100%)</span></td>
+        <td class="crit-bad">0</td>
+        <td style="word-break:break-word;font-size:0.85rem"><span class="crit-ok">render-1</span></td>
+      </tr><tr>
+        <td><strong>UI 콘솔 에러</strong></td>
+        <td style="color:var(--muted);font-size:0.88rem">콘솔 error 및 페이지 미처리 예외가 없는지</td>
+        <td class="crit-ok">1 <span style="color:var(--muted);font-weight:500">(100%)</span></td>
+        <td class="crit-bad">0</td>
+        <td style="word-break:break-word;font-size:0.85rem"><span class="crit-ok">render-1</span></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="errors">
+    <h2>브라우저 오류 (실패한 항목만)</h2>
+    <p style="color:var(--muted);margin:0">실패한 시나리오에서 잡힌 브라우저 오류가 없거나, 모든 항목이 통과했습니다.</p>
+  </section>
+
+  <section class="section" id="scenarios">
+    <h2>시나리오별 상세</h2>
+    <p class="lead">이전 형태처럼 표로 각 시나리오의 상태, 소요 시간, 실행 단계를 확인할 수 있습니다.</p>
+    <div class="scroll-x">
+      <table class="data scenario-table">
+        <thead><tr><th>상태</th><th>시나리오</th><th>소요</th><th>점검 기준</th><th>실행 단계</th></tr></thead>
+        <tbody><tr>
+    <td><span class="status-chip pass">통과</span></td>
+    <td><strong>페이지 렌더링: Example Domain</strong></td>
+    <td>0.1초</td>
+    <td><span class="pill">페이지 렌더링</span> <span class="pill">UI 콘솔 에러</span></td>
+    <td><ol class="scenario-steps"><li><svg class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/></svg><strong>페이지로 이동</strong> — <span class="step-detail">주소 example.com/ · 응답 200</span></li><li><svg class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg><strong>화면에 보이는지 확인</strong> — <span class="step-detail">대상 요소</span></li><li><svg class="step-ico-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg><strong>오류 메시지 없음 확인</strong></li></ol></td>
+  </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="crawl">
+    <h2>자동 수집 범위</h2>
+    <p class="crawl-one">페이지를 돌며 링크·버튼·입력 요소를 찾아 자동 점검 초안을 만들 때 참고한 규모입니다. 팝업·일부 앱 화면은 포함되지 않을 수 있습니다.</p>
+    <div class="stat-grid"><div class="stat-chip"><span class="stat-ico">✅</span><strong>1</strong> 정상 응답 페이지</div><div class="stat-chip"><span class="stat-ico">⚠️</span><strong>0</strong> 건너뛰거나 오류 페이지</div><div class="stat-chip"><span class="stat-ico">🔗</span><strong>0</strong> 같은 사이트 안 링크(합계)</div><div class="stat-chip"><span class="stat-ico">🖱️</span><strong>0</strong> 클릭·버튼 후보(합계)</div><div class="stat-chip"><span class="stat-ico">📄</span><strong>0</strong> 클릭 후보가 있는 페이지</div><div class="stat-chip"><span class="stat-ico">🌐</span><strong>1</strong> 외부 사이트 링크(참고)</div></div>
+  </section>
+
+  <footer class="footer">
+    <strong>저작권·이용 안내</strong><br/>
+    본 리포트는 QA 자동화 도구로 생성되었습니다. 대상 웹사이트의 이용약관·저작권은 각 사이트 정책을 따릅니다.
+    이 문서의 재배포·상업적 이용 시 관련 법령 및 사이트 정책을 확인하세요.
+    <div class="time-foot">작업 ID 25415615880 · 테스트 완료 2026-05-06T03:58:05.310Z · 리포트 생성 2026-05-06T03:58:05.310Z</div>
+  </footer>
+</div>
+</body>
+</html>

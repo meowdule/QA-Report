@@ -1,0 +1,35 @@
+{
+  "targetUrl": "https://example.com/",
+  "origin": "https://example.com",
+  "crawledAt": "2026-05-06T03:57:24.530Z",
+  "limits": {
+    "maxPages": 20,
+    "maxDepth": 2
+  },
+  "pages": [
+    {
+      "url": "https://example.com/",
+      "title": "Example Domain",
+      "links": [],
+      "linkClickMeta": {},
+      "outboundNav": [
+        {
+          "category": "external_http",
+          "url": "https://iana.org/domains/example",
+          "label": "Learn more",
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": "",
+          "download": false
+        }
+      ],
+      "forms": [],
+      "interactables": [],
+      "formControls": [],
+      "httpStatus": 200
+    }
+  ],
+  "graph": {
+    "https://example.com/": []
+  }
+}

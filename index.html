@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--
+  Worker 주소는 web/app.js 의 DEFAULT_WORKER_BASE_URL 에 한 번만 두면 됩니다(여러 사이트 분석 시에도 동일).
+  필요 시에만 여기 data-worker-base-url 로 덮어쓸 수 있습니다.
+-->
+<html
+  lang="ko"
+  data-github-repo="meowdule/QA-Report"
+  data-worker-base-url=""
+  data-qa-webhook-secret=""
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="./Icon.svg" type="image/svg+xml" />
+    <title>Site Analyzer &amp; Scenario Tester</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="file-protocol-banner" class="file-banner hidden" role="alert">
+      지금은 <strong>로컬 파일(file://)</strong>로 열려 있어 Worker·Job 데이터를 불러올 수 없습니다.
+      <a href="https://meowdule.github.io/QA-Report/" target="_blank" rel="noopener">GitHub Pages</a>에서 이용해 주세요.
+    </div>
+    <main class="shell shell--wide">
+      <header class="hero">
+        <p class="eyebrow">QA 리포트</p>
+        <h1>사이트 분석 · 시나리오 테스트</h1>
+        <p class="lede">
+          한 화면에서 <strong>분석 → 결과 확인 → 시나리오 조정 → 재테스트</strong>까지 진행합니다.<br>
+          작업마다 번호가 새로 생겨 서로 다른 분석 결과가 섞이지 않습니다.
+        </p>
+      </header>
+
+      <div class="dash-layout">
+        <aside class="dash-aside">
+          <nav
+            id="dashboard-nav"
+            class="dashboard-nav hidden"
+            aria-label="결과 화면 바로가기"
+          >
+            <span class="dashboard-nav-label"
+              ><svg class="dash-nav-ico dash-nav-ico--label" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                /></svg>
+              바로가기</span
+            >
+            <a href="#section-summary"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M19 3H5a2 2 0 0 0-2 2v14l7-3 7 3V5a2 2 0 0 0-2-2z"
+                /></svg>
+              요약</a
+            >
+            <a href="#section-results"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M3 13h4v8H3v-8zm7-6h4v14h-4V7zm7-4h4v18h-4V3z"
+                /></svg>
+              테스트 결과</a
+            >
+            <a href="#section-edit"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"
+                /></svg>
+              수정 · 재실행</a
+            >
+            <a
+              id="dash-nav-report"
+              class="dashboard-nav-report hidden"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><svg class="dash-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M21 2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 14H3V4h18v12z"
+                /></svg>
+              리포트</a
+            >
+          </nav>
+
+          <details class="panel analyze-details" id="analyze-panel" open>
+            <summary class="analyze-summary">
+              <h2 id="analyze-heading">
+                <svg class="panel-ico" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM3 5V3h2v2H3zm0 8H1V9h2v4zm0 6v-2h2v2H3zm8 4h-2v-2h2v2zm6 0h-2v-2h2v2zM19 9h2v4h-2V9zm0-4V3h2v2h-2z"
+                  />
+                </svg>
+                새 사이트 분석
+              </h2>
+            </summary>
+            <form id="analyze-form" class="job-form">
+              <label class="field">
+                <span class="field__label-row">
+                  <span class="field__label-text" id="analyze-url-label">분석할 URL</span>
+                  <button
+                    type="button"
+                    class="info-tip"
+                    id="analyze-url-tip"
+                    aria-label="테스트해볼 사이트 주소(HTTPS)를 입력해 주세요. 공개된 페이지여야 Worker·GitHub Actions가 접속할 수 있습니다."
+                    data-tip="테스트해볼 사이트 주소(HTTPS)를 입력해 주세요. 공개된 페이지여야 Worker·GitHub Actions가 접속할 수 있습니다."
+                  >
+                    i
+                  </button>
+                </span>
+                <input
+                  id="analyze-target-url"
+                  type="url"
+                  required
+                  autocomplete="url"
+                  placeholder="https://example.com/"
+                  aria-labelledby="analyze-url-label analyze-heading"
+                />
+              </label>
+              <div class="row-2">
+                <label class="field">
+                  <span class="field__label-row">
+                    <span class="field__label-text" id="analyze-max-pages-label">최대 페이지</span>
+                    <button
+                      type="button"
+                      class="info-tip"
+                      id="analyze-max-pages-tip"
+                      aria-label="크롤링으로 방문·수집할 페이지 수 상한입니다. 값이 클수록 더 많은 화면을 보려 하지만, 분석 시간이 길어질 수 있습니다."
+                      data-tip="크롤링으로 방문·수집할 페이지 수 상한입니다. 값이 클수록 더 많은 화면을 보려 하지만, 분석 시간이 길어질 수 있습니다."
+                    >
+                      i
+                    </button>
+                  </span>
+                  <input
+                    id="analyze-max-pages"
+                    type="number"
+                    min="1"
+                    max="100"
+                    value="20"
+                    aria-labelledby="analyze-max-pages-label analyze-heading"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field__label-row">
+                    <span class="field__label-text" id="analyze-max-depth-label">링크 깊이</span>
+                    <button
+                      type="button"
+                      class="info-tip"
+                      id="analyze-max-depth-tip"
+                      aria-labelledby="analyze-max-depth-tip analyze-max-depth-label"
+                      data-tip="시작 URL에서 링크를 몇 단계까지 따라갈지 정합니다. 0이면 시작 페이지만, 2면 대략 홈 → 한 단계 안쪽 → 그다음 단계까지 탐색합니다."
+                    >
+                      i
+                    </button>
+                  </span>
+                  <input
+                    id="analyze-max-depth"
+                    type="number"
+                    min="0"
+                    max="10"
+                    value="2"
+                    aria-labelledby="analyze-max-depth-label analyze-heading"
+                  />
+                </label>
+              </div>
+              <div class="field field--trace">
+                <span class="field__label-row">
+                  <span class="field__label-text" id="trace-mode-label">실행 기록(트레이스)</span>
+                  <button
+                    type="button"
+                    class="info-tip"
+                    id="trace-mode-tip"
+                    aria-label="문제가 났을 때 화면 흐름을 다시 볼 수 있게 저장합니다. 보통은 실패한 테스트만 기록하면 충분합니다."
+                    data-tip="문제가 났을 때 화면 흐름을 다시 볼 수 있게 저장합니다. 보통은 실패한 테스트만 기록하면 충분합니다."
+                  >
+                    i
+                  </button>
+                </span>
+                <select id="analyze-trace-mode" aria-labelledby="trace-mode-label analyze-heading">
+                  <option value="failure" selected>실패한 테스트만 기록 (권장)</option>
+                  <option value="all">모든 테스트 기록</option>
+                  <option value="off">기록 안 함</option>
+                </select>
+              </div>
+              <div class="job-actions job-actions--stack">
+                <button type="submit" class="btn primary btn--block">분석 시작</button>
+              </div>
+            </form>
+            <p id="analyze-status" class="status analyze-status--hidden" role="status" aria-hidden="true"></p>
+            <p class="hint subtle">
+              분석에는 수 분 걸릴 수 있습니다. 진행 중에는 이 탭을 닫지 마세요.
+            </p>
+          </details>
+
+          <details class="panel job-id-details" id="job-id-panel" aria-label="예전 작업 번호로 결과 열기">
+            <summary class="job-id-summary">
+              <svg class="panel-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10zM8 13h8v2H8v-2zm0-3h8v2H8v-2z"
+                />
+              </svg>
+              <span class="job-id-summary-title">작업 번호로 불러오기</span>
+            </summary>
+            <form id="job-form" class="job-form">
+              <label class="field">
+                <span class="field__label-row">
+                  <span class="field__label-text" id="job-input-label">작업 번호</span>
+                  <button
+                    type="button"
+                    class="info-tip"
+                    id="job-input-tip"
+                    aria-label="GitHub Actions 실행 후 표시되는 숫자 ID이거나, 왼쪽 「분석 시작」이 끝난 뒤 주소창·상태에 나온 번호입니다. 저장소에 올라간 결과를 다시 불러올 때 씁니다."
+                    data-tip="GitHub Actions 실행 후 표시되는 숫자 ID이거나, 왼쪽 「분석 시작」이 끝난 뒤 주소창·상태에 나온 번호입니다. 저장소에 올라간 결과를 다시 불러올 때 씁니다."
+                  >
+                    i
+                  </button>
+                </span>
+                <input
+                  id="job-input"
+                  name="job"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="숫자만"
+                  aria-labelledby="job-input-label"
+                />
+              </label>
+              <label class="check check--with-tip">
+                <span class="check__main">
+                  <input id="poll-toggle" type="checkbox" checked />
+                  <span>아직 없으면 잠깐마다 다시 시도</span>
+                </span>
+                <button
+                  type="button"
+                  class="info-tip info-tip--in-check"
+                  id="poll-toggle-tip"
+                  aria-label="결과 파일이 아직 배포 중이면 몇 초 간격으로 자동으로 다시 요청합니다. 끄면 한 번만 시도합니다."
+                  data-tip="결과 파일이 아직 배포 중이면 몇 초 간격으로 자동으로 다시 요청합니다. 끄면 한 번만 시도합니다."
+                >
+                  i
+                </button>
+              </label>
+              <div class="job-actions job-actions--stack">
+                <button type="submit" class="btn primary btn--block">불러오기</button>
+                <button type="button" class="btn ghost btn--block" id="btn-stop" hidden>대기 중지</button>
+              </div>
+            </form>
+            <p id="job-status" class="status" role="status"></p>
+          </details>
+        </aside>
+
+        <div class="dash-main">
+          <div class="dash-grid">
+            <div class="dash-cell dash-cell--summary">
+              <section id="summary-section" class="panel hidden" aria-live="polite">
+                <h2 id="section-summary">요약</h2>
+                <div id="summary-body" class="summary-body"></div>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--results">
+              <section id="results-section" class="panel hidden">
+                <h2 id="section-results">테스트 결과</h2>
+                <p class="panel-intro">기준별 집계를 확인합니다.</p>
+                <div id="results-body"></div>
+              </section>
+            </div>
+
+            <div class="dash-cell dash-cell--edit">
+              <section id="edit-section" class="panel hidden" aria-labelledby="edit-heading">
+                <h2 id="section-edit">
+                  <svg class="panel-ico" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                    />
+                  </svg>
+                  <span id="edit-heading">시나리오 수정 · 다시 테스트</span>
+                </h2>
+                <p class="panel-intro">
+                  블록을 위아래로 옮기거나 삭제해 순서를 바꾸고, 칸에 값을 적어 내용을 수정합니다. 같은 작업 번호로 다시 돌립니다.
+                </p>
+                <p id="edit-hint" class="hint" role="status"></p>
+                <h3 class="subh">시나리오별 편집</h3>
+                <div id="scenario-form-rows" class="scenario-forms"></div>
+
+                <h3 class="subh">다시 테스트</h3>
+                <p class="panel-intro">
+                  저장·배포가 끝날 때까지 이 탭을 두면 결과가 자동으로 갱신됩니다.
+                </p>
+                <div class="job-actions">
+                  <button type="button" class="btn primary" id="btn-post-rerun">테스트 수행</button>
+                </div>
+                <p id="dispatch-hint" class="hint hint--subtle" role="status"></p>
+              </section>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p class="footer-line">
+          본 도구로 생성된 리포트는 내부 점검·기록용으로 활용해 주세요.<br>타사 사이트를 대상으로 할 때는 해당 사이트의 이용약관을 준수해야 합니다.
+        </p>
+        <p class="footer-line footer-line--muted">© QA 리포트 · 교육·문서 목적의 예시 UI</p>
+      </footer>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
