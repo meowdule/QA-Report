@@ -1,0 +1,1499 @@
+{
+  "version": 2,
+  "jobId": "25642082081",
+  "targetUrl": "https://meowdule.github.io/SEO-TESTING-HTML",
+  "traceMode": "failure",
+  "startedAt": "2026-05-10T22:57:02.904Z",
+  "finishedAt": "2026-05-10T22:59:09.645Z",
+  "criteriaSummary": {
+    "page_rendering": {
+      "labelKo": "페이지 렌더링",
+      "pass": 10,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        },
+        {
+          "id": "render-2",
+          "passed": true
+        },
+        {
+          "id": "render-3",
+          "passed": true
+        },
+        {
+          "id": "render-4",
+          "passed": true
+        },
+        {
+          "id": "render-5",
+          "passed": true
+        },
+        {
+          "id": "render-6",
+          "passed": true
+        },
+        {
+          "id": "render-7",
+          "passed": true
+        },
+        {
+          "id": "render-8",
+          "passed": true
+        },
+        {
+          "id": "render-9",
+          "passed": true
+        },
+        {
+          "id": "primary-flow-linear",
+          "passed": true
+        }
+      ]
+    },
+    "core_action": {
+      "labelKo": "핵심 액션",
+      "pass": 14,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "link-nav-1",
+          "passed": true
+        },
+        {
+          "id": "link-nav-2",
+          "passed": true
+        },
+        {
+          "id": "link-nav-3",
+          "passed": true
+        },
+        {
+          "id": "link-nav-4",
+          "passed": true
+        },
+        {
+          "id": "link-nav-5",
+          "passed": true
+        },
+        {
+          "id": "link-nav-6",
+          "passed": true
+        },
+        {
+          "id": "link-nav-7",
+          "passed": true
+        },
+        {
+          "id": "link-nav-8",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-1",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-2",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-3",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-4",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-5",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-6",
+          "passed": true
+        }
+      ]
+    },
+    "input_data": {
+      "labelKo": "입력 데이터",
+      "pass": 3,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "input-smoke",
+          "passed": true
+        },
+        {
+          "id": "form-select-1",
+          "passed": true
+        },
+        {
+          "id": "form-select-2",
+          "passed": true
+        }
+      ]
+    },
+    "console_errors": {
+      "labelKo": "UI 콘솔 에러",
+      "pass": 27,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        },
+        {
+          "id": "render-2",
+          "passed": true
+        },
+        {
+          "id": "render-3",
+          "passed": true
+        },
+        {
+          "id": "render-4",
+          "passed": true
+        },
+        {
+          "id": "render-5",
+          "passed": true
+        },
+        {
+          "id": "render-6",
+          "passed": true
+        },
+        {
+          "id": "render-7",
+          "passed": true
+        },
+        {
+          "id": "render-8",
+          "passed": true
+        },
+        {
+          "id": "render-9",
+          "passed": true
+        },
+        {
+          "id": "link-nav-1",
+          "passed": true
+        },
+        {
+          "id": "link-nav-2",
+          "passed": true
+        },
+        {
+          "id": "link-nav-3",
+          "passed": true
+        },
+        {
+          "id": "link-nav-4",
+          "passed": true
+        },
+        {
+          "id": "link-nav-5",
+          "passed": true
+        },
+        {
+          "id": "link-nav-6",
+          "passed": true
+        },
+        {
+          "id": "link-nav-7",
+          "passed": true
+        },
+        {
+          "id": "link-nav-8",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-1",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-2",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-3",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-4",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-5",
+          "passed": true
+        },
+        {
+          "id": "ui-click-https-meowdule-github-io-SEO-TESTING-6",
+          "passed": true
+        },
+        {
+          "id": "input-smoke",
+          "passed": true
+        },
+        {
+          "id": "form-select-1",
+          "passed": true
+        },
+        {
+          "id": "form-select-2",
+          "passed": true
+        },
+        {
+          "id": "primary-flow-linear",
+          "passed": true
+        }
+      ]
+    },
+    "primary_flow": {
+      "labelKo": "주요 흐름",
+      "pass": 1,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "primary-flow-linear",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "렌더 /SEO-TESTING-HTML · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 276,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-2",
+      "name": "렌더 /SEO-TESTING-HTML#/ · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 273,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-3",
+      "name": "렌더 /SEO-TESTING-HTML#/pages/plans · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 256,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-4",
+      "name": "렌더 /SEO-TESTING-HTML#/pages/contact · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 259,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-5",
+      "name": "렌더 /SEO-TESTING-HTML#/auth/login · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 237,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-6",
+      "name": "렌더 /SEO-TESTING-HTML#/pages/apply · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 239,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/apply",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-7",
+      "name": "렌더 /SEO-TESTING-HTML#/auth/find-id · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 248,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-id",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-8",
+      "name": "렌더 /SEO-TESTING-HTML#/auth/find-password · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 264,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-password",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "render-9",
+      "name": "렌더 /SEO-TESTING-HTML#/auth/signup · SEO DEMO",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 256,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/signup",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-1",
+      "name": "링크 /SEO-TESTING-HTML → /SEO-TESTING-HTML#/pages/plans",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 426,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "status": 200,
+          "url": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/variable/woff2-dynamic-subset/PretendardVariable.subset.84.woff2",
+          "requestMethod": "GET"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-2",
+      "name": "링크(3) /SEO-TESTING-HTML → /SEO-TESTING-HTML#/pages/contact",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8388,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-3",
+      "name": "링크 /SEO-TESTING-HTML#/ → /SEO-TESTING-HTML#/pages/contact",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8372,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-4",
+      "name": "링크(3) /SEO-TESTING-HTML#/ → /SEO-TESTING-HTML#/auth/login",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8364,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-5",
+      "name": "링크 /SEO-TESTING-HTML#/pages/plans → /SEO-TESTING-HTML#/pages/apply",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8412,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/apply",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-6",
+      "name": "링크(3) /SEO-TESTING-HTML#/pages/plans → /SEO-TESTING-HTML#/auth/login",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8370,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-7",
+      "name": "링크 /SEO-TESTING-HTML#/auth/login → /SEO-TESTING-HTML#/auth/find-id",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8333,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-id",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "link-nav-8",
+      "name": "링크(3) /SEO-TESTING-HTML#/auth/login → /SEO-TESTING-HTML#/auth/find-password",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 630,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-password",
+          "navigationMode": "same_origin_navigation",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "status": 200,
+          "url": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/variable/woff2-dynamic-subset/PretendardVariable.subset.85.woff2",
+          "requestMethod": "GET"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-SEO-TESTING-1",
+      "name": "UI 클릭: button — 제출하기",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8333,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "selector": "div > main > div > form > div:nth-of-type(5) > button",
+          "getByRole": "button",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-SEO-TESTING-2",
+      "name": "UI 클릭: button — 로그인하고 보드로 이동",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8315,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "selector": "div > main > div > form > div:nth-of-type(3) > button",
+          "getByRole": "button",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/login",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-SEO-TESTING-3",
+      "name": "UI 클릭: button — 신청 제출",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8335,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/apply",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "selector": "body > div > main > div > form > button",
+          "getByRole": "button",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/apply",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/apply",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-SEO-TESTING-4",
+      "name": "UI 클릭: button — 아이디 조회",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8320,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-id",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "selector": "body > div > main > div > form > button",
+          "getByRole": "button",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-id",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-id",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-SEO-TESTING-5",
+      "name": "UI 클릭: button — 비밀번호 변경",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8351,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-password",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "selector": "body > div > main > div > form > button",
+          "getByRole": "button",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-password",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/find-password",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-SEO-TESTING-6",
+      "name": "UI 클릭: button — 가입 완료",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 8333,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/signup",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "click",
+          "selector": "body > div > main > div > form > button",
+          "getByRole": "button",
+          "ok": true,
+          "startUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/signup",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/auth/signup",
+          "navigationMode": "same_tab_or_spa",
+          "popupClosed": false
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 8000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "input-smoke",
+      "name": "입력 데이터: 첫 폼에 더미 값 입력 (저장 검증은 후속 단계)",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 5274,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "fill",
+          "selector": "form:nth-of-type(1) input",
+          "ok": true
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 5000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 5000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "form-select-1",
+      "name": "입력 데이터: 단일 <select> (single) — 주제",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 6271,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/contact",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "selectOption",
+          "selector": "#topic",
+          "ok": true
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 6000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 6000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "form-select-2",
+      "name": "입력 데이터: 단일 <select> (single) — 희망 플랜",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 6289,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/apply",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "selectOption",
+          "selector": "#plan",
+          "ok": true
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 6000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 6000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    },
+    {
+      "id": "primary-flow-linear",
+      "name": "주요 흐름: 상위 페이지 순차 방문",
+      "criteria": [
+        "primary_flow",
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 4486,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "finalUrl": "https://meowdule.github.io/SEO-TESTING-HTML/#/pages/plans",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "waitForResponse",
+          "ok": true,
+          "error": "page.waitForResponse: Timeout 4000ms exceeded while waiting for event \"response\"",
+          "skipped": true,
+          "note": "optional: page.waitForResponse: Timeout 4000ms exceeded while waiting for event \"response\""
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    }
+  ]
+}
