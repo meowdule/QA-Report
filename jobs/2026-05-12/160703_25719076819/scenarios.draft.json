@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "generatedAt": "2026-05-12T07:06:32.949Z",
+  "targetUrl": "https://m.getcha.kr/home",
+  "schema": {
+    "stepTypes": [
+      "navigate",
+      "click",
+      "fill",
+      "selectOption",
+      "check",
+      "assertVisible",
+      "assertNoConsoleError",
+      "waitForResponse",
+      "waitForSelector"
+    ],
+    "criterionIds": [
+      "page_rendering",
+      "core_action",
+      "input_data",
+      "console_errors",
+      "primary_flow"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "렌더 /home · 겟차 - 신차 구매 필수 앱! 발품 없이 자동차 견적 보기",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://m.getcha.kr/home"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    }
+  ]
+}

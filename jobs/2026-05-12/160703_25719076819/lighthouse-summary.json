@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-12T07:07:01.719Z",
+  "internalUrls": [
+    "https://m.getcha.kr/home"
+  ],
+  "externalUrls": [],
+  "auditedUrls": [
+    "https://m.getcha.kr/home"
+  ],
+  "items": [
+    {
+      "url": "https://m.getcha.kr/home",
+      "kind": "internal",
+      "scores": {
+        "performance": 26,
+        "accessibility": 76,
+        "best-practices": 74,
+        "seo": 100
+      },
+      "reportHtml": "lighthouse/0854134262377779.html",
+      "reportJson": "lighthouse/0854134262377779.json",
+      "error": null
+    }
+  ]
+}

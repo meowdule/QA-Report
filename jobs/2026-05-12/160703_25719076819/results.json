@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "jobId": "25719076819",
+  "targetUrl": "https://m.getcha.kr/home",
+  "traceMode": "failure",
+  "startedAt": "2026-05-12T07:06:32.950Z",
+  "finishedAt": "2026-05-12T07:06:35.460Z",
+  "criteriaSummary": {
+    "page_rendering": {
+      "labelKo": "페이지 렌더링",
+      "pass": 1,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        }
+      ]
+    },
+    "core_action": {
+      "labelKo": "핵심 액션",
+      "pass": 0,
+      "fail": 0,
+      "scenarioIds": []
+    },
+    "input_data": {
+      "labelKo": "입력 데이터",
+      "pass": 0,
+      "fail": 0,
+      "scenarioIds": []
+    },
+    "console_errors": {
+      "labelKo": "UI 콘솔 에러",
+      "pass": 1,
+      "fail": 0,
+      "scenarioIds": [
+        {
+          "id": "render-1",
+          "passed": true
+        }
+      ]
+    },
+    "primary_flow": {
+      "labelKo": "주요 흐름",
+      "pass": 0,
+      "fail": 0,
+      "scenarioIds": []
+    }
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "렌더 /home · 겟차 - 신차 구매 필수 앱! 발품 없이 자동차 견적 보기",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "passed": true,
+      "durationMs": 2475,
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://m.getcha.kr/home",
+          "finalUrl": "https://m.getcha.kr/home",
+          "status": 200,
+          "ok": true
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body",
+          "ok": true
+        },
+        {
+          "type": "assertNoConsoleError",
+          "ok": true,
+          "consoleErrorCount": 0,
+          "pageErrorCount": 0
+        }
+      ],
+      "consoleErrors": [],
+      "artifacts": {}
+    }
+  ]
+}

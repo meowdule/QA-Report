@@ -1,0 +1,26 @@
+{
+  "targetUrl": "https://m.getcha.kr/home",
+  "origin": "https://m.getcha.kr",
+  "crawledAt": "2026-05-12T07:06:32.948Z",
+  "limits": {
+    "maxPages": 20,
+    "maxDepth": 2
+  },
+  "pages": [
+    {
+      "url": "https://m.getcha.kr/home",
+      "title": "겟차 - 신차 구매 필수 앱! 발품 없이 자동차 견적 보기",
+      "links": [],
+      "linkClickMeta": {},
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 0
+    }
+  ],
+  "graph": {
+    "https://m.getcha.kr/home": []
+  }
+}
