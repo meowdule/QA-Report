@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-12T23:55:06.541Z",
+  "internalUrls": [
+    "https://meowdule.github.io/SEO-TESTING-HTML",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup"
+  ],
+  "externalUrls": [],
+  "auditedUrls": [
+    "https://meowdule.github.io/SEO-TESTING-HTML",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup"
+  ],
+  "items": [
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+      "kind": "internal",
+      "scores": {
+        "performance": 55,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/5e5aa138131d2671.html",
+      "reportJson": "lighthouse/5e5aa138131d2671.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "kind": "internal",
+      "scores": {
+        "performance": 58,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/8eded67ca7bf79c1.html",
+      "reportJson": "lighthouse/8eded67ca7bf79c1.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+      "kind": "internal",
+      "scores": {
+        "performance": 63,
+        "accessibility": 98,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/300f3736a89e1209.html",
+      "reportJson": "lighthouse/300f3736a89e1209.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+      "kind": "internal",
+      "scores": {
+        "performance": 67,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/0368f5491b4e73c5.html",
+      "reportJson": "lighthouse/0368f5491b4e73c5.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+      "kind": "internal",
+      "scores": {
+        "performance": 67,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/e4e7889d914c4ea7.html",
+      "reportJson": "lighthouse/e4e7889d914c4ea7.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+      "kind": "internal",
+      "scores": {
+        "performance": 73,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/63a838daf0989df5.html",
+      "reportJson": "lighthouse/63a838daf0989df5.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+      "kind": "internal",
+      "scores": {
+        "performance": 68,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/c5dfce9d1818f245.html",
+      "reportJson": "lighthouse/c5dfce9d1818f245.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+      "kind": "internal",
+      "scores": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/ca035f5665845756.html",
+      "reportJson": "lighthouse/ca035f5665845756.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup",
+      "kind": "internal",
+      "scores": {
+        "performance": 68,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/3e5a184f456d4bc8.html",
+      "reportJson": "lighthouse/3e5a184f456d4bc8.json",
+      "error": null
+    }
+  ]
+}

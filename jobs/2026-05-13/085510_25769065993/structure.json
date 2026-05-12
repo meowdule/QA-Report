@@ -1,0 +1,1011 @@
+{
+  "targetUrl": "https://meowdule.github.io/SEO-TESTING-HTML",
+  "origin": "https://meowdule.github.io",
+  "crawledAt": "2026-05-12T23:51:59.251Z",
+  "limits": {
+    "maxPages": 21,
+    "maxDepth": 2
+  },
+  "pages": [
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "name": "플랜",
+          "getByRole": "link",
+          "accessibleName": "플랜",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의",
+          "getByRole": "link",
+          "accessibleName": "문의",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "name": "지금 신청하기",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의하기",
+          "getByRole": "link",
+          "accessibleName": "문의하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "name": "구매 플랜 조회",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "name": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "name": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "getByRole": "link",
+          "accessibleName": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 0
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "name": "플랜",
+          "getByRole": "link",
+          "accessibleName": "플랜",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의",
+          "getByRole": "link",
+          "accessibleName": "문의",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "name": "지금 신청하기",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의하기",
+          "getByRole": "link",
+          "accessibleName": "문의하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "name": "구매 플랜 조회",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > section:nth-of-type(1) > div > div:nth-of-type(1) > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "문의하기간단한 폼으로 문의 내용을 남깁니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "name": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "getByRole": "link",
+          "accessibleName": "지금 신청하기신청서를 작성하고 제출합니다. (로컬에만 저장)",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+          "name": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜 조회Starter · Pro · Team 플랜을 비교합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > section:nth-of-type(2) > div > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "getByRole": "link",
+          "accessibleName": "체험하기 (로그인)회원가입 후 커뮤니티 보드로 이동합니다.",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "홈",
+          "getByRole": "link",
+          "accessibleName": "홈",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "name": "신청하기",
+          "getByRole": "link",
+          "accessibleName": "신청하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div > article:nth-of-type(1) > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "체험하기",
+          "getByRole": "link",
+          "accessibleName": "체험하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div > article:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+          "name": "이 플랜으로 신청",
+          "getByRole": "link",
+          "accessibleName": "이 플랜으로 신청",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div > article:nth-of-type(3) > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+          "name": "문의하기",
+          "getByRole": "link",
+          "accessibleName": "문의하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form:nth-of-type(1)",
+          "types": [
+            "text",
+            "email"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "홈",
+          "getByRole": "link",
+          "accessibleName": "홈",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "div > main > div > form > div:nth-of-type(5) > button",
+          "name": "제출하기",
+          "getByRole": "button",
+          "accessibleName": "제출하기"
+        }
+      ],
+      "formControls": [
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#topic",
+          "name": "topic",
+          "id": "topic",
+          "multiple": false,
+          "disabled": false,
+          "label": "주제",
+          "labelForId": "topic",
+          "options": [
+            {
+              "value": "제품 문의",
+              "label": "제품 문의",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "가격 / 견적",
+              "label": "가격 / 견적",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "기술 지원",
+              "label": "기술 지원",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "기타",
+              "label": "기타",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        }
+      ],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form:nth-of-type(1)",
+          "types": [
+            "text",
+            "password"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "홈",
+          "getByRole": "link",
+          "accessibleName": "홈",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div:nth-of-type(2) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+          "name": "아이디 찾기",
+          "getByRole": "link",
+          "accessibleName": "아이디 찾기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div:nth-of-type(2) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+          "name": "비밀번호 찾기",
+          "getByRole": "link",
+          "accessibleName": "비밀번호 찾기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div:nth-of-type(2) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup",
+          "name": "회원가입",
+          "getByRole": "link",
+          "accessibleName": "회원가입",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "div > main > div > form > div:nth-of-type(3) > button",
+          "name": "로그인하고 보드로 이동",
+          "getByRole": "button",
+          "accessibleName": "로그인하고 보드로 이동"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form:nth-of-type(1)",
+          "types": [
+            "text",
+            "text",
+            "email"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "홈",
+          "getByRole": "link",
+          "accessibleName": "홈",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "body > div > main > div > form > button",
+          "name": "신청 제출",
+          "getByRole": "button",
+          "accessibleName": "신청 제출"
+        }
+      ],
+      "formControls": [
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#plan",
+          "name": "plan",
+          "id": "plan",
+          "multiple": false,
+          "disabled": false,
+          "label": "희망 플랜",
+          "labelForId": "plan",
+          "options": [
+            {
+              "value": "Starter",
+              "label": "Starter",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "Pro",
+              "label": "Pro",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "Team",
+              "label": "Team",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        }
+      ],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form:nth-of-type(1)",
+          "types": [
+            "email"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > main > div > p:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "로그인으로 돌아가기",
+          "getByRole": "link",
+          "accessibleName": "로그인으로 돌아가기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "body > div > main > div > form > button",
+          "name": "아이디 조회",
+          "getByRole": "button",
+          "accessibleName": "아이디 조회"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form:nth-of-type(1)",
+          "types": [
+            "email"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > main > div > p:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "로그인으로 돌아가기",
+          "getByRole": "link",
+          "accessibleName": "로그인으로 돌아가기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "body > div > main > div > form > button",
+          "name": "비밀번호 변경",
+          "getByRole": "button",
+          "accessibleName": "비밀번호 변경"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+    },
+    {
+      "url": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup",
+      "title": "SEO DEMO",
+      "links": [
+        "https://meowdule.github.io/SEO-TESTING-HTML#/",
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/SEO-TESTING-HTML#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form:nth-of-type(1)",
+          "types": [
+            "text",
+            "text",
+            "email",
+            "password"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/",
+          "name": "SEO DEMO",
+          "getByRole": "link",
+          "accessibleName": "SEO DEMO",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > nav > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > main > div > p:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "body > div > main > div > form > button",
+          "name": "가입 완료",
+          "getByRole": "button",
+          "accessibleName": "가입 완료"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+    }
+  ],
+  "graph": {
+    "https://meowdule.github.io/SEO-TESTING-HTML": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/plans": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/contact": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/pages/apply": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-id": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/find-password": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+    ],
+    "https://meowdule.github.io/SEO-TESTING-HTML#/auth/signup": [
+      "https://meowdule.github.io/SEO-TESTING-HTML#/",
+      "https://meowdule.github.io/SEO-TESTING-HTML#/auth/login"
+    ]
+  }
+}
