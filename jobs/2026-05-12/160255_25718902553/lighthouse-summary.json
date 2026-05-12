@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-12T07:02:51.964Z",
+  "internalUrls": [
+    "https://bbangji-sullae.com/store/signIn"
+  ],
+  "externalUrls": [],
+  "auditedUrls": [
+    "https://bbangji-sullae.com/store/signIn"
+  ],
+  "items": [
+    {
+      "url": "https://bbangji-sullae.com/store/signIn",
+      "kind": "internal",
+      "scores": {
+        "performance": 56,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 92
+      },
+      "reportHtml": "lighthouse/f172a5237c801af8.html",
+      "reportJson": "lighthouse/f172a5237c801af8.json",
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "targetUrl": "https://bbangji-sullae.com/store/signIn",
+  "origin": "https://bbangji-sullae.com",
+  "crawledAt": "2026-05-12T07:02:37.556Z",
+  "limits": {
+    "maxPages": 20,
+    "maxDepth": 2
+  },
+  "pages": [
+    {
+      "url": "https://bbangji-sullae.com/store/signIn",
+      "title": "빵지술래 사장님 서비스",
+      "links": [],
+      "linkClickMeta": {},
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 0
+    }
+  ],
+  "graph": {
+    "https://bbangji-sullae.com/store/signIn": []
+  }
+}
