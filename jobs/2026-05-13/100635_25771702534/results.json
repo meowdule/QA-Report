@@ -3,8 +3,8 @@
   "jobId": "25771702534",
   "targetUrl": "https://example.com/",
   "traceMode": "failure",
-  "startedAt": "2026-05-13T01:06:24.106Z",
-  "finishedAt": "2026-05-13T01:06:24.271Z",
+  "startedAt": "2026-05-13T01:22:47.210Z",
+  "finishedAt": "2026-05-13T01:22:47.364Z",
   "criteriaSummary": {
     "page_rendering": {
       "labelKo": "페이지 렌더링",
@@ -56,7 +56,7 @@
         "console_errors"
       ],
       "passed": true,
-      "durationMs": 128,
+      "durationMs": 108,
       "steps": [
         {
           "type": "navigate",

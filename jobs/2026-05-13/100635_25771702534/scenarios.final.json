@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-05-13T01:06:24.106Z",
+  "scenarios": [
+    {
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "id": "render-1",
+      "name": "렌더 / · Example Domain",
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://example.com/"
+        },
+        {
+          "selector": "body",
+          "type": "assertVisible"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    }
+  ],
+  "schema": {
+    "criterionIds": [
+      "page_rendering",
+      "core_action",
+      "input_data",
+      "console_errors",
+      "primary_flow"
+    ],
+    "stepTypes": [
+      "navigate",
+      "click",
+      "fill",
+      "selectOption",
+      "check",
+      "assertVisible",
+      "assertNoConsoleError",
+      "waitForResponse",
+      "waitForSelector"
+    ]
+  },
+  "targetUrl": "https://example.com/",
+  "version": 2
+}
