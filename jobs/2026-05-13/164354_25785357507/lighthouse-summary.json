@@ -1,0 +1,313 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-13T07:43:50.308Z",
+  "internalUrls": [
+    "https://meowdule.github.io/QA-Playground#/",
+    "https://meowdule.github.io/QA-Playground/index.html#/",
+    "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+    "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+    "https://meowdule.github.io/QA-Playground/index.html#/login",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero",
+    "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge"
+  ],
+  "externalUrls": [],
+  "auditedUrls": [
+    "https://meowdule.github.io/QA-Playground#/",
+    "https://meowdule.github.io/QA-Playground/index.html#/",
+    "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+    "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+    "https://meowdule.github.io/QA-Playground/index.html#/login",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero",
+    "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge"
+  ],
+  "items": [
+    {
+      "url": "https://meowdule.github.io/QA-Playground#/",
+      "kind": "internal",
+      "scores": {
+        "performance": 97,
+        "accessibility": 95,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/7a52047d170e2dcd.html",
+      "reportJson": "lighthouse/7a52047d170e2dcd.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/",
+      "kind": "internal",
+      "scores": {
+        "performance": 94,
+        "accessibility": 95,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/d78a936f0a6e9ab9.html",
+      "reportJson": "lighthouse/d78a936f0a6e9ab9.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 94,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/9d44093c058956d3.html",
+      "reportJson": "lighthouse/9d44093c058956d3.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 91,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/3bbef0fad0def7bb.html",
+      "reportJson": "lighthouse/3bbef0fad0def7bb.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/login",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 92,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/ff296d1070dbe7d6.html",
+      "reportJson": "lighthouse/ff296d1070dbe7d6.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+      "kind": "internal",
+      "scores": {
+        "performance": 97,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/f7d67133c27f35a6.html",
+      "reportJson": "lighthouse/f7d67133c27f35a6.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/10a1fee38e33e943.html",
+      "reportJson": "lighthouse/10a1fee38e33e943.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/402ec1dbc93465e6.html",
+      "reportJson": "lighthouse/402ec1dbc93465e6.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/4305ab0e5e4b271a.html",
+      "reportJson": "lighthouse/4305ab0e5e4b271a.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/046fabda0f4ccfa4.html",
+      "reportJson": "lighthouse/046fabda0f4ccfa4.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/2b9061363d4c46d6.html",
+      "reportJson": "lighthouse/2b9061363d4c46d6.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/f1f4568bde5372e4.html",
+      "reportJson": "lighthouse/f1f4568bde5372e4.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/17075cdd6e4b6df8.html",
+      "reportJson": "lighthouse/17075cdd6e4b6df8.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/868b7e7013ada08e.html",
+      "reportJson": "lighthouse/868b7e7013ada08e.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/afd01bc8688a720b.html",
+      "reportJson": "lighthouse/afd01bc8688a720b.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/826a8013ac07986c.html",
+      "reportJson": "lighthouse/826a8013ac07986c.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/2527341efe03e8be.html",
+      "reportJson": "lighthouse/2527341efe03e8be.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/d85b6e31b621e88c.html",
+      "reportJson": "lighthouse/d85b6e31b621e88c.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero",
+      "kind": "internal",
+      "scores": {
+        "performance": 95,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/8115eec460de19e9.html",
+      "reportJson": "lighthouse/8115eec460de19e9.json",
+      "error": null
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge",
+      "kind": "internal",
+      "scores": {
+        "performance": 91,
+        "accessibility": 92,
+        "best-practices": 100,
+        "seo": 90
+      },
+      "reportHtml": "lighthouse/85bf479ce1e8c934.html",
+      "reportJson": "lighthouse/85bf479ce1e8c934.json",
+      "error": null
+    }
+  ]
+}

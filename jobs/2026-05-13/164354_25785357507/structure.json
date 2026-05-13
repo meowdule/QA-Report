@@ -1,0 +1,4633 @@
+{
+  "targetUrl": "https://meowdule.github.io/QA-Playground#/",
+  "origin": "https://meowdule.github.io",
+  "crawledAt": "2026-05-13T07:39:37.902Z",
+  "limits": {
+    "maxPages": 20,
+    "maxDepth": 2
+  },
+  "pages": [
+    {
+      "url": "https://meowdule.github.io/QA-Playground#/",
+      "title": "QA Playground — 시나리오 실습",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+          "name": "문의하기 기능 4개 시나리오 문의 폼만 두고 정상 제출·연속 제출 등 시나리오를 나눕니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "문의하기 기능 4개 시나리오 문의 폼만 두고 정상 제출·연속 제출 등 시나리오를 나눕니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+          "name": "신청하기 기능 4개 시나리오 신청 폼 단독 제출과, 같은 세션에서 문의+신청을 함께 다루는 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "신청하기 기능 4개 시나리오 신청 폼 단독 제출과, 같은 세션에서 문의+신청을 함께 다루는 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+          "name": "구매 플랜·메뉴 5개 시나리오 플랜 비교 화면 진입과, 상단 메뉴·랜딩 배너 경로가 어긋나는 버그 탐지를 묶었습니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜·메뉴 5개 시나리오 플랜 비교 화면 진입과, 상단 메뉴·랜딩 배너 경로가 어긋나는 버그 탐지를 묶었습니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+          "name": "회원가입 기능 6개 시나리오 정상 가입, 잘못된 이메일 버그, 비밀번호 규칙, 랜딩 배너 체험하기 동작까지 가입 주변 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "회원가입 기능 6개 시나리오 정상 가입, 잘못된 이메일 버그, 비밀번호 규칙, 랜딩 배너 체험하기 동작까지 가입 주변 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(5)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+          "name": "로그인·세션 5개 시나리오 로그인 성공, 실패 후 재시도, 로그아웃까지 세션 관련 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "로그인·세션 5개 시나리오 로그인 성공, 실패 후 재시도, 로그아웃까지 세션 관련 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(6)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+          "name": "랜딩·배너 탐색 3개 시나리오 비로그인 랜딩에서 맨 위 배너 버튼만으로 문의·신청·플랜 화면을 순회합니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "랜딩·배너 탐색 3개 시나리오 비로그인 랜딩에서 맨 위 배너 버튼만으로 문의·신청·플랜 화면을 순회합니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(7)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+          "name": "게시판 · 글 7개 시나리오 목록·상세 열람, 새 글 작성, 수정 후 삭제까지 글 중심 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "게시판 · 글 7개 시나리오 목록·상세 열람, 새 글 작성, 수정 후 삭제까지 글 중심 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(8)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+          "name": "게시판 · 댓글 4개 시나리오 댓글 등록과, 내 댓글 수정·삭제를 각각 연습합니다. 화면 테스트 초급중급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "게시판 · 댓글 4개 시나리오 댓글 등록과, 내 댓글 수정·삭제를 각각 연습합니다. 화면 테스트 초급중급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(9)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+          "name": "프로필 기능 3개 시나리오 로그인 후 표시 이름 등 프로필 수정 플로우입니다. 화면 테스트 초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "프로필 기능 3개 시나리오 로그인 후 표시 이름 등 프로필 수정 플로우입니다. 화면 테스트 초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(2) > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+          "name": "포스트맨 스타일 API 연습 1개 시나리오 플레이 화면 우측 Postman 유형 패널에서 직접 요청을 보냅니다. 포스트맨 테스트 입문 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "포스트맨 스타일 API 연습 1개 시나리오 플레이 화면 우측 Postman 유형 패널에서 직접 요청을 보냅니다. 포스트맨 테스트 입문 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(3) > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab",
+          "name": "Swagger·AI 스타일 문서 연습 1개 시나리오 Swagger UI 유형 패널에서 Try → Execute로 모의 응답을 확인합니다. Swagger·AI 기반 테스트 입문 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "Swagger·AI 스타일 문서 연습 1개 시나리오 Swagger UI 유형 패널에서 Try → Execute로 모의 응답을 확인합니다. Swagger·AI 기반 테스트 입문 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "#catalogFilterReset",
+          "name": "필터 초기화",
+          "getByRole": "button",
+          "accessibleName": "필터 초기화"
+        }
+      ],
+      "formControls": [
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#catalogChapterFilter",
+          "id": "catalogChapterFilter",
+          "multiple": false,
+          "disabled": false,
+          "label": "챕터",
+          "options": [
+            {
+              "value": "all",
+              "label": "전체 챕터",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "screen_test",
+              "label": "화면 테스트",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "postman_test",
+              "label": "포스트맨 테스트",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "swagger_ai_test",
+              "label": "Swagger·AI 기반 테스트",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        },
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#catalogLevelFilter",
+          "id": "catalogLevelFilter",
+          "multiple": false,
+          "disabled": false,
+          "label": "난이도(레벨)",
+          "options": [
+            {
+              "value": "all",
+              "label": "전체 난이도",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "beginner",
+              "label": "입문",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "junior",
+              "label": "초급",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "mid",
+              "label": "중급",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        },
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#catalogProgressFilter",
+          "id": "catalogProgressFilter",
+          "multiple": false,
+          "disabled": false,
+          "label": "진행 상태",
+          "options": [
+            {
+              "value": "all",
+              "label": "전체",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "not_started",
+              "label": "수행 전",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "in_progress",
+              "label": "수행 중",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "completed",
+              "label": "수행 완료",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        }
+      ],
+      "httpStatus": 200,
+      "crawlDepth": 0
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/",
+      "title": "QA Playground — 시나리오 실습",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+          "name": "문의하기 기능 4개 시나리오 문의 폼만 두고 정상 제출·연속 제출 등 시나리오를 나눕니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "문의하기 기능 4개 시나리오 문의 폼만 두고 정상 제출·연속 제출 등 시나리오를 나눕니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+          "name": "신청하기 기능 4개 시나리오 신청 폼 단독 제출과, 같은 세션에서 문의+신청을 함께 다루는 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "신청하기 기능 4개 시나리오 신청 폼 단독 제출과, 같은 세션에서 문의+신청을 함께 다루는 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+          "name": "구매 플랜·메뉴 5개 시나리오 플랜 비교 화면 진입과, 상단 메뉴·랜딩 배너 경로가 어긋나는 버그 탐지를 묶었습니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "구매 플랜·메뉴 5개 시나리오 플랜 비교 화면 진입과, 상단 메뉴·랜딩 배너 경로가 어긋나는 버그 탐지를 묶었습니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(4)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+          "name": "회원가입 기능 6개 시나리오 정상 가입, 잘못된 이메일 버그, 비밀번호 규칙, 랜딩 배너 체험하기 동작까지 가입 주변 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "회원가입 기능 6개 시나리오 정상 가입, 잘못된 이메일 버그, 비밀번호 규칙, 랜딩 배너 체험하기 동작까지 가입 주변 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(5)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+          "name": "로그인·세션 5개 시나리오 로그인 성공, 실패 후 재시도, 로그아웃까지 세션 관련 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "로그인·세션 5개 시나리오 로그인 성공, 실패 후 재시도, 로그아웃까지 세션 관련 흐름입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(6)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+          "name": "랜딩·배너 탐색 3개 시나리오 비로그인 랜딩에서 맨 위 배너 버튼만으로 문의·신청·플랜 화면을 순회합니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "랜딩·배너 탐색 3개 시나리오 비로그인 랜딩에서 맨 위 배너 버튼만으로 문의·신청·플랜 화면을 순회합니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(7)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+          "name": "게시판 · 글 7개 시나리오 목록·상세 열람, 새 글 작성, 수정 후 삭제까지 글 중심 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "게시판 · 글 7개 시나리오 목록·상세 열람, 새 글 작성, 수정 후 삭제까지 글 중심 시나리오입니다. 화면 테스트 입문초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(8)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+          "name": "게시판 · 댓글 4개 시나리오 댓글 등록과, 내 댓글 수정·삭제를 각각 연습합니다. 화면 테스트 초급중급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "게시판 · 댓글 4개 시나리오 댓글 등록과, 내 댓글 수정·삭제를 각각 연습합니다. 화면 테스트 초급중급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(1) > div > a:nth-of-type(9)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+          "name": "프로필 기능 3개 시나리오 로그인 후 표시 이름 등 프로필 수정 플로우입니다. 화면 테스트 초급 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "프로필 기능 3개 시나리오 로그인 후 표시 이름 등 프로필 수정 플로우입니다. 화면 테스트 초급 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(2) > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+          "name": "포스트맨 스타일 API 연습 1개 시나리오 플레이 화면 우측 Postman 유형 패널에서 직접 요청을 보냅니다. 포스트맨 테스트 입문 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "포스트맨 스타일 API 연습 1개 시나리오 플레이 화면 우측 Postman 유형 패널에서 직접 요청을 보냅니다. 포스트맨 테스트 입문 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "main > div > div:nth-of-type(3) > section:nth-of-type(3) > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab",
+          "name": "Swagger·AI 스타일 문서 연습 1개 시나리오 Swagger UI 유형 패널에서 Try → Execute로 모의 응답을 확인합니다. Swagger·AI 기반 테스트 입문 시나리오 목록 →",
+          "getByRole": "link",
+          "accessibleName": "Swagger·AI 스타일 문서 연습 1개 시나리오 Swagger UI 유형 패널에서 Try → Execute로 모의 응답을 확인합니다. Swagger·AI 기반 테스트 입문 시나리오 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "#catalogFilterReset",
+          "name": "필터 초기화",
+          "getByRole": "button",
+          "accessibleName": "필터 초기화"
+        }
+      ],
+      "formControls": [
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#catalogChapterFilter",
+          "id": "catalogChapterFilter",
+          "multiple": false,
+          "disabled": false,
+          "label": "챕터",
+          "options": [
+            {
+              "value": "all",
+              "label": "전체 챕터",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "screen_test",
+              "label": "화면 테스트",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "postman_test",
+              "label": "포스트맨 테스트",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "swagger_ai_test",
+              "label": "Swagger·AI 기반 테스트",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        },
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#catalogLevelFilter",
+          "id": "catalogLevelFilter",
+          "multiple": false,
+          "disabled": false,
+          "label": "난이도(레벨)",
+          "options": [
+            {
+              "value": "all",
+              "label": "전체 난이도",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "beginner",
+              "label": "입문",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "junior",
+              "label": "초급",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "mid",
+              "label": "중급",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        },
+        {
+          "kind": "select",
+          "selectionMode": "single",
+          "selector": "#catalogProgressFilter",
+          "id": "catalogProgressFilter",
+          "multiple": false,
+          "disabled": false,
+          "label": "진행 상태",
+          "options": [
+            {
+              "value": "all",
+              "label": "전체",
+              "selected": true,
+              "index": 0,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "not_started",
+              "label": "수행 전",
+              "selected": false,
+              "index": 1,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "in_progress",
+              "label": "수행 중",
+              "selected": false,
+              "index": 2,
+              "disabled": false,
+              "optgroupLabel": null
+            },
+            {
+              "value": "completed",
+              "label": "수행 완료",
+              "selected": false,
+              "index": 3,
+              "disabled": false,
+              "optgroupLabel": null
+            }
+          ]
+        }
+      ],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "title": "TC 작성 실습 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div:nth-of-type(2) > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+          "name": "문의하기 · TC 작성 3개 과정 단건·연속 두 번 제출·배너 진입 등 문의 데모를 TC 초안으로 옮깁니다. TC 작성 실습 입문 과정 목록 →",
+          "getByRole": "link",
+          "accessibleName": "문의하기 · TC 작성 3개 과정 단건·연속 두 번 제출·배너 진입 등 문의 데모를 TC 초안으로 옮깁니다. TC 작성 실습 입문 과정 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div:nth-of-type(2) > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+          "name": "신청하기 · TC 작성 3개 과정 단건·연속 제출·문의 후 신청까지 신청 흐름을 TC로 정리합니다. TC 작성 실습 입문 과정 목록 →",
+          "getByRole": "link",
+          "accessibleName": "신청하기 · TC 작성 3개 과정 단건·연속 제출·문의 후 신청까지 신청 흐름을 TC로 정리합니다. TC 작성 실습 입문 과정 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > main > div > div:nth-of-type(2) > div > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero",
+          "name": "플랜 비교 · TC 작성 3개 과정 배너·상단 메뉴·두 경로 비교로 플랜 화면 진입을 TC로 서술합니다. TC 작성 실습 입문초급 과정 목록 →",
+          "getByRole": "link",
+          "accessibleName": "플랜 비교 · TC 작성 3개 과정 배너·상단 메뉴·두 경로 비교로 플랜 화면 진입을 TC로 서술합니다. TC 작성 실습 입문초급 과정 목록 →",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "title": "챌린지 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav&from=challenge"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav&from=challenge": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > div > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge",
+          "name": "스피드 런(미리보기) 제한 120초 · 만점 100 문의 화면으로 이동해 필수 항목을 채우고 제출까지 완료합니다. 성공 입문 80점 테스트 화면 → 연결 시나리오 · 문의하기 · 폼 제출",
+          "getByRole": "link",
+          "accessibleName": "스피드 런(미리보기) 제한 120초 · 만점 100 문의 화면으로 이동해 필수 항목을 채우고 제출까지 완료합니다. 성공 입문 80점 테스트 화면 → 연결 시나리오 · 문의하기 · 폼 제출",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > div > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav&from=challenge",
+          "name": "불일치 재현 챌린지(미리보기) 제한 180초 · 만점 150 같은 이름의 메뉴가 서로 다른 결과를 내는지 찾습니다. 버그 초급 120점 테스트 화면 → 연결 시나리오 · [버그 탐지] 상단 메뉴와 화면 불일치",
+          "getByRole": "link",
+          "accessibleName": "불일치 재현 챌린지(미리보기) 제한 180초 · 만점 150 같은 이름의 메뉴가 서로 다른 결과를 내는지 찾습니다. 버그 초급 120점 테스트 화면 → 연결 시나리오 · [버그 탐지] 상단 메뉴와 화면 불일치",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/login",
+      "title": "로그인 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/signup"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form#formLogin",
+          "types": [
+            "email",
+            "password"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "#linkSignup",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/signup",
+          "name": "회원가입",
+          "getByRole": "link",
+          "accessibleName": "회원가입",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "div > div > main > div > form > button",
+          "name": "로그인",
+          "getByRole": "button",
+          "accessibleName": "로그인"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+      "title": "문의하기 기능 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_inquiry",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_repeat_inquiry",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_contact_empty",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_contact_empty",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_inquiry": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_repeat_inquiry": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_contact_empty": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_contact_empty": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_inquiry",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_repeat_inquiry",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_contact_empty",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_contact_empty",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+      "title": "신청하기 기능 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_apply",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_apply",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dual_forms",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_apply_empty",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_apply_empty",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_apply": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dual_forms": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_apply_empty": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_apply_empty": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_apply",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_apply",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dual_forms",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_apply_empty",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_apply_empty",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+      "title": "구매 플랜·메뉴 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_plans",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_plans",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_nav",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_plans_wrong",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_plans_wrong",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_plans": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_plans": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_nav": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_plans_wrong": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_plans_wrong": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_plans",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_plans",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_nav",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_plans_wrong",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_plans_wrong",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+      "title": "회원가입 기능 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_signup",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_signup",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_signup",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_signup",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_signup_password_rule",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_cta",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_cta",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_signup": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_signup_password_rule": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_cta": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_cta": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_signup",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_signup",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_signup",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_signup",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_signup_password_rule",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_cta",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(6) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_cta",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(6) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+      "title": "로그인·세션 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_login",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_login",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_login_retry",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_session_logout",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_login_false_success",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_login_false_success",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_login": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_login_retry": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_session_logout": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_login_false_success": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_login_false_success": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_login",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_login",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_login_retry",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_session_logout",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_login_false_success",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_login_false_success",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+      "title": "랜딩·배너 탐색 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tour_public",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tour_public",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_apply_wrong",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_apply_wrong",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tour_public": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tour_public": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_apply_wrong": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_apply_wrong": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tour_public",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tour_public",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_apply_wrong",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_apply_wrong",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+      "title": "게시판 · 글 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_board_browse",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_board_browse",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_post_create",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_post_edit_delete",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_board_empty_list",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_board_empty_list",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_post_wrong_author",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_post_wrong_author",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_board_browse": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_board_browse": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_post_create": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_post_edit_delete": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_board_empty_list": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_board_empty_list": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_post_wrong_author": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_post_wrong_author": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_board_browse",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_board_browse",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_post_create",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_post_edit_delete",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_board_empty_list",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_board_empty_list",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(6) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_post_wrong_author",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(7) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_post_wrong_author",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(5) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(6) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(7) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+      "title": "게시판 · 댓글 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_comment",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_comment",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_comment_edit_delete",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_comment_double_submit",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_comment_double_submit",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_comment": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_comment": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_comment_edit_delete": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_comment_double_submit": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_comment_double_submit": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_comment",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_comment",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_comment_edit_delete",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_comment_double_submit",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_comment_double_submit",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(4) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+      "title": "프로필 기능 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_profile",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_profile",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_profile_fake_save",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_profile_fake_save",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_profile": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_profile": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_profile_fake_save": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_profile_fake_save": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_profile",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_profile",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_profile_fake_save",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_profile_fake_save",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+      "title": "포스트맨 스타일 API 연습 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_feedback_tutorial",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_feedback_tutorial",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_feedback_tutorial": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_feedback_tutorial": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_feedback_tutorial",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_feedback_tutorial",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab",
+      "title": "Swagger·AI 스타일 문서 연습 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_swagger_ai_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_swagger_ai_lab",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_swagger_ai_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_swagger_ai_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_swagger_ai_lab",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_swagger_ai_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 1,
+      "parentUrl": "https://meowdule.github.io/QA-Playground#/"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+      "title": "문의하기 · TC 작성 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_inq_once",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_once&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_twice&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_banner&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_inq_once": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_once&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_twice&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_banner&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_inq_once",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_once&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_twice&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_banner&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+      "title": "신청하기 · TC 작성 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_app_once",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_once&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_twice&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_dual&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_app_once": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_once&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_twice&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_dual&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_app_once",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_once&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_twice&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_dual&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero",
+      "title": "플랜 비교 · TC 작성 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_plans_hero",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_hero&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_nav&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_paths&from=tc_lab",
+        "https://meowdule.github.io/QA-Playground/index.html"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/challenges": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_plans_hero": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_hero&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_nav&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_paths&from=tc_lab": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > header > div > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > header > div > span > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_plans_hero",
+          "name": "로그인",
+          "getByRole": "link",
+          "accessibleName": "로그인",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "div > div > main > div > nav > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_hero&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_nav&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > a",
+          "href": "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_paths&from=tc_lab",
+          "name": "수행하기",
+          "getByRole": "link",
+          "accessibleName": "수행하기",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(1)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "시나리오 실습",
+          "getByRole": "link",
+          "accessibleName": "시나리오 실습",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(2)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "name": "TC 작성",
+          "getByRole": "link",
+          "accessibleName": "TC 작성",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "body > div > footer > div > nav > a:nth-of-type(3)",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "name": "챌린지",
+          "getByRole": "link",
+          "accessibleName": "챌린지",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(2) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        },
+        {
+          "kind": "button",
+          "selector": "section > ul > li:nth-of-type(3) > div > div:nth-of-type(2) > button",
+          "name": "시나리오 설명",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+    },
+    {
+      "url": "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge",
+      "title": "로그인 · QA Playground",
+      "links": [
+        "https://meowdule.github.io/QA-Playground/index.html#/",
+        "https://meowdule.github.io/QA-Playground/index.html#/signup?next=play.html%3Fm%3Dm_inquiry%26from%3Dchallenge"
+      ],
+      "linkClickMeta": {
+        "https://meowdule.github.io/QA-Playground/index.html#/": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        },
+        "https://meowdule.github.io/QA-Playground/index.html#/signup?next=play.html%3Fm%3Dm_inquiry%26from%3Dchallenge": {
+          "target": "_self",
+          "opensNewTab": false,
+          "rel": ""
+        }
+      },
+      "outboundNav": [],
+      "forms": [
+        {
+          "selector": "form#formLogin",
+          "types": [
+            "email",
+            "password"
+          ]
+        }
+      ],
+      "interactables": [
+        {
+          "kind": "anchor",
+          "selector": "html > body > div > header > div > a",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/",
+          "name": "QA Playground",
+          "getByRole": "link",
+          "accessibleName": "QA Playground",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "anchor",
+          "selector": "#linkSignup",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/signup?next=play.html%3Fm%3Dm_inquiry%26from%3Dchallenge",
+          "name": "회원가입",
+          "getByRole": "link",
+          "accessibleName": "회원가입",
+          "linkTarget": "_self",
+          "opensNewTab": false
+        },
+        {
+          "kind": "button",
+          "selector": "div > div > main > div > form > button",
+          "name": "로그인",
+          "getByRole": "button",
+          "accessibleName": "로그인"
+        }
+      ],
+      "formControls": [],
+      "httpStatus": 200,
+      "crawlDepth": 2,
+      "parentUrl": "https://meowdule.github.io/QA-Playground/index.html#/challenges"
+    }
+  ],
+  "graph": {
+    "https://meowdule.github.io/QA-Playground#/": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/tc-lab": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once",
+      "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/challenges": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav&from=challenge"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/login": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/signup"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_inquiry",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_repeat_inquiry",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_contact_empty",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_contact_empty",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_apply",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_apply",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dual_forms",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_apply_empty",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_apply_empty",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_plans",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_plans",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_nav",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_nav",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_plans_wrong",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_plans_wrong",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_signup",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_signup",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_signup",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_signup",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_signup_password_rule",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_cta",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_cta",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_login",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_login",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_login_retry",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_session_logout",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_login_false_success",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_login_false_success",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tour_public",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tour_public",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_hero_apply_wrong",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_hero_apply_wrong",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_board_browse",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_board_browse",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_post_create",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_post_edit_delete",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_board_empty_list",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_board_empty_list",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_post_wrong_author",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_post_wrong_author",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_comment",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_comment",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_comment_edit_delete",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_comment_double_submit",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_comment_double_submit",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_profile",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_profile",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_bug_profile_fake_save",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_dr_bug_profile_fake_save",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_feedback_tutorial",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_feedback_tutorial",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_swagger_ai_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_swagger_ai_lab",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_inq_once",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_once&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_twice&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_inq_banner&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_app_once",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_once&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_twice&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_app_dual&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+      "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+      "https://meowdule.github.io/QA-Playground/index.html#/login?next=.%2Findex.html%23%2Fmission%3Fm%3Dm_tc_plans_hero",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_hero&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_nav&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/play.html?m=m_tc_plans_paths&from=tc_lab",
+      "https://meowdule.github.io/QA-Playground/index.html"
+    ],
+    "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge": [
+      "https://meowdule.github.io/QA-Playground/index.html#/",
+      "https://meowdule.github.io/QA-Playground/index.html#/signup?next=play.html%3Fm%3Dm_inquiry%26from%3Dchallenge"
+    ]
+  }
+}

@@ -1,0 +1,1161 @@
+{
+  "version": 2,
+  "generatedAt": "2026-05-13T07:39:37.906Z",
+  "targetUrl": "https://meowdule.github.io/QA-Playground#/",
+  "schema": {
+    "stepTypes": [
+      "navigate",
+      "click",
+      "fill",
+      "selectOption",
+      "check",
+      "assertVisible",
+      "assertNoConsoleError",
+      "waitForResponse",
+      "waitForSelector"
+    ],
+    "criterionIds": [
+      "page_rendering",
+      "core_action",
+      "input_data",
+      "console_errors",
+      "primary_flow"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "render-1",
+      "name": "렌더 /QA-Playground#/ · QA Playground — 시나리오 실습",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-2",
+      "name": "렌더 /QA-Playground/index.html#/ · QA Playground — 시나리오 실습",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-3",
+      "name": "렌더 /QA-Playground/index.html#/tc-lab · TC 작성 실습 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-4",
+      "name": "렌더 /QA-Playground/index.html#/challenges · 챌린지 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/challenges"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-5",
+      "name": "렌더 /QA-Playground/index.html#/login · 로그인 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/login"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-6",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_inquiry · 문의하기 기능 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-7",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_apply · 신청하기 기능 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-8",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_plans · 구매 플랜·메뉴 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-9",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_signup · 회원가입 기능 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_signup"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-10",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_login · 로그인·세션 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_login"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-11",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_tour_public · 랜딩·배너 탐색 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tour_public"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-12",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_board_browse · 게시판 · 글 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_board_browse"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-13",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_comment · 게시판 · 댓글 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_comment"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-14",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_profile · 프로필 기능 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_profile"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-15",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_feedback_tutorial · 포스트맨 스타일 API 연습 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_feedback_tutorial"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-16",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_swagger_ai_lab · Swagger·AI 스타일 문서 연습 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_swagger_ai_lab"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-17",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_tc_inq_once · 문의하기 · TC 작성 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_inq_once"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-18",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_tc_app_once · 신청하기 · TC 작성 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_app_once"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-19",
+      "name": "렌더 /QA-Playground/index.html#/mission?m=m_tc_plans_hero · 플랜 비교 · TC 작성 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_tc_plans_hero"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "render-20",
+      "name": "렌더 /QA-Playground/play.html · 로그인 · QA Playground",
+      "criteria": [
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/play.html?m=m_inquiry&from=challenge"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-1",
+      "name": "링크 /QA-Playground#/ → /QA-Playground/index.html#/tc-lab",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-2",
+      "name": "링크(3) /QA-Playground#/ → /QA-Playground/index.html#/challenges",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-3",
+      "name": "링크 /QA-Playground/index.html#/ → /QA-Playground/index.html#/challenges",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-4",
+      "name": "링크(3) /QA-Playground/index.html#/ → /QA-Playground/index.html#/login",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-5",
+      "name": "링크 /QA-Playground/index.html#/tc-lab → /QA-Playground/index.html#/challenges",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/challenges",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-6",
+      "name": "링크(3) /QA-Playground/index.html#/tc-lab → /QA-Playground/index.html#/login",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-7",
+      "name": "링크 /QA-Playground/index.html#/challenges → /QA-Playground/index.html#/tc-lab",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/challenges"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "link-nav-8",
+      "name": "링크(3) /QA-Playground/index.html#/challenges → /QA-Playground/index.html#/login",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/challenges"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "href": "https://meowdule.github.io/QA-Playground/index.html#/login",
+          "fallbackSelector": "a[href]"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-QA-Playgrou-1",
+      "name": "UI 클릭: button — 필터 초기화",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "getByRole": "button",
+          "accessibleName": "필터 초기화",
+          "selector": "#catalogFilterReset"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-QA-Playgrou-2",
+      "name": "UI 클릭: button — 필터 초기화",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "getByRole": "button",
+          "accessibleName": "필터 초기화",
+          "selector": "#catalogFilterReset"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-QA-Playgrou-3",
+      "name": "UI 클릭: button — 로그인",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/login"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "getByRole": "button",
+          "accessibleName": "로그인",
+          "selector": "div > div > main > div > form > button"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-QA-Playgrou-4",
+      "name": "UI 클릭: button — 시나리오 설명",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_inquiry"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-QA-Playgrou-5",
+      "name": "UI 클릭: button — 시나리오 설명",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_apply"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "ui-click-https-meowdule-github-io-QA-Playgrou-6",
+      "name": "UI 클릭: button — 시나리오 설명",
+      "criteria": [
+        "core_action",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/mission?m=m_plans"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "click",
+          "getByRole": "button",
+          "accessibleName": "시나리오 설명",
+          "selector": "section > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > button"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 8000
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "input-smoke",
+      "name": "입력 데이터: 첫 폼에 더미 값 입력 (저장 검증은 후속 단계)",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/login"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "fill",
+          "selector": "form#formLogin input",
+          "value": "qa-automation@example.com"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 5000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "form-select-1",
+      "name": "입력 데이터: 단일 <select> (single) — 챕터",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "selectOption",
+          "selector": "#catalogChapterFilter",
+          "value": "screen_test"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 6000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "form-select-2",
+      "name": "입력 데이터: 단일 <select> (single) — 난이도(레벨)",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "selectOption",
+          "selector": "#catalogLevelFilter",
+          "value": "beginner"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 6000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "form-select-3",
+      "name": "입력 데이터: 단일 <select> (single) — 진행 상태",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "selectOption",
+          "selector": "#catalogProgressFilter",
+          "value": "not_started"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 6000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "form-select-4",
+      "name": "입력 데이터: 단일 <select> (single) — 챕터",
+      "criteria": [
+        "input_data",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "selectOption",
+          "selector": "#catalogChapterFilter",
+          "value": "screen_test"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 6000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    },
+    {
+      "id": "primary-flow-linear",
+      "name": "주요 흐름: 상위 페이지 순차 방문",
+      "criteria": [
+        "primary_flow",
+        "page_rendering",
+        "console_errors"
+      ],
+      "steps": [
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "navigate",
+          "url": "https://meowdule.github.io/QA-Playground/index.html#/tc-lab"
+        },
+        {
+          "type": "assertVisible",
+          "selector": "body"
+        },
+        {
+          "type": "waitForResponse",
+          "urlPattern": "",
+          "optional": true,
+          "timeout": 4000
+        },
+        {
+          "type": "assertNoConsoleError"
+        }
+      ]
+    }
+  ]
+}
