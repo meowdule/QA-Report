@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "skipped": false,
+  "scope": "internal_only",
+  "generatedAt": "2026-05-13T01:06:31.441Z",
+  "internalUrls": [
+    "https://example.com/"
+  ],
+  "externalUrls": [
+    "https://iana.org/domains/example"
+  ],
+  "auditedUrls": [
+    "https://example.com/"
+  ],
+  "items": [
+    {
+      "url": "https://example.com/",
+      "kind": "internal",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 93,
+        "seo": 80
+      },
+      "reportHtml": "lighthouse/0f115db062b7c0dd.html",
+      "reportJson": "lighthouse/0f115db062b7c0dd.json",
+      "error": null
+    }
+  ]
+}
